@@ -14,5 +14,11 @@ repository   'https://github.com/overextended/ox_doorlock'
 --[[ Manifest ]]--
 shared_script '@ox_lib/init.lua'
 
-client_script 'client.lua'
-server_script 'server.lua'
+client_scripts {
+	'client.lua',
+}
+
+server_scripts {
+	'server/framework.lua',
+	'server/main.lua',
+}

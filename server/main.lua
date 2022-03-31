@@ -8,12 +8,18 @@ do
 			coords = vector3(450.1042, -985.7384, 30.83931),
 			heading = 90,
 			maxDistance = 2,
+			groups = {
+				police = 1,
+			}
 		},
 		{
 			model = -1320876379,
 			coords = vector3(446.5728, -980.0106, 30.83931),
 			heading = 180,
 			maxDistance = 2,
+			groups = {
+				police = 1,
+			}
 		},
 		{
 			doors = {
@@ -30,6 +36,9 @@ do
 			},
 			maxDistance = 3,
 			state = 0,
+			groups = {
+				police = 1,
+			}
 		},
 	}
 
@@ -53,10 +62,15 @@ do
 end
 
 RegisterNetEvent('ox_doorlock:setState', function(hash, state)
-	doors[hash].state = state
-	TriggerClientEvent('ox_doorlock:setState', -1, hash, state)
+	local door = doors[hash]
+
+	if door and playerGroup(source, door.groups) then
+		door.state = state
+		TriggerClientEvent('ox_doorlock:setState', -1, hash, state)
+	end
 end)
 
 RegisterNetEvent('ox_doorlock:getDoors', function()
 	TriggerClientEvent('ox_doorlock:setDoors', source, doors)
 end)
+
