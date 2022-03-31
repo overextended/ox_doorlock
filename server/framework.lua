@@ -21,23 +21,26 @@ if Core.resource == 'ox_core' then
 		end
 	end
 elseif Core.resource == 'qb-core' then
-	function playerGroup(source, group)
-		if not group then return true end
+	function playerGroup(source, job)
+		if not job then return true end
 
-		if type(group) == 'table' then
-			for k, v in pairs(group) do
+		local Player = Core.Functions.GetPlayer(source)
+		if not Player then return false end
+
+		if type(job) == 'table' then
+			for k, v in pairs(job) do
 				if type(k) == 'string' then
-					if IsPlayerAceAllowed(source, ('qbcore.%s:%s'):format(k, v)) then
+					if Player.PlayerData.job.name == k and Player.PlayerData.job.grade.level >= v then
 						return true
 					end
 				else
-					if IsPlayerAceAllowed(source, ('qbcore.%s'):format(v)) then
+					if Player.PlayerData.job.name == v then
 						return true
 					end
 				end
 			end
 		else
-			return IsPlayerAceAllowed(source, ('qbcore.%s'):format(group))
+			return Player.PlayerData.job.name == job
 		end
 	end
 end
