@@ -28,16 +28,9 @@ elseif Core.resource == 'qb-core' then
 		if not Player then return false end
 
 		if type(job) == 'table' then
-			for k, v in pairs(job) do
-				if type(k) == 'string' then
-					if Player.PlayerData.job.name == k and Player.PlayerData.job.grade.level >= v then
-						return true
-					end
-				else
-					if Player.PlayerData.job.name == v then
-						return true
-					end
-				end
+			local rank = job[Player.PlayerData.job.name]
+			if rank and Player.PlayerData.job.grade.level >= rank then
+				return true
 			end
 		else
 			return Player.PlayerData.job.name == job
