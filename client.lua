@@ -2,19 +2,40 @@ local doors = {}
 local CDoor = {}
 CDoor.__index = CDoor
 
-function CDoor:setState(state, forceShut)
-	if forceShut then
-		self:setState(4)
-	end
-
+function CDoor:setState(state)
 	self.state = state
 	local double = self.doors
 
 	if double then
-		DoorSystemSetDoorState(double[1].hash, state)
-		DoorSystemSetDoorState(double[2].hash, state)
+		while self.state == 1 and double[1].entity do
+			local doorOneHeading = double[1].heading
+			local doorOneCurrentHeading = math.floor(GetEntityHeading(double[1].entity) + 0.5)
+
+			if doorOneHeading == doorOneCurrentHeading then
+				DoorSystemSetDoorState(double[1].hash, self.state)
+			end
+
+			local doorTwoHeading = double[2].heading
+			local doorTwoCurrentHeading = math.floor(GetEntityHeading(double[2].entity) + 0.5)
+
+			if doorTwoHeading == doorTwoCurrentHeading then
+				DoorSystemSetDoorState(double[2].hash, self.state)
+			end
+
+			if doorOneHeading == doorOneCurrentHeading and doorTwoHeading == doorTwoCurrentHeading then break end
+			Wait(0)
+		end
+
+		DoorSystemSetDoorState(double[1].hash, self.state)
+		DoorSystemSetDoorState(double[2].hash, self.state)
 	else
-		DoorSystemSetDoorState(self.hash, state)
+		while self.state == 1 and self.entity do
+			local heading = math.floor(GetEntityHeading(self.entity) + 0.5)
+			if heading == self.heading then break end
+			Wait(0)
+		end
+
+		DoorSystemSetDoorState(self.hash, self.state)
 	end
 end
 
@@ -47,10 +68,15 @@ local function createDoor(door)
 	local double = door.doors
 
 	if double then
-		AddDoorToSystem(double[1].hash, double[1].model, double[1].coords.x, double[1].coords.y, double[1].coords.z, false, false, false)
-		AddDoorToSystem(double[2].hash, double[2].model, double[2].coords.x, double[2].coords.y, double[2].coords.z, false, false, false)
+		for i = 1, 2 do
+			AddDoorToSystem(double[i].hash, double[i].model, double[i].coords.x, double[i].coords.y, double[i].coords.z, false, false, false)
+			DoorSystemSetDoorState(double[i].hash, 4)
+			DoorSystemSetDoorState(double[i].hash, double[i].state)
+		end
 	else
 		AddDoorToSystem(door.hash, door.model, door.coords.x, door.coords.y, door.coords.z, false, false, false)
+		DoorSystemSetDoorState(door.hash, 4)
+		DoorSystemSetDoorState(door.hash, door.state)
 	end
 end
 
@@ -67,14 +93,11 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data)
 		table.wipe(nearbyDoors)
 		local coords = GetEntityCoords(cache.ped)
 
-		for hash, door in pairs(doors) do
+		for _, door in pairs(doors) do
 			door.distance = #(coords - door.coords)
 
 			if door.distance < 50 then
 				local double = door.doors
-				local doorState = DoorSystemGetDoorState(double and double[1].hash or hash)
-
-				if doorState ~= door.state then door:setState(door.state, true) end
 
 				if not door.entity then
 					if double then
