@@ -3,12 +3,12 @@ local CDoor = {}
 CDoor.__index = CDoor
 
 function CDoor:setState(state, forceShut)
-	self.state = state
-	local double = self.doors
-
 	if forceShut then
 		self:setState(4)
 	end
+
+	self.state = state
+	local double = self.doors
 
 	if double then
 		DoorSystemSetDoorState(double[1].hash, state)
@@ -42,21 +42,25 @@ function CDoor:draw()
 	ClearDrawOrigin()
 end
 
+local function createDoor(door)
+	setmetatable(door, CDoor)
+	local double = door.doors
+
+	if double then
+		AddDoorToSystem(double[1].hash, double[1].model, double[1].coords.x, double[1].coords.y, double[1].coords.z, false, false, false)
+		AddDoorToSystem(double[2].hash, double[2].model, double[2].coords.x, double[2].coords.y, double[2].coords.z, false, false, false)
+	else
+		AddDoorToSystem(door.hash, door.model, door.coords.x, door.coords.y, door.coords.z, false, false, false)
+	end
+end
+
 local nearbyDoors = {}
 
 RegisterNetEvent('ox_doorlock:setDoors', function(data)
 	doors = data
 
-	for hash, door in pairs(data) do
-		setmetatable(door, CDoor)
-		local double = door.doors
-
-		if double then
-			AddDoorToSystem(double[1].hash, double[1].model, double[1].coords.x, double[1].coords.y, double[1].coords.z, false, false, false)
-			AddDoorToSystem(double[2].hash, double[2].model, double[2].coords.x, double[2].coords.y, double[2].coords.z, false, false, false)
-		else
-			AddDoorToSystem(hash, door.model, door.coords.x, door.coords.y, door.coords.z, false, false, false)
-		end
+	for _, door in pairs(data) do
+		createDoor(door)
 	end
 
 	while true do
