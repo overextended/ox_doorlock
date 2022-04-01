@@ -7,7 +7,7 @@ function CDoor:setState(state)
 	local double = self.doors
 
 	if double then
-		while self.state == 1 and double[1].entity do
+		while not self.auto and self.state == 1 and double[1].entity do
 			local doorOneHeading = double[1].heading
 			local doorOneCurrentHeading = math.floor(GetEntityHeading(double[1].entity) + 0.5)
 
@@ -29,7 +29,7 @@ function CDoor:setState(state)
 		DoorSystemSetDoorState(double[1].hash, self.state)
 		DoorSystemSetDoorState(double[2].hash, self.state)
 	else
-		while self.state == 1 and self.entity do
+		while not self.auto and self.state == 1 and self.entity do
 			local heading = math.floor(GetEntityHeading(self.entity) + 0.5)
 			if heading == self.heading then break end
 			Wait(0)
@@ -96,7 +96,7 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data)
 		for _, door in pairs(doors) do
 			door.distance = #(coords - door.coords)
 
-			if door.distance < 50 then
+			if door.distance < 40 then
 				local double = door.doors
 
 				if not door.entity then
