@@ -46,7 +46,7 @@ function CDoor:toggle()
 
 	if gameTimer - lastTriggered > 500 then
 		lastTriggered = gameTimer
-		TriggerServerEvent('ox_doorlock:setState', self.hash, self.state == 1 and 0 or 1)
+		TriggerServerEvent('ox_doorlock:setState', self.id, self.state == 1 and 0 or 1)
 	end
 end
 
@@ -138,8 +138,8 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data)
 	end
 end)
 
-RegisterNetEvent('ox_doorlock:setState', function(hash, state)
-	doors[hash]:setState(state)
+RegisterNetEvent('ox_doorlock:setState', function(id, state)
+	doors[id]:setState(state)
 end)
 
 CreateThread(function()
