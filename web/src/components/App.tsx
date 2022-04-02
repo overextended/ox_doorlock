@@ -14,12 +14,13 @@ const App: React.FC = () => {
         alignItems="center"
         color="white"
         p={3}
+        pt={2}
         width={250}
         borderRadius={1}
         textAlign="center"
       >
         <Typography style={{ marginBottom: '0.7rem' }}>Optional settings</Typography>
-        <TextField fullWidth label="Door name (Optional)" style={{ marginBottom: '0.7rem' }} />
+        <TextField fullWidth label="Door name" style={{ marginBottom: '0.7rem' }} />
         <Divider />
         <Button fullWidth style={{ marginBottom: '0.7rem' }} variant="outlined">
           Job Authorisation
@@ -27,21 +28,21 @@ const App: React.FC = () => {
         <Button fullWidth style={{ marginBottom: '0.7rem' }} variant="outlined">
           Item Authorisation
         </Button>
-        <TextField fullWidth label="Passcode (Optional)" style={{ marginBottom: '0.7rem' }} />
+        <TextField fullWidth label="Passcode" style={{ marginBottom: '0.7rem' }} />
         <TextField
           fullWidth
-          label="Autolock interval (Optional)"
+          label="Autolock interval"
+          type="number"
           style={{ marginBottom: '0.7rem' }}
         />
-        {/* Tood: fix alignment */}
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Box justifySelf="flex-start" display="flex" flexDirection="column">
-            <FormControlLabel label="Double doors" control={<Checkbox />} />
-            <FormControlLabel label="Automatic" control={<Checkbox />} />
+        <Box display="flex">
+          <Box display="flex" justifyContent="space-evenly" flexDirection="column">
+            <FormControlLabel label="Double door" control={<Checkbox />} sx={{ margin: 0 }} />
+            <FormControlLabel label="Automatic" control={<Checkbox />} sx={{ margin: 0 }} />
           </Box>
-          <Box justifySelf="flex-end" display="flex" flexDirection="column">
-            <FormControlLabel label="Locked" control={<Checkbox />} />
-            <FormControlLabel label="Lockpick" control={<Checkbox />} />
+          <Box display="flex" justifyContent="space-evenly" flexDirection="column">
+            <FormControlLabel label="Locked" control={<Checkbox />} sx={{ margin: 0 }} />
+            <FormControlLabel label="Lockpick" control={<Checkbox />} sx={{ margin: 0 }} />
           </Box>
         </Box>
         <Button fullWidth style={{ marginTop: '0.7rem' }} variant="outlined">
