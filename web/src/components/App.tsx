@@ -1,4 +1,6 @@
 import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import { Button, Typography, Checkbox, FormControlLabel, Divider } from '@mui/material';
 
 const App: React.FC = () => {
   return (
@@ -12,8 +14,40 @@ const App: React.FC = () => {
         alignItems="center"
         color="white"
         p={3}
+        width={250}
         borderRadius={1}
-      ></Box>
+        textAlign="center"
+      >
+        <Typography style={{ marginBottom: '0.7rem' }}>Optional settings</Typography>
+        <TextField fullWidth label="Door name (Optional)" style={{ marginBottom: '0.7rem' }} />
+        <Divider />
+        <Button fullWidth style={{ marginBottom: '0.7rem' }} variant="outlined">
+          Job Authorisation
+        </Button>
+        <Button fullWidth style={{ marginBottom: '0.7rem' }} variant="outlined">
+          Item Authorisation
+        </Button>
+        <TextField fullWidth label="Passcode (Optional)" style={{ marginBottom: '0.7rem' }} />
+        <TextField
+          fullWidth
+          label="Autolock interval (Optional)"
+          style={{ marginBottom: '0.7rem' }}
+        />
+        {/* Tood: fix alignment */}
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Box justifySelf="flex-start" display="flex" flexDirection="column">
+            <FormControlLabel label="Double doors" control={<Checkbox />} />
+            <FormControlLabel label="Automatic" control={<Checkbox />} />
+          </Box>
+          <Box justifySelf="flex-end" display="flex" flexDirection="column">
+            <FormControlLabel label="Locked" control={<Checkbox />} />
+            <FormControlLabel label="Lockpick" control={<Checkbox />} />
+          </Box>
+        </Box>
+        <Button fullWidth style={{ marginTop: '0.7rem' }} variant="outlined">
+          Submit
+        </Button>
+      </Box>
     </Box>
   );
 };
