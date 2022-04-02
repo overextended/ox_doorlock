@@ -22,3 +22,10 @@ server_scripts {
 	'server/framework.lua',
 	'server/main.lua',
 }
+
+ui_page 'web/build/index.html'
+
+files {
+	'web/build/index.html',
+	'web/build/**/*'
+}
