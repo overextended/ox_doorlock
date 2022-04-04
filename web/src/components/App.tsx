@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Settings from './settings';
+import Auth from './auth';
 
 const App: React.FC = () => {
   return (
@@ -8,8 +9,8 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Settings />} />
-          <Route path="job_auth" element={<>hdsakdosa</>} />
-          <Route path="item_auth" element={<>dsadasda</>} />
+          <Route path="job_auth" element={<Auth type="job" />} />
+          <Route path="item_auth" element={<Auth type="item" />} />
         </Routes>
       </BrowserRouter>
     </Box>
