@@ -6,6 +6,7 @@ import { VisibilityProvider } from './providers/VisibilityProvider';
 import { debugData } from './utils/debugData';
 import { ThemeProvider } from '@mui/material';
 import { customTheme } from './theme';
+import { RecoilRoot } from 'recoil';
 
 debugData([
   {
@@ -18,7 +19,9 @@ ReactDOM.render(
   <React.StrictMode>
     <VisibilityProvider>
       <ThemeProvider theme={customTheme}>
-        <App />
+        <RecoilRoot>
+          <App />
+        </RecoilRoot>
       </ThemeProvider>
     </VisibilityProvider>
   </React.StrictMode>,

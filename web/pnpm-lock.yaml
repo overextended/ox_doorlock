@@ -13,6 +13,7 @@ specifiers:
   react: ^17.0.2
   react-dom: ^17.0.2
   react-router-dom: ^6.3.0
+  recoil: ^0.7.0
   typescript: ^4.5.4
   vite: ^2.9.0
 
@@ -24,6 +25,7 @@ dependencies:
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-router-dom: 6.3.0_react-dom@17.0.2+react@17.0.2
+  recoil: 0.7.0_react-dom@17.0.2+react@17.0.2
 
 devDependencies:
   '@babel/core': 7.17.8
@@ -1030,6 +1032,10 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /hamt_plus/1.0.2:
+    resolution: {integrity: sha1-4hwlKWjH4zsg9qGwlM2FeHomVgE=}
+    dev: false
+
   /has-flag/3.0.0:
     resolution: {integrity: sha1-tdRU3CGZriJWmfNGfloH87lVuv0=}
     engines: {node: '>=4'}
@@ -1234,6 +1240,23 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
+    dev: false
+
+  /recoil/0.7.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-NYG79ZciSILFIu6Zo3aoqPOIU0Ok+dIwA9DM4NdxIx0tKXKenAZWxsalyRQyGVfxR3cVynsgVu7XCAdKNa957A==}
+    peerDependencies:
+      react: '>=16.13.1'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      hamt_plus: 1.0.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
     dev: false
 
   /regenerator-runtime/0.13.9:
