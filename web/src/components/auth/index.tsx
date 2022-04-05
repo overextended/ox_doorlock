@@ -4,14 +4,16 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Auth: React.FC<{ type: string }> = ({ type }) => {
-  const [itemFields, setItemFields] = useState<string[]>([]);
-  const [jobFields, setJobFields] = useState<{ name: string; group: number }[]>([]);
+  const [itemFields, setItemFields] = useState<string[]>(['']);
+  const [jobFields, setJobFields] = useState<{ name: string; grade: number }[]>([
+    { name: '', grade: 0 },
+  ]);
   const navigate = useNavigate();
 
   const createFields = () => {
     type === 'item'
       ? setItemFields([...itemFields, ''])
-      : setJobFields([...jobFields, { name: '', group: 0 }]);
+      : setJobFields([...jobFields, { name: '', grade: 0 }]);
   };
 
   return (
@@ -33,28 +35,40 @@ const Auth: React.FC<{ type: string }> = ({ type }) => {
         <Typography style={{ marginBottom: '0.7rem' }}>
           {type === 'item' ? 'Item' : 'Job'} authorisation
         </Typography>
-        {type === 'item' ? (
-          <>
-            {itemFields.map((item, idx) => (
-              <>
-                <TextField label="Item name" style={{ marginBottom: '0.7rem' }} fullWidth />
-              </>
-            ))}
-          </>
-        ) : (
-          jobFields.map((job) => (
-            <>
-              <TextField style={{ marginBottom: '0.7rem' }} fullWidth />
-            </>
-          ))
-        )}
-        <Box display="flex" width="100%" justifyContent="space-between" alignItems="center">
-          <Button variant="outlined" onClick={() => navigate('/')}>
-            <ArrowBack />
-          </Button>
-          <Button onClick={createFields} variant="outlined">
-            <Add />
-          </Button>
+        <Box maxHeight={300} sx={{ overflowY: 'auto' }} padding={1}>
+          {type === 'item' ? (
+            <Box>
+              {itemFields.map((item, index) => (
+                <Box key={`item-${index}`} style={{ marginBottom: '0.7rem' }}>
+                  <TextField label="Item name" fullWidth />
+                </Box>
+              ))}
+            </Box>
+          ) : (
+            jobFields.map((job, index) => (
+              <Box key={`job-${index}`} style={{ marginBottom: '0.7rem' }}>
+                <TextField fullWidth />
+              </Box>
+            ))
+          )}
+        </Box>
+        <Box
+          display="flex"
+          width="100%"
+          justifyContent="space-between"
+          alignItems="center"
+          marginTop={2}
+        >
+          <Box width="100%" marginRight={1}>
+            <Button variant="outlined" onClick={() => navigate('/')} fullWidth>
+              <ArrowBack />
+            </Button>
+          </Box>
+          <Box width="100%" marginLeft={1}>
+            <Button onClick={createFields} variant="outlined" fullWidth>
+              <Add />
+            </Button>
+          </Box>
         </Box>
       </Box>
     </>
