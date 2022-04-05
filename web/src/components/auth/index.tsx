@@ -35,7 +35,7 @@ const Auth: React.FC<{ type: string }> = ({ type }) => {
         <Typography style={{ marginBottom: '0.7rem' }}>
           {type === 'item' ? 'Item' : 'Job'} authorisation
         </Typography>
-        <Box maxHeight={300} sx={{ overflowY: 'auto' }} padding={1}>
+        <Box maxHeight={300} sx={{ overflowY: 'auto' }} padding={1} width="100%">
           {type === 'item' ? (
             <Box>
               {itemFields.map((item, index) => (
@@ -46,8 +46,9 @@ const Auth: React.FC<{ type: string }> = ({ type }) => {
             </Box>
           ) : (
             jobFields.map((job, index) => (
-              <Box key={`job-${index}`} style={{ marginBottom: '0.7rem' }}>
-                <TextField fullWidth />
+              <Box key={`job-${index}`} style={{ marginBottom: '0.7rem' }} display="flex">
+                <TextField label="Job name" fullWidth sx={{ marginRight: 0.5 }} />
+                <TextField label="Min. grade" fullWidth sx={{ marginLeft: 0.5 }} />
               </Box>
             ))
           )}
