@@ -1,7 +1,5 @@
 import { atom } from 'recoil';
 
-// Export hooks instead of raw atoms?
-
 export const itemFieldsState = atom<string[]>({
   key: 'itemFields',
   default: [''],
@@ -25,4 +23,19 @@ export const checkboxState = atom<{
     automatic: false,
     lockpick: false,
   },
+});
+
+export const doorNameState = atom({
+  key: 'doorName',
+  default: '',
+});
+
+export const passcodeState = atom({
+  key: 'passcode',
+  default: '',
+});
+
+export const autolockIntervalState = atom({
+  key: 'autolockInterval',
+  default: '',
 });

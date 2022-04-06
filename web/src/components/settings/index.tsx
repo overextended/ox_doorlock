@@ -3,6 +3,7 @@ import Checkboxes from './Checkboxes';
 import AuthorisationButtons from './AuthorisationButtons';
 import TextFields from './TextFields';
 import Submit from './Submit';
+import DoorName from './DoorName';
 
 const Settings: React.FC = () => {
   return (
@@ -22,7 +23,7 @@ const Settings: React.FC = () => {
         textAlign="center"
       >
         <Typography style={{ marginBottom: '0.7rem' }}>Optional settings</Typography>
-        <TextField fullWidth label="Door name" style={{ marginBottom: '0.7rem' }} />
+        <DoorName />
         <AuthorisationButtons />
         <TextFields />
         <Checkboxes />
