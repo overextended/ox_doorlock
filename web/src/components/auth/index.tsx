@@ -1,19 +1,31 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { Add, ArrowBack } from '@mui/icons-material';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { groupFieldsState, itemFieldsState } from '../../recoil/atoms';
+import { useRecoilState } from 'recoil';
 
 const Auth: React.FC<{ type: string }> = ({ type }) => {
-  const [itemFields, setItemFields] = useState<string[]>(['']);
-  const [jobFields, setJobFields] = useState<{ name: string; grade: number }[]>([
-    { name: '', grade: 0 },
-  ]);
   const navigate = useNavigate();
+  const [itemFields, setItemFields] = useRecoilState(itemFieldsState);
+  const [groupFields, setGroupFields] = useRecoilState(groupFieldsState);
 
-  const createFields = () => {
+  const createField = () => {
     type === 'item'
       ? setItemFields([...itemFields, ''])
-      : setJobFields([...jobFields, { name: '', grade: 0 }]);
+      : setGroupFields([...groupFields, { name: '', grade: '' }]);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+    index: number
+  ) => {
+    if (type === 'item') {
+      const items = [...itemFields];
+      items[index] = e.target.value;
+      setItemFields(items);
+    } else {
+      // Handle group field state, somehow
+    }
   };
 
   return (
@@ -40,12 +52,17 @@ const Auth: React.FC<{ type: string }> = ({ type }) => {
             <Box>
               {itemFields.map((item, index) => (
                 <Box key={`item-${index}`} style={{ marginBottom: '0.7rem' }}>
-                  <TextField label="Item name" fullWidth />
+                  <TextField
+                    label="Item name"
+                    fullWidth
+                    value={item}
+                    onChange={(e) => handleChange(e, index)}
+                  />
                 </Box>
               ))}
             </Box>
           ) : (
-            jobFields.map((job, index) => (
+            groupFields.map((group, index) => (
               <Box key={`job-${index}`} style={{ marginBottom: '0.7rem' }} display="flex">
                 <TextField label="Job name" fullWidth sx={{ marginRight: 0.5 }} />
                 <TextField label="Min. grade" fullWidth sx={{ marginLeft: 0.5 }} />
@@ -66,7 +83,7 @@ const Auth: React.FC<{ type: string }> = ({ type }) => {
             </Button>
           </Box>
           <Box width="100%" marginLeft={1}>
-            <Button onClick={createFields} variant="outlined" fullWidth>
+            <Button onClick={createField} variant="outlined" fullWidth>
               <Add />
             </Button>
           </Box>
