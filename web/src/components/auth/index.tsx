@@ -17,14 +17,21 @@ const Auth: React.FC<{ type: string }> = ({ type }) => {
 
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-    index: number
+    index: number,
+    property?: 'name' | 'grade'
   ) => {
     if (type === 'item') {
       const items = [...itemFields];
       items[index] = e.target.value;
       setItemFields(items);
     } else {
-      // Handle group field state, somehow
+      // i hate this
+      property &&
+        setGroupFields((prevState) => {
+          return prevState.map((item, indx) =>
+            index === indx ? { ...item, [property]: e.target.value } : item
+          );
+        });
     }
   };
 
@@ -64,8 +71,20 @@ const Auth: React.FC<{ type: string }> = ({ type }) => {
           ) : (
             groupFields.map((group, index) => (
               <Box key={`job-${index}`} style={{ marginBottom: '0.7rem' }} display="flex">
-                <TextField label="Job name" fullWidth sx={{ marginRight: 0.5 }} />
-                <TextField label="Min. grade" fullWidth sx={{ marginLeft: 0.5 }} />
+                <TextField
+                  label="Job name"
+                  fullWidth
+                  sx={{ marginRight: 0.5 }}
+                  value={group.name}
+                  onChange={(e) => handleChange(e, index, 'name')}
+                />
+                <TextField
+                  label="Min. grade"
+                  fullWidth
+                  sx={{ marginLeft: 0.5 }}
+                  value={group.grade}
+                  onChange={(e) => handleChange(e, index, 'grade')}
+                />
               </Box>
             ))
           )}

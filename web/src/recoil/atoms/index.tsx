@@ -5,9 +5,9 @@ export const itemFieldsState = atom<string[]>({
   default: [''],
 });
 
-export const groupFieldsState = atom<{ name: string; grade: number }[]>({
+export const groupFieldsState = atom<{ name?: string; grade?: string }[]>({
   key: 'groupFields',
-  default: [{ name: '', grade: 0 }],
+  default: [{ name: '', grade: '' }],
 });
 
 export const checkboxState = atom<{
