@@ -12,7 +12,7 @@ const AuthorisationButtons: React.FC = () => {
         variant="outlined"
         onClick={() => navigate('/job_auth')}
       >
-        Job Authorisation
+        Group Authorisation
       </Button>
 
       <Button
