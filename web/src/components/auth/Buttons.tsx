@@ -15,6 +15,18 @@ const Buttons: React.FC<{ type: string }> = ({ type }) => {
       : setGroupFields((prevState) => [...prevState, { name: '', grade: '' }]);
   };
 
+  // Why keep empty fields when going back? So filter them
+  const filterFields = () => {
+    if (type === 'item')
+      setItemFields((prevState) => prevState.filter((item, index) => index === 0 || item !== ''));
+    else
+      setGroupFields((prevState) =>
+        prevState.filter((item, index) => item.name !== '' || item.grade !== '' || index === 0)
+      );
+
+    navigate('/');
+  };
+
   return (
     <>
       <Box
@@ -25,7 +37,7 @@ const Buttons: React.FC<{ type: string }> = ({ type }) => {
         marginTop={2}
       >
         <Box width="100%" marginRight={1}>
-          <Button variant="outlined" onClick={() => navigate('/')} fullWidth>
+          <Button variant="outlined" onClick={() => filterFields()} fullWidth>
             <ArrowBack />
           </Button>
         </Box>
