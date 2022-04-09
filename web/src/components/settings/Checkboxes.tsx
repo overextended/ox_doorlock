@@ -20,7 +20,7 @@ const Checkboxes: React.FC = () => {
             label="Double door"
             control={
               <Tooltip title="Door is a double door" disableInteractive enterDelay={500}>
-                <Checkbox onChange={(e) => handleChange(e, 'double')} value={checkboxes.double} />
+                <Checkbox onChange={(e) => handleChange(e, 'double')} checked={checkboxes.double} />
               </Tooltip>
             }
             sx={{ margin: 0 }}
@@ -37,7 +37,7 @@ const Checkboxes: React.FC = () => {
                 <Checkbox
                   name="automatic"
                   onChange={(e) => handleChange(e, 'automatic')}
-                  value={checkboxes.automatic}
+                  checked={checkboxes.automatic}
                 />
               </Tooltip>
             }
@@ -52,7 +52,7 @@ const Checkboxes: React.FC = () => {
                 <Checkbox
                   name="locked"
                   onChange={(e) => handleChange(e, 'locked')}
-                  value={checkboxes.locked}
+                  checked={checkboxes.locked}
                 />
               </Tooltip>
             }
@@ -65,7 +65,7 @@ const Checkboxes: React.FC = () => {
                 <Checkbox
                   name="lockpick"
                   onChange={(e) => handleChange(e, 'lockpick')}
-                  value={checkboxes.lockpick}
+                  checked={checkboxes.lockpick}
                 />
               </Tooltip>
             }
