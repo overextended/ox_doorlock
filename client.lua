@@ -1,70 +1,6 @@
 local doors = {}
-local CDoor = {}
-CDoor.__index = CDoor
-
-function CDoor:setState(state)
-	self.state = state
-	local double = self.doors
-
-	if double then
-		while not self.auto and self.state == 1 and double[1].entity do
-			local doorOneHeading = double[1].heading
-			local doorOneCurrentHeading = math.floor(GetEntityHeading(double[1].entity) + 0.5)
-
-			if doorOneHeading == doorOneCurrentHeading then
-				DoorSystemSetDoorState(double[1].hash, self.state)
-			end
-
-			local doorTwoHeading = double[2].heading
-			local doorTwoCurrentHeading = math.floor(GetEntityHeading(double[2].entity) + 0.5)
-
-			if doorTwoHeading == doorTwoCurrentHeading then
-				DoorSystemSetDoorState(double[2].hash, self.state)
-			end
-
-			if doorOneHeading == doorOneCurrentHeading and doorTwoHeading == doorTwoCurrentHeading then break end
-			Wait(0)
-		end
-
-		DoorSystemSetDoorState(double[1].hash, self.state)
-		DoorSystemSetDoorState(double[2].hash, self.state)
-	else
-		while not self.auto and self.state == 1 and self.entity do
-			local heading = math.floor(GetEntityHeading(self.entity) + 0.5)
-			if heading == self.heading then break end
-			Wait(0)
-		end
-
-		DoorSystemSetDoorState(self.hash, self.state)
-	end
-end
-
-local lastTriggered = 0
-
-function CDoor:toggle()
-	local gameTimer = GetGameTimer()
-
-	if gameTimer - lastTriggered > 500 then
-		lastTriggered = gameTimer
-		TriggerServerEvent('ox_doorlock:setState', self.id, self.state == 1 and 0 or 1)
-	end
-end
-
-function CDoor:draw()
-	SetDrawOrigin(self.coords.x, self.coords.y, self.coords.z)
-	SetTextScale(0.35, 0.35)
-	SetTextFont(4)
-	SetTextEntry('STRING')
-	SetTextCentre(1)
-	local text = self.state == 0 and 'Unlocked' or 'Locked'
-	AddTextComponentString(text)
-	DrawText(0.0, 0.0)
-	DrawRect(0.0, 0.0125, 0.02 + text:len() / 360, 0.03, 25, 25, 25, 140)
-	ClearDrawOrigin()
-end
 
 local function createDoor(door)
-	setmetatable(door, CDoor)
 	local double = door.doors
 
 	if double then
@@ -139,10 +75,46 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data)
 end)
 
 RegisterNetEvent('ox_doorlock:setState', function(id, state)
-	doors[id]:setState(state)
+	local door = doors[id]
+	local double = door.doors
+	door.state = state
+
+	if double then
+		while not door.auto and door.state == 1 and double[1].entity do
+			local doorOneHeading = double[1].heading
+			local doorOneCurrentHeading = math.floor(GetEntityHeading(double[1].entity) + 0.5)
+
+			if doorOneHeading == doorOneCurrentHeading then
+				DoorSystemSetDoorState(double[1].hash, door.state)
+			end
+
+			local doorTwoHeading = double[2].heading
+			local doorTwoCurrentHeading = math.floor(GetEntityHeading(double[2].entity) + 0.5)
+
+			if doorTwoHeading == doorTwoCurrentHeading then
+				DoorSystemSetDoorState(double[2].hash, door.state)
+			end
+
+			if doorOneHeading == doorOneCurrentHeading and doorTwoHeading == doorTwoCurrentHeading then break end
+			Wait(0)
+		end
+
+		DoorSystemSetDoorState(double[1].hash, door.state)
+		DoorSystemSetDoorState(double[2].hash, door.state)
+	else
+		while not door.auto and door.state == 1 and door.entity do
+			local heading = math.floor(GetEntityHeading(door.entity) + 0.5)
+			if heading == door.heading then break end
+			Wait(0)
+		end
+
+		DoorSystemSetDoorState(door.hash, door.state)
+	end
 end)
 
 CreateThread(function()
+	local lastTriggered = 0
+
 	while true do
 		local num = #nearbyDoors
 
@@ -152,10 +124,24 @@ CreateThread(function()
 
 				if door.distance < door.maxDistance then
 					if IsDisabledControlJustReleased(0, 38) then
-						door:toggle()
+						local gameTimer = GetGameTimer()
+
+						if gameTimer - lastTriggered > 500 then
+							lastTriggered = gameTimer
+							TriggerServerEvent('ox_doorlock:setState', door.id, door.state == 1 and 0 or 1)
+						end
 					end
 
-					door:draw()
+					SetDrawOrigin(door.coords.x, door.coords.y, door.coords.z)
+					SetTextScale(0.35, 0.35)
+					SetTextFont(4)
+					SetTextEntry('STRING')
+					SetTextCentre(1)
+					local text = door.state == 0 and 'Unlocked' or 'Locked'
+					AddTextComponentString(text)
+					DrawText(0.0, 0.0)
+					DrawRect(0.0, 0.0125, 0.02 + text:len() / 360, 0.03, 25, 25, 25, 140)
+					ClearDrawOrigin()
 				end
 			end
 		end
