@@ -3,9 +3,16 @@ import Buttons from './Buttons';
 import ItemFields from './ItemFields';
 import GroupFields from './GroupFields';
 import { useVisibility } from '../../providers/VisibilityProvider';
+import { useNuiEvent } from '../../hooks/useNuiEvent';
+import { useNavigate } from 'react-router-dom';
 
 const Auth: React.FC<{ type: string }> = ({ type }) => {
   const visibility = useVisibility();
+  const navigate = useNavigate();
+
+  useNuiEvent('setVisible', () => {
+    navigate('/');
+  });
 
   return (
     <Grow in={visibility.visible} timeout={300}>
