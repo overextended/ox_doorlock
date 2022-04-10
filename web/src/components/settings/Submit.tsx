@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { useVisibility } from '../../providers/VisibilityProvider';
-import { useStore, defaultState } from '../../store';
+import { useStore } from '../../store';
 import { fetchNui } from '../../utils/fetchNui';
 
 const Submit: React.FC = () => {
@@ -10,7 +10,6 @@ const Submit: React.FC = () => {
     const state = useStore.getState();
     fetchNui('createDoor', state);
     visibility.setVisible(false);
-    useStore.setState(defaultState, true);
   };
 
   return (

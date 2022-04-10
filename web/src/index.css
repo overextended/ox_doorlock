@@ -30,12 +30,16 @@ code {
 ::-webkit-scrollbar-track {
   background: rgb(95, 95, 95);
   border-radius: 3px;
-
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 3px;
+}
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

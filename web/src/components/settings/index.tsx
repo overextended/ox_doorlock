@@ -10,7 +10,7 @@ const Settings: React.FC = () => {
   const visibility = useVisibility();
 
   return (
-    <Grow in={visibility.visible} unmountOnExit>
+    <Grow in={visibility.visible} timeout={300}>
       <Box
         height="fit-content"
         bgcolor="rgba(0, 0, 0, 0.8)"

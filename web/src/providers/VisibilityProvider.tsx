@@ -2,6 +2,7 @@ import React, { Context, createContext, useContext, useEffect, useState } from '
 import { useNuiEvent } from '../hooks/useNuiEvent';
 import { fetchNui } from '../utils/fetchNui';
 import { isEnvBrowser } from '../utils/misc';
+import { useStore, defaultState } from '../store';
 
 const VisibilityCtx = createContext<VisibilityProviderValue | null>(null);
 
@@ -32,6 +33,13 @@ export const VisibilityProvider: React.FC = ({ children }) => {
     window.addEventListener('keydown', keyHandler);
 
     return () => window.removeEventListener('keydown', keyHandler);
+  }, [visible]);
+
+  // Reset state when closing the UI
+  useEffect(() => {
+    if (visible) return;
+
+    useStore.setState(defaultState, true);
   }, [visible]);
 
   return (
