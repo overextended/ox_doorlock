@@ -6,6 +6,7 @@ interface State {
   autolockInterval: string;
   itemFields: string[];
   groupFields: { name: string; grade: string }[];
+  interactDistance: string;
   checkboxes: {
     locked: boolean;
     double: boolean;
@@ -27,6 +28,7 @@ interface StateSetters {
   toggleCheckbox: (
     type: "locked" | "double" | "automatic" | "lockpick"
   ) => void;
+  setInteractDistance: (value: State['interactDistance']) => void
 }
 
 export const useStore = create<State>((set: SetState<State>) => ({
@@ -35,6 +37,7 @@ export const useStore = create<State>((set: SetState<State>) => ({
   autolockInterval: "",
   itemFields: [""],
   groupFields: [{ name: "", grade: "" }],
+  interactDistance: '',
   checkboxes: {
     locked: false,
     double: false,
@@ -56,7 +59,8 @@ export const useSetters = create<StateSetters>(
       useStore.setState(({ checkboxes }) => ({
         checkboxes: { ...checkboxes, [type]: !checkboxes[type] },
       })),
-    // Returns previous state, works like usual state setter except if you
+    setInteractDistance: (value: State['interactDistance']) => useStore.setState(() => ({interactDistance: value})),
+        // Returns previous state, works like usual state setter except if you
     // want to set state straight away, you still have to call the function
     setItemFields: (fn) =>
       useStore.setState(({ itemFields }) => ({ itemFields: fn(itemFields) })),
