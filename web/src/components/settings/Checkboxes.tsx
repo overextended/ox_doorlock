@@ -1,15 +1,15 @@
 import { Box, FormControlLabel, Checkbox, Tooltip } from '@mui/material';
-import { useRecoilState } from 'recoil';
-import { checkboxState } from '../../recoil/atoms';
+import { useStore, useSetters } from '../../store';
 
 const Checkboxes: React.FC = () => {
-  const [checkboxes, setCheckboxes] = useRecoilState(checkboxState);
+  const checkboxes = useStore((state) => state.checkboxes);
+  const toggleCheckbox = useSetters((setters) => setters.toggleCheckbox);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    type: 'double' | 'automatic' | 'locked' | 'lockpick'
+    type: 'double' | 'automatic' | 'locked' | 'lockpick',
   ) => {
-    setCheckboxes((prevState) => ({ ...prevState, [type]: !prevState[type] }));
+    toggleCheckbox(type);
   };
 
   return (

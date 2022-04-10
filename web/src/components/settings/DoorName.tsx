@@ -1,9 +1,9 @@
 import { TextField } from '@mui/material';
-import { useRecoilState } from 'recoil';
-import { doorNameState } from '../../recoil/atoms';
+import { useStore, useDoorName, useSetters } from '../../store';
 
 const DoorName: React.FC = () => {
-  const [doorName, setDoorName] = useRecoilState(doorNameState);
+  const doorName = useStore((state) => state.doorName);
+  const setDoorName = useSetters((setter) => setter.setDoorName);
 
   return (
     <TextField

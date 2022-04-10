@@ -1,17 +1,20 @@
-import { TextField } from '@mui/material';
-import { useRecoilState } from 'recoil';
-import { passcodeState, autolockIntervalState } from '../../recoil/atoms';
+import { TextField } from "@mui/material";
+import { useStore, useSetters } from "../../store";
 
 const TextFields: React.FC = () => {
-  const [passcode, setPasscode] = useRecoilState(passcodeState);
-  const [autolockInterval, setAutolockInterval] = useRecoilState(autolockIntervalState);
+  const passcode = useStore((state) => state.passcode);
+  const autolockInterval = useStore((state) => state.autolockInterval);
+  const setPasscode = useSetters((setter) => setter.setPasscode);
+  const setAutolockInterval = useSetters(
+    (setter) => setter.setAutolockInterval
+  );
 
   return (
     <>
       <TextField
         fullWidth
         label="Passcode"
-        style={{ marginBottom: '0.7rem' }}
+        style={{ marginBottom: "0.7rem" }}
         value={passcode}
         onChange={(e) => setPasscode(e.target.value)}
       />
@@ -19,7 +22,7 @@ const TextFields: React.FC = () => {
         fullWidth
         label="Autolock interval"
         type="number"
-        style={{ marginBottom: '0.7rem' }}
+        style={{ marginBottom: "0.7rem" }}
         value={autolockInterval}
         onChange={(e) => setAutolockInterval(e.target.value)}
       />
