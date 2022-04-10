@@ -1,11 +1,14 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Grow } from '@mui/material';
 import Buttons from './Buttons';
 import ItemFields from './ItemFields';
 import GroupFields from './GroupFields';
+import { useVisibility } from '../../providers/VisibilityProvider';
 
 const Auth: React.FC<{ type: string }> = ({ type }) => {
+  const visibility = useVisibility();
+
   return (
-    <>
+    <Grow in={visibility.visible} unmountOnExit>
       <Box
         height="fit-content"
         bgcolor="rgba(0, 0, 0, 0.8)"
@@ -36,7 +39,7 @@ const Auth: React.FC<{ type: string }> = ({ type }) => {
         </Box>
         <Buttons type={type} />
       </Box>
-    </>
+    </Grow>
   );
 };
 
