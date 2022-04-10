@@ -29,11 +29,6 @@ interface StateSetters {
   ) => void;
 }
 
-export const useDoorName = create((set: SetState<{ doorName: string }>) => ({
-  doorName: "",
-  setDoorName: (value: string) => set(() => ({ doorName: value })),
-}));
-
 export const useStore = create<State>((set: SetState<State>) => ({
   doorName: "",
   passcode: "",
@@ -47,6 +42,8 @@ export const useStore = create<State>((set: SetState<State>) => ({
     lockpick: false,
   },
 }));
+
+export const defaultState = useStore.getState()
 
 export const useSetters = create<StateSetters>(
   (set: SetState<StateSetters>, get: GetState<StateSetters>) => ({
