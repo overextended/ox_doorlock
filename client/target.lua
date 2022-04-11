@@ -5,26 +5,11 @@ local function entityIsNotDoor(entity)
 	return not Entity(entity).state?.doorId
 end
 
-local function addDoorlock(entity)
-	if not Entity(entity).state?.doorId then
-		TriggerServerEvent('ox_doorlock:addDoorlock', {
-			model = GetEntityModel(entity),
-			coords = GetEntityCoords(entity),
-			heading = GetEntityHeading(entity),
-			groups = {
-				police = 1
-			},
-			maxDistance = 2,
-		})
-	end
-end
-
 local function entityIsDoor(entity)
 	local state = Entity(entity).state
 	local doorId = state.doorId
 
 	if doorId and not doors[doorId] then
-		doors[doorId] = nil
 		state.doorId = nil
 		return false
 	end
@@ -32,12 +17,22 @@ local function entityIsDoor(entity)
 	return doorId
 end
 
-local function removeDoorlock(entity)
+local function editDoorlock(entity)
 	local door = doors[Entity(entity).state?.doorId]
 
 	if door then
-		TriggerServerEvent('ox_doorlock:removeDoorlock', door.id)
+		return TriggerServerEvent('ox_doorlock:editDoorlock', door.id, data)
 	end
+
+	TriggerServerEvent('ox_doorlock:editDoorlock', false, {
+		model = GetEntityModel(entity),
+		coords = GetEntityCoords(entity),
+		heading = math.floor(GetEntityHeading(entity) + 0.5),
+		groups = {
+			police = 1
+		},
+		maxDistance = 2,
+	})
 end
 
 local function removeTarget(res)
@@ -54,14 +49,20 @@ RegisterCommand('doorlock', function()
 			options = {
 				{
 					label = 'Create doorlock',
-					icon = 'fas fa-circle-plus',
-					action = addDoorlock,
+					icon = 'fas fa-file-circle-plus',
+					action = editDoorlock,
 					canInteract = entityIsNotDoor
 				},
 				{
+					label = 'Modify doorlock',
+					icon = 'fas fa-file-pen',
+					action = editDoorlock,
+					canInteract = entityIsDoor
+				},
+				{
 					label = 'Remove doorlock',
-					icon = 'fas fa-circle-minus',
-					action = removeDoorlock,
+					icon = 'fas fa-file-circle-minus',
+					action = editDoorlock,
 					canInteract = entityIsDoor
 				},
 			}

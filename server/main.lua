@@ -1,12 +1,13 @@
 local doors = {}
-local doorId
+local doorId = 0
 
-local function createDoor(id, door)
+local function createDoor(door)
+	doorId += 1
 	local double = door.doors
 
 	if double then
 		for i = 1, 2 do
-			double[i].hash = joaat(('ox_door_%s_%s'):format(id, i))
+			double[i].hash = joaat(('ox_door_%s_%s'):format(doorId, i))
 
 			local coords = double[i].coords
 			double[i].coords = vector3(coords.x, coords.y, coords.z)
@@ -14,7 +15,7 @@ local function createDoor(id, door)
 
 		door.coords = double[1].coords - ((double[1].coords - double[2].coords) / 2)
 	else
-		door.hash = joaat(('ox_door_%s'):format(id))
+		door.hash = joaat(('ox_door_%s'):format(doorId))
 		door.coords = vector3(door.coords.x, door.coords.y, door.coords.z)
 	end
 
@@ -22,8 +23,8 @@ local function createDoor(id, door)
 		door.state = 1
 	end
 
-	door.id = id
-	doors[id] = door
+	door.id = doorId
+	doors[doorId] = door
 	return door
 end
 
@@ -31,8 +32,8 @@ do
 	local data = json.decode(LoadResourceFile('ox_doorlock', 'server/doors.json'))
 
 	if data then
-		for i = 1, #data do
-			createDoor(i, data[i])
+		for _, door in pairs(data) do
+			createDoor(door)
 		end
 	end
 
@@ -58,21 +59,18 @@ RegisterNetEvent('ox_doorlock:getDoors', function()
 	TriggerClientEvent('ox_doorlock:setDoors', source, doors)
 end)
 
-RegisterNetEvent('ox_doorlock:removeDoorlock', function(id)
+RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 	if IsPlayerAceAllowed(source, 'command.doorlock') then
-		doors[id] = nil
+		if id then
+			doors[id] = data
+			TriggerClientEvent('ox_doorlock:editDoorlock', -1, id, data)
+		else
+			local door = createDoor(data)
 
-		TriggerClientEvent('ox_doorlock:removeDoorlock', -1, id)
+			TriggerClientEvent('ox_doorlock:setState', -1, door.id, door.state, false, door)
+		end
+
 		SaveResourceFile('ox_doorlock', 'server/doors.json', json.encode(doors, {indent=true}), -1)
 	end
 end)
 
-RegisterNetEvent('ox_doorlock:addDoorlock', function(data)
-	if IsPlayerAceAllowed(source, 'command.doorlock') then
-		doorId += 1
-		local door = createDoor(doorId, data)
-
-		TriggerClientEvent('ox_doorlock:setState', -1, door.id, door.state, false, door)
-		SaveResourceFile('ox_doorlock', 'server/doors.json', json.encode(doors, {indent=true}), -1)
-	end
-end)

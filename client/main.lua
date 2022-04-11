@@ -1,3 +1,7 @@
+SetTimeout(500, function()
+	TriggerServerEvent('ox_doorlock:getDoors')
+end)
+
 local function createDoor(door)
 	local double = door.doors
 
@@ -135,14 +139,22 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 	end
 end)
 
-RegisterNetEvent('ox_doorlock:removeDoorlock', function(id)
+RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 	local door = doors[id]
 
-	if door.entity then
+	if not data and door.entity then
 		Entity(door.entity).state.doorId = nil
+		local double = door.doors
+
+		if double then
+			DoorSystemSetDoorState(double[1].hash, 0)
+			DoorSystemSetDoorState(double[2].hash, 0)
+		else
+			DoorSystemSetDoorState(door.hash, 0)
+		end
 	end
 
-	doors[id] = nil
+	doors[id] = data
 end)
 
 CreateThread(function()
@@ -182,5 +194,3 @@ CreateThread(function()
 		Wait(num > 0 and 0 or 500)
 	end
 end)
-
-TriggerServerEvent('ox_doorlock:getDoors')
