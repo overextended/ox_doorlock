@@ -1,5 +1,5 @@
 import { TextField } from '@mui/material';
-import { useStore, useDoorName, useSetters } from '../../store';
+import { useStore, useSetters } from '../../store';
 
 const DoorName: React.FC = () => {
   const doorName = useStore((state) => state.doorName);

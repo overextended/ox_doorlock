@@ -74,8 +74,29 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data)
 	end
 end)
 
-RegisterNetEvent('ox_doorlock:setState', function(id, state)
-	local door = doors[id]
+RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
+	if data then
+		table.insert(doors, data)
+		createDoor(data)
+	end
+
+	if source == cache.serverId then
+		if state == 0 then
+			lib.notify({
+				type = 'success',
+				icon = 'unlock',
+				description = 'Unlocked door'
+			})
+		else
+			lib.notify({
+				type = 'success',
+				icon = 'lock',
+				description = 'Locked door'
+			})
+		end
+	end
+
+	local door = data or doors[id]
 	local double = door.doors
 	door.state = state
 

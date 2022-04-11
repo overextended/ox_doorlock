@@ -40,7 +40,13 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state)
 
 	if door and playerGroup(source, door.groups) then
 		door.state = state
-		TriggerClientEvent('ox_doorlock:setState', -1, id, state)
+		TriggerClientEvent('ox_doorlock:setState', -1, id, state, source)
+	else
+		TriggerClientEvent('ox_lib:notify', source, {
+			type = 'error',
+			icon = 'lock',
+			description = ('Unable to %s door'):format(state == 0 and 'unlock' or 'lock')
+		})
 	end
 end)
 
