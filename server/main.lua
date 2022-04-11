@@ -1,4 +1,5 @@
 local doors = {}
+local doorId
 
 local function createDoor(id, door)
 	local double = door.doors
@@ -23,6 +24,7 @@ local function createDoor(id, door)
 
 	door.id = id
 	doors[id] = door
+	return door
 end
 
 do
@@ -33,6 +35,8 @@ do
 			createDoor(i, data[i])
 		end
 	end
+
+	doorId = #doors
 end
 
 RegisterNetEvent('ox_doorlock:setState', function(id, state)
@@ -52,4 +56,23 @@ end)
 
 RegisterNetEvent('ox_doorlock:getDoors', function()
 	TriggerClientEvent('ox_doorlock:setDoors', source, doors)
+end)
+
+RegisterNetEvent('ox_doorlock:removeDoorlock', function(id)
+	if IsPlayerAceAllowed(source, 'command.doorlock') then
+		doors[id] = nil
+
+		TriggerClientEvent('ox_doorlock:removeDoorlock', -1, id)
+		SaveResourceFile('ox_doorlock', 'server/doors.json', json.encode(doors, {indent=true}), -1)
+	end
+end)
+
+RegisterNetEvent('ox_doorlock:addDoorlock', function(data)
+	if IsPlayerAceAllowed(source, 'command.doorlock') then
+		doorId += 1
+		local door = createDoor(doorId, data)
+
+		TriggerClientEvent('ox_doorlock:setState', -1, door.id, door.state, false, door)
+		SaveResourceFile('ox_doorlock', 'server/doors.json', json.encode(doors, {indent=true}), -1)
+	end
 end)

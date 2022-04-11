@@ -1,5 +1,3 @@
-local doors = {}
-
 local function createDoor(door)
 	local double = door.doors
 
@@ -17,6 +15,7 @@ local function createDoor(door)
 end
 
 local nearbyDoors = {}
+local Entity = Entity
 
 RegisterNetEvent('ox_doorlock:setDoors', function(data)
 	doors = data
@@ -37,8 +36,10 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data)
 
 				if not door.entity then
 					if double then
-						double[1].entity = GetClosestObjectOfType(double[1].coords.x, double[1].coords.y, double[1].coords.z, 0.5, double[1].model, false, false, false)
-						double[2].entity = GetClosestObjectOfType(double[2].coords.x, double[2].coords.y, double[2].coords.z, 0.5, double[2].model, false, false, false)
+						for i = 1, 2 do
+							double[i].entity = GetClosestObjectOfType(double[i].coords.x, double[i].coords.y, double[i].coords.z, 0.5, double[i].model, false, false, false)
+							Entity(double[i].entity).state.doorId = door.id
+						end
 					else
 						local entity = GetClosestObjectOfType(door.coords.x, door.coords.y, door.coords.z, 0.5, door.model, false, false, false)
 						local min, max = GetModelDimensions(door.model)
@@ -61,6 +62,7 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data)
 
 						door.entity = entity
 						door.coords = centroid / 8
+						Entity(entity).state.doorId = door.id
 					end
 				end
 
@@ -76,7 +78,7 @@ end)
 
 RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 	if data then
-		table.insert(doors, data)
+		doors[id] = data
 		createDoor(data)
 	end
 
@@ -131,6 +133,16 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 
 		DoorSystemSetDoorState(door.hash, door.state)
 	end
+end)
+
+RegisterNetEvent('ox_doorlock:removeDoorlock', function(id)
+	local door = doors[id]
+
+	if door.entity then
+		Entity(door.entity).state.doorId = nil
+	end
+
+	doors[id] = nil
 end)
 
 CreateThread(function()
