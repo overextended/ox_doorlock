@@ -6,6 +6,7 @@ import * as path from 'path'
 export default defineConfig(({ command, mode }) => {
   return {
     plugins: [react()],
+    base: './',
     build: {
       outDir: 'build',
     },

@@ -2,20 +2,33 @@ import { Box, Typography, Grow } from '@mui/material';
 import Buttons from './Buttons';
 import ItemFields from './ItemFields';
 import GroupFields from './GroupFields';
-import { useVisibility } from '../../providers/VisibilityProvider';
-import { useNuiEvent } from '../../hooks/useNuiEvent';
+import { useVisibilityStore, useStore, defaultState } from '../../store';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useNuiEvent } from '../../hooks/useNuiEvent';
+import { useExitListener } from '../../hooks/useExitListener';
 
 const Auth: React.FC<{ type: string }> = ({ type }) => {
-  const visibility = useVisibility();
+  const setVisible = useVisibilityStore((state) => state.setAuthVisible);
+  const setSettingsVisible = useVisibilityStore((state) => state.setSettingsVisible);
+  const visible = useVisibilityStore((state) => state.authVisible);
   const navigate = useNavigate();
 
+  // If auth was the last visible component
+  // upon setting ui to visible, reset state
+  // and display the settings page
   useNuiEvent('setVisible', () => {
+    useStore.setState(defaultState, true);
     navigate('/');
+    setSettingsVisible(true);
   });
 
+  useExitListener(setVisible);
+
+  useEffect(() => setVisible(true), []);
+
   return (
-    <Grow in={visibility.visible} timeout={300}>
+    <Grow in={visible} timeout={300}>
       <Box
         height="fit-content"
         bgcolor="rgba(0, 0, 0, 0.8)"

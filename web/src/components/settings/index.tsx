@@ -4,13 +4,26 @@ import AuthorisationButtons from './AuthorisationButtons';
 import TextFields from './TextFields';
 import Submit from './Submit';
 import DoorName from './DoorName';
-import { useVisibility } from '../../providers/VisibilityProvider';
+import { useVisibilityStore, defaultState, useStore } from '../../store';
+import { useNuiEvent } from '../../hooks/useNuiEvent';
+import { useNavigate } from 'react-router-dom';
+import { useExitListener } from '../../hooks/useExitListener';
 
 const Settings: React.FC = () => {
-  const visibility = useVisibility();
+  const visible = useVisibilityStore((state) => state.settingsVisible);
+  const setVisible = useVisibilityStore((state) => state.setSettingsVisible);
+  const navigate = useNavigate();
+
+  useNuiEvent('setVisible', () => {
+    useStore.setState(defaultState, true);
+    navigate('/');
+    setVisible(true);
+  });
+
+  useExitListener(setVisible);
 
   return (
-    <Grow in={visibility.visible} timeout={300}>
+    <Grow in={visible} timeout={300}>
       <Box
         height="fit-content"
         bgcolor="rgba(0, 0, 0, 0.8)"

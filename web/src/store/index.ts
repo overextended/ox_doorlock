@@ -31,6 +31,13 @@ interface StateSetters {
   setInteractDistance: (value: State['interactDistance']) => void
 }
 
+interface VisibilityState {
+  settingsVisible: boolean,
+  authVisible: boolean
+  setSettingsVisible: (state: boolean) => void
+  setAuthVisible: (state: boolean) => void
+}
+
 export const useStore = create<State>((set: SetState<State>) => ({
   doorName: "",
   passcode: "",
@@ -71,4 +78,9 @@ export const useSetters = create<StateSetters>(
   })
 );
 
-// Store setters
+export const useVisibilityStore = create((set: SetState<VisibilityState>) => ({
+  settingsVisible: false,
+  authVisible: false,
+  setSettingsVisible: (state: boolean) => set({settingsVisible: state}),
+  setAuthVisible: (state: boolean) => set({authVisible: state})
+}))
