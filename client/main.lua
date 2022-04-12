@@ -194,3 +194,23 @@ CreateThread(function()
 		Wait(num > 0 and 0 or 500)
 	end
 end)
+
+RegisterNUICallback('createDoor', function(data, cb)
+	cb(1)
+	print(json.encode(data, {indent=true}))
+	SetNuiFocus(false, false)
+end)
+
+RegisterNUICallback('exit', function(_, cb)
+	cb(1)
+	SetNuiFocus(false, false)
+end)
+
+RegisterCommand('doortest', function()
+	print(1)
+	SendNUIMessage({
+		action = 'setVisible',
+		data = true
+	})
+	SetNuiFocus(true, true)
+end)
