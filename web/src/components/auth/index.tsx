@@ -2,7 +2,7 @@ import { Box, Typography, Grow } from '@mui/material';
 import Buttons from './Buttons';
 import ItemFields from './ItemFields';
 import GroupFields from './GroupFields';
-import { useVisibilityStore, useStore, defaultState } from '../../store';
+import { useVisibilityStore, useStore, defaultState, StoreState } from '../../store';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useNuiEvent } from '../../hooks/useNuiEvent';
@@ -17,10 +17,11 @@ const Auth: React.FC<{ type: string }> = ({ type }) => {
   // If auth was the last visible component
   // upon setting ui to visible, reset state
   // and display the settings page
-  useNuiEvent('setVisible', () => {
-    useStore.setState(defaultState, true);
+  useNuiEvent<boolean | StoreState>('setVisible', (data) => {
     navigate('/');
     setSettingsVisible(true);
+    useStore.setState(typeof data === 'object' ? data : defaultState, true);
+    setVisible(true);
   });
 
   useExitListener(setVisible);

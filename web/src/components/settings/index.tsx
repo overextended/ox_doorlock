@@ -8,15 +8,16 @@ import { useVisibilityStore, defaultState, useStore } from '../../store';
 import { useNuiEvent } from '../../hooks/useNuiEvent';
 import { useNavigate } from 'react-router-dom';
 import { useExitListener } from '../../hooks/useExitListener';
+import { StoreState } from '../../store';
 
 const Settings: React.FC = () => {
   const visible = useVisibilityStore((state) => state.settingsVisible);
   const setVisible = useVisibilityStore((state) => state.setSettingsVisible);
   const navigate = useNavigate();
 
-  useNuiEvent('setVisible', () => {
-    useStore.setState(defaultState, true);
+  useNuiEvent<boolean | StoreState>('setVisible', (data) => {
     navigate('/');
+    useStore.setState(typeof data === 'object' ? data : defaultState, true);
     setVisible(true);
   });
 

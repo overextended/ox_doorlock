@@ -1,6 +1,6 @@
 import create, { GetState, SetState } from "zustand";
 
-interface State {
+export interface StoreState {
   doorName: string;
   passcode: string;
   autolockInterval: string;
@@ -16,19 +16,19 @@ interface State {
 }
 
 interface StateSetters {
-  setDoorName: (value: State["doorName"]) => void;
-  setPasscode: (value: State["passcode"]) => void;
-  setAutolockInterval: (value: State["autolockInterval"]) => void;
+  setDoorName: (value: StoreState["doorName"]) => void;
+  setPasscode: (value: StoreState["passcode"]) => void;
+  setAutolockInterval: (value: StoreState["autolockInterval"]) => void;
   setItemFields: (
-    fn: (state: State["itemFields"]) => State["itemFields"]
+    fn: (state: StoreState["itemFields"]) => StoreState["itemFields"]
   ) => void;
   setGroupFields: (
-    fn: (state: State["groupFields"]) => State["groupFields"]
+    fn: (state: StoreState["groupFields"]) => StoreState["groupFields"]
   ) => void;
   toggleCheckbox: (
     type: "locked" | "double" | "automatic" | "lockpick"
   ) => void;
-  setInteractDistance: (value: State['interactDistance']) => void
+  setInteractDistance: (value: StoreState['interactDistance']) => void
 }
 
 interface VisibilityState {
@@ -38,7 +38,7 @@ interface VisibilityState {
   setAuthVisible: (state: boolean) => void
 }
 
-export const useStore = create<State>((set: SetState<State>) => ({
+export const useStore = create<StoreState>((set: SetState<StoreState>) => ({
   doorName: "",
   passcode: "",
   autolockInterval: "",
@@ -58,15 +58,15 @@ export const defaultState = useStore.getState()
 export const useSetters = create<StateSetters>(
   (set: SetState<StateSetters>, get: GetState<StateSetters>) => ({
     setDoorName: (value) => useStore.setState({ doorName: value }),
-    setPasscode: (value: State["passcode"]) =>
+    setPasscode: (value: StoreState["passcode"]) =>
       useStore.setState({ passcode: value }),
-    setAutolockInterval: (value: State["autolockInterval"]) =>
+    setAutolockInterval: (value: StoreState["autolockInterval"]) =>
       useStore.setState({ autolockInterval: value }),
     toggleCheckbox: (type) =>
       useStore.setState(({ checkboxes }) => ({
         checkboxes: { ...checkboxes, [type]: !checkboxes[type] },
       })),
-    setInteractDistance: (value: State['interactDistance']) => useStore.setState(() => ({interactDistance: value})),
+    setInteractDistance: (value: StoreState['interactDistance']) => useStore.setState(() => ({interactDistance: value})),
         // Returns previous state, works like usual state setter except if you
     // want to set state straight away, you still have to call the function
     setItemFields: (fn) =>

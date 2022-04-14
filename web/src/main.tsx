@@ -6,11 +6,28 @@ import { debugData } from './utils/debugData';
 import { ThemeProvider } from '@mui/material';
 import { customTheme } from './theme';
 import { isEnvBrowser } from './utils/misc';
+import { StoreState } from './store';
 
-debugData([
+debugData<boolean | StoreState>([
   {
     action: 'setVisible',
-    data: true,
+    data: {
+      doorName: 'Door name',
+      passcode: 'Supersecret123',
+      autolockInterval: '300',
+      itemFields: ['mrpd_key', 'lockpick'],
+      groupFields: [
+        { name: 'police', grade: '0' },
+        { name: 'ambulance', grade: '3' },
+      ],
+      interactDistance: '15.2',
+      checkboxes: {
+        locked: true,
+        double: true,
+        automatic: true,
+        lockpick: true,
+      },
+    },
   },
 ]);
 
