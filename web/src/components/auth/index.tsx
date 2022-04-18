@@ -1,4 +1,4 @@
-import { Box, Typography, Grow } from '@mui/material';
+import { Box, Typography, Fade } from '@mui/material';
 import Buttons from './Buttons';
 import ItemFields from './ItemFields';
 import GroupFields from './GroupFields';
@@ -29,7 +29,7 @@ const Auth: React.FC<{ type: string }> = ({ type }) => {
   useEffect(() => setVisible(true), []);
 
   return (
-    <Grow in={visible} timeout={300}>
+    <Fade in={visible}>
       <Box
         height="fit-content"
         bgcolor="rgba(0, 0, 0, 0.8)"
@@ -60,7 +60,7 @@ const Auth: React.FC<{ type: string }> = ({ type }) => {
         </Box>
         <Buttons type={type} />
       </Box>
-    </Grow>
+    </Fade>
   );
 };
 

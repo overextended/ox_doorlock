@@ -1,4 +1,4 @@
-import { Typography, Box, Grow } from '@mui/material';
+import { Typography, Box, Fade } from '@mui/material';
 import Checkboxes from './Checkboxes';
 import AuthorisationButtons from './AuthorisationButtons';
 import TextFields from './TextFields';
@@ -24,7 +24,7 @@ const Settings: React.FC = () => {
   useExitListener(setVisible);
 
   return (
-    <Grow in={visible} timeout={300}>
+    <Fade in={visible}>
       <Box
         height="fit-content"
         bgcolor="rgba(0, 0, 0, 0.8)"
@@ -46,7 +46,7 @@ const Settings: React.FC = () => {
         <Checkboxes />
         <Submit />
       </Box>
-    </Grow>
+    </Fade>
   );
 };
 
