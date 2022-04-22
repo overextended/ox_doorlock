@@ -1,4 +1,4 @@
-local Core = lib.loadFramework(GetConvar('framework', 'ox_core'))
+local Core = lib.loadFramework()
 
 if Core.resource == 'ox_core' then
 	function playerGroup(source, group)
@@ -49,12 +49,12 @@ elseif Core.resource == 'es_extended' then
 		if not player then return false end
 
 		if type(group) == 'table' then
-			local jobGrade = group[player.PlayerData.job.name]
-			if jobGrade and player.PlayerData.job.grade.level >= jobGrade then
+			local jobGrade = group[player.job.name]
+			if jobGrade and player.job.grade >= jobGrade then
 				return true
 			end
 		else
-			return player.PlayerData.job.name == group
+			return player.job.name == group
 		end
 	end
 end
