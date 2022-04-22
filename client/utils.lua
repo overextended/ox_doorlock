@@ -1,7 +1,14 @@
 local Entity = Entity
 
 local function entityIsNotDoor(entity)
-	return not Entity(entity).state?.doorId
+	local state = Entity(entity).state
+	local doorId = state.doorId
+
+	if doorId and not doors[doorId] then
+		state.doorId = nil
+	end
+
+	return not doorId
 end
 
 local function entityIsDoor(entity)
@@ -55,12 +62,38 @@ local function parseTempData()
 		state = tempData.checkboxes.locked and 1 or 0,
 		lockpick = tempData.checkboxes.lockpick or nil,
 		double = tempData.checkboxes.double and {} or nil,
-		groups = #tempData.groupFields > 0 and {},
+		groups = {},
+		items = {},
 	}
 
 	for i = 1, #tempData.groupFields do
 		local group = tempData.groupFields[i]
 		data.groups[group.name] = tonumber(group.grade)
+	end
+
+	if not next(data.groups) then
+		data.groups = nil
+	end
+
+	local itemSize = 0
+
+	for i = 1, #tempData.itemFields do
+		local item = tempData.itemFields[i]
+
+		if item ~= '' then
+			itemSize += 1
+			data.items[itemSize] = item
+		end
+	end
+
+	for i = 1, #tempData.itemFields do
+		if tempData.itemFields[i] == '' then
+			tempData.itemFields[i] = nil
+		end
+	end
+
+	if not next(data.items) then
+		data.items = nil
 	end
 
 	return data
@@ -114,6 +147,7 @@ local function parseDoorData(door)
 		autolockInterval = door.autolock,
 		interactDistance = door.maxDistance,
 		groupFields = {},
+		itemFields = door.items or {},
 		checkboxes = {
 			automatic = door.auto,
 			locked = door.state == 1,
@@ -121,14 +155,17 @@ local function parseDoorData(door)
 			double = door.double and true,
 		}
 	}
+
 	local groupSize = 0
 
-	for name, grade in pairs(door.groups) do
-		groupSize += 1
-		data.groupFields[groupSize] = {
-			name = name,
-			grade = grade
-		}
+	if door.groups then
+		for name, grade in pairs(door.groups) do
+			groupSize += 1
+			data.groupFields[groupSize] = {
+				name = name,
+				grade = grade
+			}
+		end
 	end
 
 	return data
