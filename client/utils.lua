@@ -1,5 +1,15 @@
 local Entity = Entity
 
+local function playSound(fileName, volume)
+	SendNUIMessage({
+		action = 'playSound',
+		data = {
+			sound = fileName,
+			volume = volume
+		}
+	})
+end
+
 local function entityIsNotDoor(entity)
 	local state = Entity(entity).state
 	local doorId = state.doorId
