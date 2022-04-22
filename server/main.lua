@@ -43,7 +43,7 @@ end
 RegisterNetEvent('ox_doorlock:setState', function(id, state)
 	local door = doors[id]
 
-	if door and playerGroup(source, door.groups) then
+	if door and isAuthorised(source, door) then
 		door.state = state
 		TriggerClientEvent('ox_doorlock:setState', -1, id, state, source)
 	else
