@@ -1,11 +1,20 @@
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const AuthorisationButtons: React.FC = () => {
+const Buttons: React.FC = () => {
   const navigate = useNavigate();
 
   return (
     <>
+      <Button
+        fullWidth
+        style={{ marginBottom: '0.7rem' }}
+        variant="outlined"
+        onClick={() => navigate('/sound_options')}
+      >
+        Sound Options
+      </Button>
+
       <Button
         fullWidth
         style={{ marginBottom: '0.7rem' }}
@@ -27,4 +36,4 @@ const AuthorisationButtons: React.FC = () => {
   );
 };
 
-export default AuthorisationButtons;
+export default Buttons;

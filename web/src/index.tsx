@@ -20,6 +20,8 @@ debugData<boolean | StoreState>([
         { name: 'police', grade: '0' },
         { name: 'ambulance', grade: '3' },
       ],
+      lockSound: null,
+      unlockSound: null,
       interactDistance: '15.2',
       checkboxes: {
         locked: true,
@@ -28,6 +30,13 @@ debugData<boolean | StoreState>([
         lockpick: true,
       },
     },
+  },
+]);
+
+debugData<string[]>([
+  {
+    action: 'setSoundFiles',
+    data: ['button-remote', 'door-bolt-4', 'metal-locker', 'metallic-creak'],
   },
 ]);
 

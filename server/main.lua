@@ -1,6 +1,23 @@
 local doors = {}
 local doorId = 0
 
+local function readSoundFiles()
+	local files = {}
+	local system = os.getenv('OS')
+	local command = system and system:match('Windows') and 'dir "' or 'ls "'
+	local path = GetResourcePath(GetCurrentResourceName())
+	local types = path:gsub('//', '/') .. '/web/build/sounds'
+	local suffix = command == 'dir "' and '/" /b' or '/"'
+	local dir = io.popen(command .. types .. suffix)
+	for line in dir:lines() do
+		local file = line:gsub('%.ogg', '')
+		print(file)
+		files[#files+1] = file
+	end
+	dir:close()
+	return files
+end
+
 local function createDoor(door)
 	doorId += 1
 	local double = door.doors
@@ -56,7 +73,9 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state)
 end)
 
 RegisterNetEvent('ox_doorlock:getDoors', function()
-	TriggerClientEvent('ox_doorlock:setDoors', source, doors)
+	local sounds = readSoundFiles()
+	print(sounds)
+	TriggerClientEvent('ox_doorlock:setDoors', source, doors, sounds)
 end)
 
 RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)

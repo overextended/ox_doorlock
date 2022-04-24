@@ -1,6 +1,6 @@
 import { Typography, Box, Fade } from '@mui/material';
 import Checkboxes from './Checkboxes';
-import AuthorisationButtons from './AuthorisationButtons';
+import Buttons from './Buttons';
 import TextFields from './TextFields';
 import Submit from './Submit';
 import DoorName from './DoorName';
@@ -41,7 +41,7 @@ const Settings: React.FC = () => {
       >
         <Typography style={{ marginBottom: '0.7rem' }}>Optional settings</Typography>
         <DoorName />
-        <AuthorisationButtons />
+        <Buttons />
         <TextFields />
         <Checkboxes />
         <Submit />

@@ -21,8 +21,13 @@ end
 local nearbyDoors = {}
 local Entity = Entity
 
-RegisterNetEvent('ox_doorlock:setDoors', function(data)
+RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 	doors = data
+
+	SendNUIMessage({
+		action = 'setSoundFiles',
+		data = sounds
+	})
 
 	for _, door in pairs(data) do
 		createDoor(door)

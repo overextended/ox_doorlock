@@ -45,6 +45,11 @@
       "react-hooks/rules-of-hooks": "off"
     }
   },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "browserslist": {
     "production": [
       ">0.2%",

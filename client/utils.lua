@@ -58,6 +58,8 @@ local function parseTempData()
 		passcode = tempData.passcode ~= '' and tonumber(tempData.passcode) or nil,
 		autolock = tempData.autolockInterval ~= '' and tonumber(tempData.autolockInterval) or nil,
 		maxDistance = tempData.interactDistance ~= '' and tonumber(tempData.interactDistance) or 2,
+		lockSound = tempData.lockSound,
+		unlockSound = tempData.unlockSound,
 		auto = tempData.checkboxes.automatic or nil,
 		state = tempData.checkboxes.locked and 1 or 0,
 		lockpick = tempData.checkboxes.lockpick or nil,
@@ -146,6 +148,8 @@ local function parseDoorData(door)
 		passcode = door.passcode,
 		autolockInterval = door.autolock,
 		interactDistance = door.maxDistance,
+		lockSound = door.locksound,
+		unlockSound = door.unlockSound,
 		groupFields = {},
 		itemFields = door.items or {},
 		checkboxes = {
