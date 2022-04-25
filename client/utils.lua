@@ -202,7 +202,7 @@ local function parseDoorData(door)
 		passcode = door.passcode,
 		autolockInterval = door.autolock,
 		interactDistance = door.maxDistance,
-		lockSound = door.locksound,
+		lockSound = door.lockSound,
 		unlockSound = door.unlockSound,
 		groupFields = {},
 		itemFields = door.items or {},

@@ -1,65 +1,66 @@
 [
     {
-        "state": 1,
-        "groups": {
-            "police": 0
-        },
         "name": "mrpd cells/briefing",
+        "id": 1,
         "coords": {
             "x": 444.7078552246094,
             "y": -989.4454345703125,
             "z": 30.83930206298828
         },
-        "maxDistance": 2,
         "doors": [
             {
+                "heading": 0,
+                "hash": -181287573,
                 "coords": {
                     "x": 446.0079345703125,
                     "y": -989.4454345703125,
                     "z": 30.83930206298828
                 },
-                "entity": 115202,
                 "model": 185711165,
-                "hash": -181287573,
-                "heading": 0
+                "entity": 115202
             },
             {
+                "heading": 180,
+                "hash": 57041364,
                 "coords": {
                     "x": 443.40777587890627,
                     "y": -989.4454345703125,
                     "z": 30.83930206298828
                 },
-                "entity": 139010,
                 "model": 185711165,
-                "hash": 57041364,
-                "heading": 180
+                "entity": 139010
             }
         ],
-        "id": 1
-    },
-    {
+        "maxDistance": 2,
         "state": 1,
         "groups": {
             "police": 0
-        },
+        }
+    },
+    {
+        "maxDistance": 2,
+        "model": 1557126584,
         "name": "mrpd locker rooms",
+        "heading": 90,
         "hash": 2091317822,
         "coords": {
             "x": 450.1041259765625,
             "y": -985.7384033203125,
             "z": 30.83930206298828
         },
-        "maxDistance": 2,
-        "model": 1557126584,
-        "heading": 90,
-        "id": 2
-    },
-    {
+        "id": 2,
         "state": 1,
         "groups": {
             "police": 0
+        }
+    },
+    {
+        "groups": {
+            "police": 0
         },
+        "model": -1603817716,
         "name": "mrpd gate",
+        "heading": 90,
         "hash": 1859280533,
         "coords": {
             "x": 488.894775390625,
@@ -67,135 +68,178 @@
             "z": 27.14714050292968
         },
         "auto": true,
-        "model": -1603817716,
         "maxDistance": 6,
-        "heading": 90,
+        "state": 1,
         "id": 3
     },
     {
-        "state": 1,
-        "groups": {
-            "police": 0
-        },
         "name": "mrpd back entrance",
+        "id": 4,
         "coords": {
             "x": 468.6697692871094,
             "y": -1014.4520263671875,
             "z": 26.5362319946289
         },
-        "maxDistance": 2,
         "doors": [
             {
+                "model": -2023754432,
+                "heading": 0,
+                "hash": 125423530,
                 "coords": {
                     "x": 467.37164306640627,
                     "y": -1014.4520263671875,
                     "z": 26.5362319946289
-                },
-                "hash": 125423530,
-                "heading": 0,
-                "model": -2023754432
+                }
             },
             {
+                "model": -2023754432,
+                "heading": 180,
+                "hash": 1482322282,
                 "coords": {
                     "x": 469.9678955078125,
                     "y": -1014.4520263671875,
                     "z": 26.5362319946289
-                },
-                "hash": 1482322282,
-                "heading": 180,
-                "model": -2023754432
+                }
             }
         ],
-        "id": 4
-    },
-    {
+        "maxDistance": 2,
         "state": 1,
         "groups": {
             "police": 0
-        },
+        }
+    },
+    {
+        "maxDistance": 2,
+        "model": -1033001619,
         "name": "mrpd cells security door",
+        "heading": 0,
         "hash": 1148062157,
         "coords": {
             "x": 464.1282958984375,
             "y": -1003.5386962890625,
             "z": 25.00598907470703
         },
-        "maxDistance": 2,
-        "model": -1033001619,
+        "groups": {
+            "police": 0
+        },
         "autolock": 5,
-        "heading": 0,
+        "state": 1,
         "id": 5
     },
     {
-        "state": 1,
+        "unlockSound": "metallic-creak",
         "groups": {
             "police": 0
         },
-        "name": "mrpd cells main",
-        "hash": -966619724,
-        "coords": {
-            "x": 464.57012939453127,
-            "y": -992.6640625,
-            "z": 25.06442642211914
-        },
-        "lockpick": true,
-        "heading": 360,
         "model": 631614199,
+        "name": "mrpd cells main",
+        "coords": {
+            "x": 463.92010498046877,
+            "y": -992.6640625,
+            "z": 25.06442832946777
+        },
+        "heading": 360,
+        "id": 6,
+        "lockpick": true,
+        "hash": -966619724,
         "maxDistance": 2,
-        "id": 6
+        "state": 1,
+        "lockSound": "metal-locker"
     },
     {
-        "state": 1,
+        "unlockSound": "metallic-creak",
         "groups": {
             "police": 0
         },
+        "model": 631614199,
         "name": "mrpd cell 1",
-        "hash": -1472966312,
         "coords": {
             "x": 461.8065185546875,
-            "y": -994.4085693359375,
-            "z": 25.06442642211914
+            "y": -993.7586059570313,
+            "z": 25.06442832946777
         },
-        "lockpick": true,
         "heading": 270,
-        "model": 631614199,
+        "id": 7,
+        "lockpick": true,
+        "hash": -1472966312,
         "maxDistance": 2,
-        "id": 7
+        "state": 1,
+        "lockSound": "metal-locker"
     },
     {
-        "state": 1,
+        "unlockSound": "metallic-creak",
         "groups": {
             "police": 0
         },
+        "model": 631614199,
         "name": "mrpd cell 2",
-        "hash": -1688815715,
         "coords": {
             "x": 461.8064880371094,
-            "y": -997.6583251953125,
-            "z": 25.06442642211914
+            "y": -998.3082885742188,
+            "z": 25.06442832946777
         },
-        "lockpick": true,
         "heading": 90,
-        "model": 631614199,
+        "id": 8,
+        "lockpick": true,
+        "hash": -1688815715,
         "maxDistance": 2,
-        "id": 8
+        "state": 1,
+        "lockSound": "metal-locker"
     },
     {
-        "state": 1,
+        "unlockSound": "metallic-creak",
         "groups": {
             "police": 0
         },
+        "model": 631614199,
         "name": "mrpd cell 3",
-        "hash": -1936090589,
         "coords": {
             "x": 461.8065185546875,
-            "y": -1001.301513671875,
-            "z": 25.06442642211914
+            "y": -1001.9515380859375,
+            "z": 25.06442832946777
         },
-        "lockpick": true,
         "heading": 90,
-        "model": 631614199,
+        "id": 9,
+        "lockpick": true,
+        "hash": -1936090589,
         "maxDistance": 2,
-        "id": 9
+        "state": 1,
+        "lockSound": "metal-locker"
+    },
+    {
+        "groups": {
+            "police": 0
+        },
+        "model": -1320876379,
+        "name": "mrpd captain's office",
+        "heading": 180,
+        "hash": 1170052936,
+        "lockpick": true,
+        "maxDistance": 2,
+        "id": 10,
+        "state": 1,
+        "coords": {
+            "x": 446.57281494140627,
+            "y": -980.0105590820313,
+            "z": 30.83930206298828
+        }
+    },
+    {
+        "maxDistance": 2,
+        "model": 749848321,
+        "name": "mrpd armoury",
+        "heading": 270,
+        "hash": 1452521716,
+        "coords": {
+            "x": 453.08428955078127,
+            "y": -982.5794677734375,
+            "z": 30.81926536560058
+        },
+        "groups": {
+            "police": 0
+        },
+        "autolock": 5,
+        "state": 1,
+        "id": 11
     }
 ]

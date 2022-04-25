@@ -146,7 +146,7 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 	if door.distance and door.distance < 20 then
 		local volume = (0.009 * GetProfileSetting(300)) / (door.distance / 2)
 		if volume > 1 then volume = 1 end
-		local sound = door.audio and (state == 0 and door.audio.unlock or door.audio.lock) or 'door-bolt-4'
+		local sound = state == 0 and door.unlockSound or door.lockSound or 'door-bolt-4'
 
 		SendNUIMessage({
 			action = 'playSound',
