@@ -178,6 +178,10 @@ end)
 
 CreateThread(function()
 	local lastTriggered = 0
+	local lockDoor = '[E] Lock door'
+	local unlockDoor = '[E] Unlock door'
+	local closestDoor
+	local showUI
 
 	while true do
 		local num = #nearbyDoors
@@ -187,13 +191,8 @@ CreateThread(function()
 				local door = nearbyDoors[i]
 
 				if door.distance < door.maxDistance then
-					if IsDisabledControlJustReleased(0, 38) then
-						local gameTimer = GetGameTimer()
-
-						if gameTimer - lastTriggered > 500 then
-							lastTriggered = gameTimer
-							TriggerServerEvent('ox_doorlock:setState', door.id, door.state == 1 and 0 or 1)
-						end
+					if door.distance < (closestDoor?.distance or 10) then
+						closestDoor = door
 					end
 
 					SetDrawOrigin(door.coords.x, door.coords.y, door.coords.z)
@@ -208,6 +207,28 @@ CreateThread(function()
 					ClearDrawOrigin()
 				end
 			end
+		else closestDoor = nil end
+
+		if closestDoor and closestDoor.distance < closestDoor.maxDistance then
+			if closestDoor.state == 0 and showUI ~= 0 then
+				lib.showTextUI(lockDoor)
+				showUI = 0
+			elseif closestDoor.state == 1 and showUI ~= 1 then
+				lib.showTextUI(unlockDoor)
+				showUI = 1
+			end
+
+			if IsDisabledControlJustReleased(0, 38) then
+				local gameTimer = GetGameTimer()
+
+				if gameTimer - lastTriggered > 500 then
+					lastTriggered = gameTimer
+					TriggerServerEvent('ox_doorlock:setState', closestDoor.id, closestDoor.state == 1 and 0 or 1)
+				end
+			end
+		elseif showUI then
+			lib.hideTextUI()
+			showUI = nil
 		end
 
 		Wait(num > 0 and 0 or 500)

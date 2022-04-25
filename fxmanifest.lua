@@ -30,3 +30,8 @@ files {
 	'web/build/index.html',
 	'web/build/**/*'
 }
+
+dependencies {
+	'ox_lib',
+	'qtarget'
+}
