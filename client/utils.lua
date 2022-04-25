@@ -109,9 +109,9 @@ end
 local function parseTempData()
 	local data = {
 		name = tempData.doorName,
-		passcode = tempData.passcode ~= '' and tonumber(tempData.passcode) or nil,
-		autolock = tempData.autolockInterval ~= '' and tonumber(tempData.autolockInterval) or nil,
-		maxDistance = tempData.interactDistance ~= '' and tonumber(tempData.interactDistance) or 2,
+		passcode = tempData.passcode,
+		autolock = tempData.autolockInterval,
+		maxDistance = tempData.interactDistance or 2,
 		lockSound = tempData.lockSound,
 		unlockSound = tempData.unlockSound,
 		auto = tempData.checkboxes.automatic or nil,
@@ -122,9 +122,10 @@ local function parseTempData()
 		items = {},
 	}
 
-	for i = 1, #tempData.groupFields do
-		local group = tempData.groupFields[i]
-		data.groups[group.name] = tonumber(group.grade)
+	for _, group in pairs(tempData.groupFields) do
+		if group?.name then
+			data.groups[group.name] = group.grade
+		end
 	end
 
 	if not next(data.groups) then
