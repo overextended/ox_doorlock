@@ -8,13 +8,13 @@ local function createDoor(door)
 	if double then
 		for i = 1, 2 do
 			AddDoorToSystem(double[i].hash, double[i].model, double[i].coords.x, double[i].coords.y, double[i].coords.z, false, false, false)
-			DoorSystemSetDoorState(double[i].hash, 4)
-			DoorSystemSetDoorState(double[i].hash, double[i].state)
+			DoorSystemSetDoorState(double[i].hash, 4, false, false)
+			DoorSystemSetDoorState(double[i].hash, double[i].state, false, false)
 		end
 	else
 		AddDoorToSystem(door.hash, door.model, door.coords.x, door.coords.y, door.coords.z, false, false, false)
-		DoorSystemSetDoorState(door.hash, 4)
-		DoorSystemSetDoorState(door.hash, door.state)
+		DoorSystemSetDoorState(door.hash, 4, false, false)
+		DoorSystemSetDoorState(door.hash, door.state, false, false)
 	end
 end
 
@@ -117,22 +117,22 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 			local doorOneCurrentHeading = math.floor(GetEntityHeading(double[1].entity) + 0.5)
 
 			if doorOneHeading == doorOneCurrentHeading then
-				DoorSystemSetDoorState(double[1].hash, door.state)
+				DoorSystemSetDoorState(double[1].hash, door.state, false, false)
 			end
 
 			local doorTwoHeading = double[2].heading
 			local doorTwoCurrentHeading = math.floor(GetEntityHeading(double[2].entity) + 0.5)
 
 			if doorTwoHeading == doorTwoCurrentHeading then
-				DoorSystemSetDoorState(double[2].hash, door.state)
+				DoorSystemSetDoorState(double[2].hash, door.state, false, false)
 			end
 
 			if doorOneHeading == doorOneCurrentHeading and doorTwoHeading == doorTwoCurrentHeading then break end
 			Wait(0)
 		end
 
-		DoorSystemSetDoorState(double[1].hash, door.state)
-		DoorSystemSetDoorState(double[2].hash, door.state)
+		DoorSystemSetDoorState(double[1].hash, door.state, false, false)
+		DoorSystemSetDoorState(double[2].hash, door.state, false, false)
 	else
 		while not door.auto and door.state == 1 and door.entity do
 			local heading = math.floor(GetEntityHeading(door.entity) + 0.5)
@@ -140,7 +140,7 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 			Wait(0)
 		end
 
-		DoorSystemSetDoorState(door.hash, door.state)
+		DoorSystemSetDoorState(door.hash, door.state, false, false)
 	end
 
 	if door.distance and door.distance < 20 then
@@ -166,10 +166,10 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 		local double = door.doors
 
 		if double then
-			DoorSystemSetDoorState(double[1].hash, 0)
-			DoorSystemSetDoorState(double[2].hash, 0)
+			DoorSystemSetDoorState(double[1].hash, 0, false, false)
+			DoorSystemSetDoorState(double[2].hash, 0, false, false)
 		else
-			DoorSystemSetDoorState(door.hash, 0)
+			DoorSystemSetDoorState(door.hash, 0, false, false)
 		end
 	end
 

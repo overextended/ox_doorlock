@@ -10,13 +10,15 @@ local sounds do
 	local suffix = command == 'dir "' and '/" /b' or '/"'
 	local dir = io.popen(command .. types .. suffix)
 
-	for line in dir:lines() do
-		local file = line:gsub('%.ogg', '')
-		print(file)
-		files[#files+1] = file
+	if dir then
+		for line in dir:lines() do
+			local file = line:gsub('%.ogg', '')
+			print(file)
+			files[#files+1] = file
+		end
+		dir:close()
 	end
 
-	dir:close()
 	sounds = files
 end
 
@@ -101,4 +103,3 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 		SaveResourceFile('ox_doorlock', 'server/doors.json', json.encode(doors, {indent=true}), -1)
 	end
 end)
-
