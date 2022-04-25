@@ -61,10 +61,10 @@ do
 	doorId = #doors
 end
 
-RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick)
+RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick, passcode)
 	local door = doors[id]
 
-	if door and isAuthorised(source, door, lockpick) then
+	if door and isAuthorised(source, door, lockpick, passcode) then
 		door.state = state
 		TriggerClientEvent('ox_doorlock:setState', -1, id, state, source)
 

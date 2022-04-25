@@ -219,11 +219,19 @@ CreateThread(function()
 			end
 
 			if IsDisabledControlJustReleased(0, 38) then
-				local gameTimer = GetGameTimer()
+				if closestDoor.passcode then
+					local input = lib.inputDialog('Door lock', {'Passcode'})
 
-				if gameTimer - lastTriggered > 500 then
-					lastTriggered = gameTimer
-					TriggerServerEvent('ox_doorlock:setState', closestDoor.id, closestDoor.state == 1 and 0 or 1)
+					if input then
+						TriggerServerEvent('ox_doorlock:setState', closestDoor.id, closestDoor.state == 1 and 0 or 1, false, input[1])
+					end
+				else
+					local gameTimer = GetGameTimer()
+
+					if gameTimer - lastTriggered > 500 then
+						lastTriggered = gameTimer
+						TriggerServerEvent('ox_doorlock:setState', closestDoor.id, closestDoor.state == 1 and 0 or 1)
+					end
 				end
 			end
 		elseif showUI then

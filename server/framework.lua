@@ -36,11 +36,15 @@ local function removeItem(player, item)
 	ox_inventory:RemoveItem(player.source, item, 1)
 end
 
-function isAuthorised(source, door, lockpick)
+function isAuthorised(source, door, lockpick, passcode)
 	local player, authorised = getPlayer(source)
 	if not player then return end
 
 	if lockpick and door.lockpick then
+		return true
+	end
+
+	if passcode and passcode == door.passcode then
 		return true
 	end
 
