@@ -1,7 +1,7 @@
 import create, { GetState, SetState } from 'zustand';
 
 type StringField = string | null;
-type NumberField = number | string;
+type NumberField = number | string | null;
 
 export interface StoreState {
   doorName: StringField;
