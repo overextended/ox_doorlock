@@ -1,7 +1,7 @@
 local doors = {}
 local doorId = 0
 
-local function readSoundFiles()
+local sounds do
 	local files = {}
 	local system = os.getenv('OS')
 	local command = system and system:match('Windows') and 'dir "' or 'ls "'
@@ -9,13 +9,15 @@ local function readSoundFiles()
 	local types = path:gsub('//', '/') .. '/web/build/sounds'
 	local suffix = command == 'dir "' and '/" /b' or '/"'
 	local dir = io.popen(command .. types .. suffix)
+
 	for line in dir:lines() do
 		local file = line:gsub('%.ogg', '')
 		print(file)
 		files[#files+1] = file
 	end
+
 	dir:close()
-	return files
+	sounds = files
 end
 
 local function createDoor(door)
@@ -57,12 +59,21 @@ do
 	doorId = #doors
 end
 
-RegisterNetEvent('ox_doorlock:setState', function(id, state)
+RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick)
 	local door = doors[id]
 
-	if door and isAuthorised(source, door) then
+	if door and isAuthorised(source, door, lockpick) then
 		door.state = state
 		TriggerClientEvent('ox_doorlock:setState', -1, id, state, source)
+
+		if door.autolock and state == 0 then
+			SetTimeout(door.autolock * 1000, function()
+				if door.state ~= 1 then
+					door.state = 1
+					TriggerClientEvent('ox_doorlock:setState', -1, id, door.state)
+				end
+			end)
+		end
 	else
 		TriggerClientEvent('ox_lib:notify', source, {
 			type = 'error',
@@ -73,8 +84,6 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state)
 end)
 
 RegisterNetEvent('ox_doorlock:getDoors', function()
-	local sounds = readSoundFiles()
-	print(sounds)
 	TriggerClientEvent('ox_doorlock:setDoors', source, doors, sounds)
 end)
 
