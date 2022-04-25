@@ -8,8 +8,19 @@ const Submit: React.FC = () => {
 
   const handleSubmit = () => {
     const state = useStore.getState();
+    const data = { ...state };
+    if (data.doorName === '') data.doorName = null;
+    if (data.passcode === '') data.passcode = null;
+    data.autolockInterval = +data.autolockInterval;
+    data.interactDistance = +data.interactDistance;
+    for (let i = 0; i < data.itemFields.length; i++)
+      if (data.itemFields[i] === '') data.itemFields[i] = null;
+    for (let i = 0; i < data.groupFields.length; i++) {
+      if (data.groupFields[i].name === '') data.groupFields[i].name = null;
+      data.groupFields[i].grade = +data.groupFields[i].grade;
+    }
     setSettingsVisible(false);
-    fetchNui('createDoor', state);
+    fetchNui('createDoor', data);
   };
 
   return (

@@ -1,14 +1,17 @@
 import create, { GetState, SetState } from 'zustand';
 
+type StringField = string | null;
+type NumberField = number | string;
+
 export interface StoreState {
-  doorName: string;
-  passcode: string;
-  autolockInterval: string;
-  itemFields: string[];
-  groupFields: { name: string; grade: string }[];
-  interactDistance: string;
-  lockSound: string | null;
-  unlockSound: string | null;
+  doorName: StringField;
+  passcode: StringField;
+  autolockInterval: NumberField;
+  itemFields: StringField[];
+  groupFields: { name: StringField; grade: NumberField }[];
+  interactDistance: NumberField;
+  lockSound: StringField;
+  unlockSound: StringField;
   checkboxes: {
     locked: boolean;
     double: boolean;
