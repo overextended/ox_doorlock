@@ -19,7 +19,7 @@ local function hasGroup(source, groups)
 end
 
 local function hasItem(player, items)
-	if #items > 1 then
+	if items[2] then
 		for _, count in pairs(ox_inventory:Search(player.source, 'count', items)) do
 			if count > 0 then
 				return true
@@ -32,9 +32,17 @@ local function hasItem(player, items)
 	return ox_inventory:GetItem(player.source, items[1], false, true) > 0
 end
 
-function isAuthorised(source, door)
+local function removeItem(player, item)
+	ox_inventory:RemoveItem(player.source, item, 1)
+end
+
+function isAuthorised(source, door, lockpick)
 	local player, authorised = getPlayer(source)
 	if not player then return end
+
+	if lockpick and door.lockpick then
+		return true
+	end
 
 	if authorised ~= false and door.groups then
 		authorised = hasGroup(player, door.groups)
@@ -88,6 +96,10 @@ elseif Core.resource == 'es_extended' then
 
 	if not Core.GetConfig().OxInventory then
 		function hasItem(player, items)
+			if not items[1] then
+				return player.getInventoryItem(items)?.count > 0
+			end
+
 			for i = 1, #items do
 				local item = player.getInventoryItem(items[i])
 
@@ -100,3 +112,10 @@ elseif Core.resource == 'es_extended' then
 		end
 	end
 end
+
+RegisterNetEvent('ox_doorlock:breakLockpick', function()
+	local player = getPlayer(source)
+	if not player then return end
+
+	removeItem(player, 'lockpick')
+end)
