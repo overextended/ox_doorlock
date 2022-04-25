@@ -5,6 +5,7 @@ import SubmitButton from './SubmitButton';
 import { useEffect } from 'react';
 import { useNuiEvent } from '../../hooks/useNuiEvent';
 import { useNavigate } from 'react-router-dom';
+import { useExitListener } from '../../hooks/useExitListener';
 
 const Sound: React.FC = () => {
   const visible = useVisibilityStore((state) => state.soundVisible);
@@ -18,6 +19,8 @@ const Sound: React.FC = () => {
     useStore.setState(typeof data === 'object' ? data : defaultState, true);
     setVisible(true);
   });
+
+  useExitListener(setVisible);
 
   useEffect(() => setVisible(true), []);
 
