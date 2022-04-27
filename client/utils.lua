@@ -124,7 +124,7 @@ local function parseTempData()
 
 	for _, group in pairs(tempData.groupFields) do
 		if group?.name then
-			data.groups[group.name] = group.grade
+			data.groups[group.name] = group.grade or 0
 		end
 	end
 
@@ -295,6 +295,6 @@ RegisterCommand('doorlock', function(_, args)
 	else
 		newDoorlock()
 	end
-end)
+end, false)
 
 AddEventHandler('onResourceStop', removeTarget)
