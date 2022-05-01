@@ -1,4 +1,4 @@
-local Core = lib.loadFramework()
+local Core = lib.getCore()
 local ox_inventory = exports.ox_inventory
 
 
