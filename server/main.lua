@@ -129,7 +129,7 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 			doors[id] = data
 			TriggerClientEvent('ox_doorlock:editDoorlock', -1, id, data)
 		else
-			local insertId = MySQL.Async.insert('INSERT INTO ox_doorlock (name, data) VALUES (?, ?)', { data.name, encodeData(data) })
+			local insertId = MySQL.Sync.insert('INSERT INTO ox_doorlock (name, data) VALUES (?, ?)', { data.name, encodeData(data) })
 			local door = createDoor(insertId, data, data.name)
 
 			TriggerClientEvent('ox_doorlock:setState', -1, door.id, door.state, false, door)
