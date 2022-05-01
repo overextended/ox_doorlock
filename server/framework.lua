@@ -81,7 +81,21 @@ if Core.resource == 'qb-core' then
 	end
 
 	function hasItem(player, items)
-		-- todo
+		if not items[1] then
+			return player.Functions.GetItemByName(items) ~= nil
+		end
+
+		for i = 1, #items do
+			local item = player.Functions.GetItemByName(items[i])
+
+			if item then
+				return true
+			end
+		end
+	end
+
+	function removeItem(player, item)
+		player.Functions.RemoveItem(item, 1)
 	end
 elseif Core.resource == 'es_extended' then
 	function getPlayer(source)
