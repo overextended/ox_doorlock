@@ -47,6 +47,8 @@ local function createDoor(id, door, name)
 	return door
 end
 
+local isLoaded = false
+
 MySQL.ready(function()
 	local results = MySQL.Sync.fetchAll('SELECT id, name, data FROM ox_doorlock')
 
@@ -56,6 +58,8 @@ MySQL.ready(function()
 			createDoor(door.id, json.decode(door.data), door.name)
 		end
 	end
+
+	isLoaded = true
 end)
 
 RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick, passcode)
@@ -83,6 +87,8 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick, passcode)
 end)
 
 RegisterNetEvent('ox_doorlock:getDoors', function()
+	local source = source
+	while not isLoaded do Wait(100) end
 	TriggerClientEvent('ox_doorlock:setDoors', source, doors, sounds)
 end)
 
