@@ -21,6 +21,7 @@ client_scripts {
 
 server_scripts {
 	'@mysql-async/lib/MySQL.lua',
+	'convert/main.lua',
 	'server/framework.lua',
 	'server/main.lua',
 }
