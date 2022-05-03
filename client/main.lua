@@ -9,7 +9,7 @@ local function createDoor(door)
 		for i = 1, 2 do
 			AddDoorToSystem(double[i].hash, double[i].model, double[i].coords.x, double[i].coords.y, double[i].coords.z, false, false, false)
 			DoorSystemSetDoorState(double[i].hash, 4, false, false)
-			DoorSystemSetDoorState(double[i].hash, double[i].state, false, false)
+			DoorSystemSetDoorState(double[i].hash, door.state, false, false)
 		end
 	else
 		AddDoorToSystem(door.hash, door.model, door.coords.x, door.coords.y, door.coords.z, false, false, false)
