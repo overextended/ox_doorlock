@@ -44,32 +44,40 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 				if not door.entity then
 					if double then
 						for i = 1, 2 do
-							double[i].entity = GetClosestObjectOfType(double[i].coords.x, double[i].coords.y, double[i].coords.z, 0.5, double[i].model, false, false, false)
-							Entity(double[i].entity).state.doorId = door.id
+							local entity = GetClosestObjectOfType(double[i].coords.x, double[i].coords.y, double[i].coords.z, 0.5, double[i].model, false, false, false)
+
+							if entity then
+								double[i].entity = entity
+								Entity(entity).state.doorId = door.id
+							end
 						end
 					else
 						local entity = GetClosestObjectOfType(door.coords.x, door.coords.y, door.coords.z, 0.5, door.model, false, false, false)
-						local min, max = GetModelDimensions(door.model)
-						local vecs = {
-							GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, min.z),
-							GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, max.z),
-							GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, max.z),
-							GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, min.z),
-							GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, min.z),
-							GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, max.z),
-							GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, max.z),
-							GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, min.z)
-						}
 
-						local centroid = vec(0,0,0)
+						if entity then
+							local min, max = GetModelDimensions(door.model)
+							local vecs = {
+								GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, min.z),
+								GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, max.z),
+								GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, max.z),
+								GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, min.z),
+								GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, min.z),
+								GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, max.z),
+								GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, max.z),
+								GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, min.z)
+							}
 
-						for i = 1, 8 do
-							centroid += vecs[i]
+							local centroid = vec(0,0,0)
+
+							for i = 1, 8 do
+								centroid += vecs[i]
+							end
+
+							door.coords = centroid / 8
+							Entity(entity).state.doorId = door.id
 						end
 
 						door.entity = entity
-						door.coords = centroid / 8
-						Entity(entity).state.doorId = door.id
 					end
 				end
 
