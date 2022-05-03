@@ -1,6 +1,4 @@
-SetTimeout(500, function()
-	TriggerServerEvent('ox_doorlock:getDoors')
-end)
+TriggerServerEvent('ox_doorlock:getDoors')
 
 local function createDoor(door)
 	local double = door.doors
