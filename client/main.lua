@@ -4,16 +4,28 @@ local function createDoor(door)
 	local double = door.doors
 
 	if double then
+		if not IsModelValid(double[1].model) or not IsModelValid(double[2].model) then
+			doors[door.id] = nil
+			return
+		end
+
 		for i = 1, 2 do
 			AddDoorToSystem(double[i].hash, double[i].model, double[i].coords.x, double[i].coords.y, double[i].coords.z, false, false, false)
 			DoorSystemSetDoorState(double[i].hash, 4, false, false)
 			DoorSystemSetDoorState(double[i].hash, door.state, false, false)
 		end
 	else
+		if not IsModelValid(door.model) then
+			doors[door.id] = nil
+			return
+		end
+
 		AddDoorToSystem(door.hash, door.model, door.coords.x, door.coords.y, door.coords.z, false, false, false)
 		DoorSystemSetDoorState(door.hash, 4, false, false)
 		DoorSystemSetDoorState(door.hash, door.state, false, false)
 	end
+
+	doors[door.id] = door
 end
 
 local nearbyDoors = {}
@@ -102,10 +114,7 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 end)
 
 RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
-	if data then
-		doors[id] = data
-		createDoor(data)
-	end
+	if data then createDoor(data) end
 
 	if source == cache.serverId then
 		if state == 0 then
