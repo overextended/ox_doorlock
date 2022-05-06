@@ -36,48 +36,58 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 		local coords = GetEntityCoords(cache.ped)
 
 		for _, door in pairs(doors) do
+			local double = door.doors
 			door.distance = #(coords - door.coords)
 
-			if door.distance < 40 then
-				local double = door.doors
-
-				if not door.entity then
-					if double then
+			if double then
+				if door.distance < 80 then
+					if not double[1].entity then
 						for i = 1, 2 do
-							local entity = GetClosestObjectOfType(double[i].coords.x, double[i].coords.y, double[i].coords.z, 0.5, double[i].model, false, false, false)
+							while not HasModelLoaded(double[i].model) do Wait(0) end
+
+							local entity = GetClosestObjectOfType(double[i].coords.x, double[i].coords.y, double[i].coords.z, 1.0, double[i].model, false, false, false)
 
 							if entity then
 								double[i].entity = entity
 								Entity(entity).state.doorId = door.id
 							end
 						end
-					else
-						local entity = GetClosestObjectOfType(door.coords.x, door.coords.y, door.coords.z, 0.5, door.model, false, false, false)
+					end
 
-						if entity then
-							local min, max = GetModelDimensions(door.model)
-							local vecs = {
-								GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, min.z),
-								GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, max.z),
-								GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, max.z),
-								GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, min.z),
-								GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, min.z),
-								GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, max.z),
-								GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, max.z),
-								GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, min.z)
-							}
+					nearbyDoors[#nearbyDoors + 1] = door
+				elseif double[1].entity then
+					for i = 1, 2 do
+						double[i].entity = nil
+					end
+				end
+			elseif door.distance < 80 then
+				if not door.entity then
+					while not HasModelLoaded(door.model) do Wait(0) end
 
-							local centroid = vec(0,0,0)
+					local entity = GetClosestObjectOfType(door.coords.x, door.coords.y, door.coords.z, 1.0, door.model, false, false, false)
 
-							for i = 1, 8 do
-								centroid += vecs[i]
-							end
+					if entity then
+						local min, max = GetModelDimensions(door.model)
+						local vecs = {
+							GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, min.z),
+							GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, max.z),
+							GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, max.z),
+							GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, min.z),
+							GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, min.z),
+							GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, max.z),
+							GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, max.z),
+							GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, min.z)
+						}
 
-							door.coords = centroid / 8
-							Entity(entity).state.doorId = door.id
+						local centroid = vec(0,0,0)
+
+						for i = 1, 8 do
+							centroid += vecs[i]
 						end
 
+						door.coords = centroid / 8
 						door.entity = entity
+						Entity(entity).state.doorId = door.id
 					end
 				end
 
