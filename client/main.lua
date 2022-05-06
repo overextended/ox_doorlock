@@ -41,7 +41,7 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 
 			if double then
 				if door.distance < 80 then
-					if not double[1].entity then
+					if not double[1].entity and IsModelValid(double[1].model) and IsModelValid(double[2].model) then
 						for i = 1, 2 do
 							while not HasModelLoaded(double[i].model) do Wait(0) end
 
@@ -61,7 +61,7 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 					end
 				end
 			elseif door.distance < 80 then
-				if not door.entity then
+				if not door.entity and IsModelValid(door.model) then
 					while not HasModelLoaded(door.model) do Wait(0) end
 
 					local entity = GetClosestObjectOfType(door.coords.x, door.coords.y, door.coords.z, 1.0, door.model, false, false, false)
