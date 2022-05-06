@@ -43,11 +43,9 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 				if door.distance < 80 then
 					if not double[1].entity and IsModelValid(double[1].model) and IsModelValid(double[2].model) then
 						for i = 1, 2 do
-							while not HasModelLoaded(double[i].model) do Wait(0) end
-
 							local entity = GetClosestObjectOfType(double[i].coords.x, double[i].coords.y, double[i].coords.z, 1.0, double[i].model, false, false, false)
 
-							if entity then
+							if entity ~= 0 then
 								double[i].entity = entity
 								Entity(entity).state.doorId = door.id
 							end
@@ -62,11 +60,9 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 				end
 			elseif door.distance < 80 then
 				if not door.entity and IsModelValid(door.model) then
-					while not HasModelLoaded(door.model) do Wait(0) end
-
 					local entity = GetClosestObjectOfType(door.coords.x, door.coords.y, door.coords.z, 1.0, door.model, false, false, false)
 
-					if entity then
+					if entity ~= 0 then
 						local min, max = GetModelDimensions(door.model)
 						local vecs = {
 							GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, min.z),
