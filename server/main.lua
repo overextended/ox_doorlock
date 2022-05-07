@@ -120,6 +120,7 @@ local function encodeData(door)
 		model = door.model,
 		state = door.state,
 		unlockSound = door.unlockSound,
+		passcode = door.passcode
 	})
 end
 
