@@ -51,6 +51,7 @@ CreateThread(function()
 							unlockSound = door.audioUnlock?.file and door.audioUnlock.file:gsub('%.ogg', ''),
 							maxDistance = door.maxDistance,
 							state = door.locked and 1 or 0,
+							passcode = door.passcode,
 							doors = double and {
 								{
 									coords = double[1].objCoords,
