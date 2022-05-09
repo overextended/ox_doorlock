@@ -65,25 +65,37 @@ end)
 RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick, passcode)
 	local door = doors[id]
 
-	if door and isAuthorised(source, door, lockpick, passcode) then
-		door.state = state
-		TriggerClientEvent('ox_doorlock:setState', -1, id, state, source)
-
-		if door.autolock and state == 0 then
-			SetTimeout(door.autolock * 1000, function()
-				if door.state ~= 1 then
-					door.state = 1
-					TriggerClientEvent('ox_doorlock:setState', -1, id, door.state)
-				end
-			end)
-		end
-	else
-		TriggerClientEvent('ox_lib:notify', source, {
-			type = 'error',
-			icon = 'lock',
-			description = ('Unable to %s door'):format(state == 0 and 'unlock' or 'lock')
-		})
+	if source == '' then
+		source = nil
 	end
+
+	if door then
+		local authorised = source == nil or isAuthorised(source, door, lockpick, passcode)
+
+		if authorised then
+			door.state = state
+			TriggerClientEvent('ox_doorlock:setState', -1, id, state, source)
+
+			if door.autolock and state == 0 then
+				SetTimeout(door.autolock * 1000, function()
+					if door.state ~= 1 then
+						door.state = 1
+
+						TriggerClientEvent('ox_doorlock:setState', -1, id, door.state)
+						TriggerEvent('ox_doorlock:stateChanged', nil, door.id, door.state == 1)
+					end
+				end)
+			end
+
+			return TriggerEvent('ox_doorlock:stateChanged', source, door.id, state == 1, authorised == 1)
+		end
+	end
+
+	TriggerClientEvent('ox_lib:notify', source, {
+		type = 'error',
+		icon = 'lock',
+		description = ('Unable to %s door'):format(state == 0 and 'unlock' or 'lock')
+	})
 end)
 
 RegisterNetEvent('ox_doorlock:getDoors', function()

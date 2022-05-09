@@ -53,7 +53,7 @@ function isAuthorised(source, door, lockpick, passcode)
 	end
 
 	if authorised ~= false and door.items then
-		authorised = hasItem(player, door.items)
+		authorised = hasItem(player, door.items) and 1
 	end
 
 	return authorised
