@@ -40,7 +40,7 @@ CreateThread(function()
 
 						local data = {
 							auto = door.slides or door.garage,
-							autolock = door.autolock,
+							autolock = door.autolock / 1000,
 							coords = door.objCoords,
 							heading = math.floor(door.objHeading + 0.5),
 							model = door.objHash,
