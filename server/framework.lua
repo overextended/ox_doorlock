@@ -20,16 +20,16 @@ end
 
 local function hasItem(player, items)
 	if items[2] then
-		for _, count in pairs(ox_inventory:Search(player.source, 'count', items)) do
+		for name, count in pairs(ox_inventory:Search(player.source, 'count', items)) do
 			if count > 0 then
-				return true
+				return name
 			end
 
 			return false
 		end
 	end
 
-	return ox_inventory:GetItem(player.source, items[1], false, true) > 0
+	return ox_inventory:GetItem(player.source, items[1], false, true) > 0 and items[1]
 end
 
 local function removeItem(player, item)
@@ -41,7 +41,7 @@ function isAuthorised(source, door, lockpick, passcode)
 	if not player then return end
 
 	if lockpick and door.lockpick then
-		return true
+		return 'lockpick'
 	end
 
 	if passcode and passcode == door.passcode then
@@ -53,7 +53,7 @@ function isAuthorised(source, door, lockpick, passcode)
 	end
 
 	if authorised ~= false and door.items then
-		authorised = hasItem(player, door.items) and 1
+		authorised = hasItem(player, door.items)
 	end
 
 	return authorised
@@ -81,17 +81,15 @@ if Core.resource == 'qb-core' then
 	end
 
 	function hasItem(player, items)
-		if not items[1] then
-			return player.Functions.GetItemByName(items) ~= nil
-		end
-
 		for i = 1, #items do
 			local item = player.Functions.GetItemByName(items[i])
 
-			if item then
-				return true
+			if item?.count > 0 then
+				return item.name
 			end
 		end
+
+		return false
 	end
 
 	function removeItem(player, item)
@@ -114,15 +112,11 @@ elseif Core.resource == 'es_extended' then
 
 	if not Core.GetConfig().OxInventory then
 		function hasItem(player, items)
-			if not items[1] then
-				return player.getInventoryItem(items)?.count > 0
-			end
-
 			for i = 1, #items do
 				local item = player.getInventoryItem(items[i])
 
 				if item?.count > 0 then
-					return true
+					return item.name
 				end
 			end
 
