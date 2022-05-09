@@ -42,7 +42,7 @@ CreateThread(function()
 							auto = door.slides or door.garage,
 							autolock = door.autolock,
 							coords = door.objCoords,
-							heading = door.objHeading,
+							heading = math.floor(door.objHeading + 0.5),
 							model = door.objHash,
 							groups = door.authorizedJobs,
 							items = door.items,
@@ -55,12 +55,12 @@ CreateThread(function()
 							doors = double and {
 								{
 									coords = double[1].objCoords,
-									heading = double[1].objHeading,
+									heading = math.floor(double[1].objHeading + 0.5),
 									model = double[1].objHash,
 								},
 								{
 									coords = double[2].objCoords,
-									heading = double[2].objHeading,
+									heading = math.floor(double[1].objHeading + 0.5),
 									model = double[2].objHash,
 								},
 							},
