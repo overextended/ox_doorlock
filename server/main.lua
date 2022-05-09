@@ -99,7 +99,7 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick, passcode)
 				end)
 			end
 
-			return TriggerEvent('ox_doorlock:stateChanged', source, door.id, state == 1, authorised == 1)
+			return TriggerEvent('ox_doorlock:stateChanged', source, door.id, state == 1, type(authorised) == 'string' and authorised)
 		end
 	end
 
