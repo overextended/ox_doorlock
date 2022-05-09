@@ -1,5 +1,17 @@
 local doors = {}
 
+exports('getDoorFromName', function(name)
+	for _, door in pairs(doors) do
+		if door.name == name then
+			return door
+		end
+	end
+end)
+
+exports('getDoor', function(id)
+	return doors[id]
+end)
+
 local sounds do
 	local files = {}
 	local system = os.getenv('OS')
