@@ -28,3 +28,26 @@ You can use edit as an argument for doorlock to add qtarget options to modify or
 
 
 More information and screenshots later..
+
+
+### API
+- Get data for door
+```lua
+local mrpd_locker_rooms = exports.ox_doorlock:getDoor(1)
+local mrpd_locker_rooms = exports.ox_doorlock:getDoorFromName('mrpd locker rooms')
+```
+
+- Lock a door from the server
+```lua
+TriggerEvent('ox_doorlock:setState', mrpd_locker_rooms.id, 1)
+```
+
+- Listen for event when door is toggled
+```lua
+AddEventHandler('ox_doorlock:stateChanged', function(source, doorId, state, usedItem)
+    if usedItem == 'trainticket' then
+        local xPlayer = ESX.GetPlayerFromId(source)
+        xPlayer.removeInventoryItem(usedItem, 1)
+    end
+end)
+```
