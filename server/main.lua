@@ -1,15 +1,29 @@
 local doors = {}
 
+local function getDoor(door)
+	if type(door) == 'number' then
+		door = doors[door]
+	end
+
+	return {
+		id = door.id,
+		name = door.name,
+		state = door.state,
+		coords = door.coords,
+		groups = door.groups,
+		items = door.items,
+		maxDistance = door.maxDistance,
+	}
+end
+
+exports('getDoor', getDoor)
+
 exports('getDoorFromName', function(name)
 	for _, door in pairs(doors) do
 		if door.name == name then
-			return door
+			return getDoor
 		end
 	end
-end)
-
-exports('getDoor', function(id)
-	return doors[id]
 end)
 
 local sounds do
