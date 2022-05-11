@@ -46,7 +46,7 @@ CreateThread(function()
 							model = door.objHash,
 							groups = door.authorizedJobs,
 							items = door.items,
-							lockpick = door.door,
+							lockpick = door.lockpick,
 							lockSound = door.audioLock?.file and door.audioLock.file:gsub('%.ogg', ''),
 							unlockSound = door.audioUnlock?.file and door.audioUnlock.file:gsub('%.ogg', ''),
 							maxDistance = door.maxDistance,
