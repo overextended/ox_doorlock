@@ -122,6 +122,10 @@ elseif Core.resource == 'es_extended' then
 
 			return false
 		end
+
+		function removeItem(player, item)
+			Core:removeInventoryItem(player.source, item, 1)
+		end
 	end
 end
 
