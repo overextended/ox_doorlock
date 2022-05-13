@@ -1,9 +1,7 @@
 local doors = {}
 
 local function getDoor(door)
-	if type(door) == 'number' then
-		door = doors[door]
-	end
+	door = type(door) == 'table' and door or doors[door]
 
 	return {
 		id = door.id,
@@ -21,8 +19,31 @@ exports('getDoor', getDoor)
 exports('getDoorFromName', function(name)
 	for _, door in pairs(doors) do
 		if door.name == name then
-			return getDoor
+			return getDoor(door)
 		end
+	end
+end)
+
+exports('editDoor', function(id, data)
+	local door = doors[id]
+
+	if door then
+		for k, v in pairs(data) do
+			if k ~= 'id' then
+				local current = door[k]
+				local t1 = type(current)
+				local t2 = type(v)
+
+				if t1 ~= nil and t1 ~= t2 then
+					error(("Expected '%s' for door.%s, received %s (%s)"):format(t1, k, t2, v))
+				end
+
+				door[k] = v
+			end
+		end
+
+		MySQL.Async.execute('UPDATE ox_doorlock SET name = ?, data = ? WHERE id = ?', { door.name, encodeData(door), id })
+		TriggerClientEvent('ox_doorlock:editDoorlock', -1, id, door)
 	end
 end)
 
