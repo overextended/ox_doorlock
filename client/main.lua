@@ -232,7 +232,9 @@ CreateThread(function()
 
 			if IsDisabledControlJustReleased(0, 38) then
 				if closestDoor.passcode then
-					local input = lib.inputDialog('Door lock', {'Passcode'})
+					local input = lib.inputDialog('Door lock', {
+						{ type = "input", label = "Passcode", password = true, icon = 'lock' },
+					})
 
 					if input then
 						TriggerServerEvent('ox_doorlock:setState', closestDoor.id, closestDoor.state == 1 and 0 or 1, false, input[1])
