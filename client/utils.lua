@@ -268,8 +268,8 @@ end
 
 local displayTarget
 
-RegisterCommand('doorlock', function(_, args)
-	if args[1] == 'edit' then
+RegisterNetEvent('ox_doorlock:triggeredCommand', function(edit)
+	if edit then
 		displayTarget = not displayTarget
 
 		if displayTarget then
@@ -295,6 +295,6 @@ RegisterCommand('doorlock', function(_, args)
 	else
 		newDoorlock()
 	end
-end, false)
+end)
 
 AddEventHandler('onResourceStop', removeTarget)

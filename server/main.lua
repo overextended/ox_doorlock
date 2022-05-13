@@ -181,3 +181,7 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 		end
 	end
 end)
+
+lib.addCommand('group.admin', 'doorlock', function(source, args)
+	TriggerClientEvent('ox_doorlock:triggeredCommand', source, args.edit)
+end, {'edit'}, 'Create a doorlock, or modify an existing one')
