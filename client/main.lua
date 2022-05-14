@@ -52,7 +52,9 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 						end
 					end
 
-					nearbyDoors[#nearbyDoors + 1] = door
+					if door.distance < 20 then
+						nearbyDoors[#nearbyDoors + 1] = door
+					end
 				elseif double[1].entity then
 					for i = 1, 2 do
 						double[i].entity = nil
