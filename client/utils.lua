@@ -177,9 +177,9 @@ local function newDoorlock()
 				label = 'Add doorlock',
 				icon = 'fas fa-file-circle-plus',
 				action = addDoorlock,
-				canInteract = entityIsNotDoor
+				canInteract = entityIsNotDoor,
+				distance = 10
 			},
-			distance = 10,
 		}
 	})
 
@@ -288,8 +288,8 @@ RegisterNetEvent('ox_doorlock:triggeredCommand', function(edit)
 						action = removeDoorlock,
 						canInteract = getDoorFromEntity
 					},
-					distance = 10,
-				}
+				},
+				distance = 10
 			})
 		end
 
