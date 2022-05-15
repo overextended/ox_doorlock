@@ -141,7 +141,7 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick, passcode)
 	TriggerClientEvent('ox_lib:notify', source, {
 		type = 'error',
 		icon = 'lock',
-		description = ('Unable to %s door'):format(state == 0 and 'unlock' or 'lock')
+		description = locale('unable_to', state == 0 and locale('unlock') or locale('lock'))
 	})
 end)
 
@@ -205,4 +205,4 @@ end)
 
 lib.addCommand('group.admin', 'doorlock', function(source, args)
 	TriggerClientEvent('ox_doorlock:triggeredCommand', source, args.edit)
-end, {'edit'}, 'Create a doorlock, or modify an existing one')
+end, {'edit'}, locale('create_modify_lock'))

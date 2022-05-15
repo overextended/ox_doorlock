@@ -1,0 +1,17 @@
+{
+	"unlocked_door": "Porte déverrouillée",
+    "locked_door": "Porte verrouillée",
+    "lock_door": "[E] Verrouiller la porte",
+    "unlock_door": "[E] Déverrouiller la porte",
+    "door_lock": "Verrou de porte",
+    "passcode": "Mot de passe",
+    "lockpick_broke": "Votre crochet à céder",
+    "pick_lock": "Crocheter la serrure",
+    "add_lock": "Ajouter serrure",
+    "edit_lock": "Modifier serrure",
+    "remove_lock": "Retirer serrure",
+    "lock": "verrouiller",
+    "unlock": "déverrouiller",
+    "unable_to": "Impossible de %s la porte",
+    "create_modify_lock": "Ajouter use serrure ou en modifier une"
+}
