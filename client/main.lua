@@ -198,11 +198,30 @@ CreateThread(function()
 	local unlockDoor = '[E] Unlock door'
 	local closestDoor
 	local showUI
+	local drawSprite = Config.DrawSprite
+
+	if drawSprite then
+		local sprite1 = drawSprite[0]?[1]
+		local sprite2 = drawSprite[1]?[1]
+
+		if sprite1 then
+			RequestStreamedTextureDict(sprite1, true)
+		end
+
+		if sprite2 then
+			RequestStreamedTextureDict(sprite2, true)
+		end
+	end
+
+	local SetDrawOrigin = SetDrawOrigin
+	local ClearDrawOrigin = ClearDrawOrigin
+	local DrawSprite = drawSprite and DrawSprite
 
 	while true do
 		local num = #nearbyDoors
 
 		if num > 0 then
+			local ratio = drawSprite and GetAspectRatio(true)
 			for i = 1, num do
 				local door = nearbyDoors[i]
 
@@ -211,27 +230,28 @@ CreateThread(function()
 						closestDoor = door
 					end
 
-					SetDrawOrigin(door.coords.x, door.coords.y, door.coords.z)
-					SetTextScale(0.35, 0.35)
-					SetTextFont(4)
-					SetTextEntry('STRING')
-					SetTextCentre(1)
-					local text = door.state == 0 and 'Unlocked' or 'Locked'
-					AddTextComponentString(text)
-					DrawText(0.0, 0.0)
-					DrawRect(0.0, 0.0125, 0.02 + text:len() / 360, 0.03, 25, 25, 25, 140)
-					ClearDrawOrigin()
+					if drawSprite then
+						local sprite = drawSprite[door.state]
+
+						if sprite then
+							SetDrawOrigin(door.coords.x, door.coords.y, door.coords.z)
+							DrawSprite(sprite[1], sprite[2], sprite[3], sprite[4], sprite[5], sprite[6] * ratio, sprite[7], sprite[8], sprite[9], sprite[10], sprite[11])
+							ClearDrawOrigin()
+						end
+					end
 				end
 			end
 		else closestDoor = nil end
 
 		if closestDoor and closestDoor.distance < closestDoor.maxDistance then
-			if closestDoor.state == 0 and showUI ~= 0 then
-				lib.showTextUI(lockDoor)
-				showUI = 0
-			elseif closestDoor.state == 1 and showUI ~= 1 then
-				lib.showTextUI(unlockDoor)
-				showUI = 1
+			if Config.DrawTextUI then
+				if closestDoor.state == 0 and showUI ~= 0 then
+					lib.showTextUI(lockDoor)
+					showUI = 0
+				elseif closestDoor.state == 1 and showUI ~= 1 then
+					lib.showTextUI(unlockDoor)
+					showUI = 1
+				end
 			end
 
 			if IsDisabledControlJustReleased(0, 38) then

@@ -6,7 +6,7 @@ game         'gta5'
 
 --[[ Resource Information ]]--
 name         'ox_doorlock'
-version      '1.0.1'
+version      '1.0.2'
 license      'GPL-3.0-or-later'
 author       'Overextended'
 repository   'https://github.com/overextended/ox_doorlock'
@@ -15,6 +15,7 @@ repository   'https://github.com/overextended/ox_doorlock'
 shared_script '@ox_lib/init.lua'
 
 client_scripts {
+	'config.lua',
 	'client/main.lua',
 	'client/utils.lua',
 }
