@@ -45,7 +45,7 @@ jobs:
         run: |
           mkdir -p ./temp/ox_doorlock
           mkdir -p ./temp/ox_doorlock/web/
-          cp ./{LICENSE,README.md,fxmanifest.lua} ./temp/ox_doorlock
+          cp ./{LICENSE,README.md,fxmanifest.lua,config.lua} ./temp/ox_doorlock
           cp -r ./{client,convert,server,sql} ./temp/ox_doorlock
           cp -r ./web/build ./temp/ox_doorlock/web/
           cd ./temp && zip -r ../ox_doorlock.zip ./ox_doorlock
