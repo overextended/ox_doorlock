@@ -99,11 +99,20 @@ local function removeDoorlock(entity)
 end
 
 local function addDoorlock(entity)
+	local model = GetEntityModel(entity)
+	local coords = GetEntityCoords(entity)
+
+	AddDoorToSystem(`temp`, model, coords.x, coords.y, coords.z, false, false, false)
+	DoorSystemSetDoorState(`temp`, 4, false, false)
+
+	coords = GetEntityCoords(entity)
 	tempData[#tempData + 1] = {
-		model = GetEntityModel(entity),
-		coords = GetEntityCoords(entity),
+		model = model,
+		coords = coords,
 		heading = math.floor(GetEntityHeading(entity) + 0.5)
 	}
+
+	RemoveDoorFromSystem(`temp`)
 end
 
 local function parseTempData()
