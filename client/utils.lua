@@ -1,3 +1,4 @@
+lib.locale()
 local Entity = Entity
 
 local function getDoorFromEntity(entity)
@@ -48,13 +49,13 @@ local function pickLock(entity)
 		if math.random(1, 500) == 1 then
 			TriggerServerEvent('ox_doorlock:breakLockpick')
 			lib.cancelProgress()
-			lib.notify({ type = 'error', description = 'Your lockpick broke' })
+			lib.notify({ type = 'error', description = locale('lockpick_broke') })
 		end
 	end
 
 	if math.random(1, 100) == 1 then
 		TriggerServerEvent('ox_doorlock:breakLockpick')
-		lib.notify({ type = 'error', description = 'Your lockpick broke' })
+		lib.notify({ type = 'error', description = locale('lockpick_broke') })
 	end
 
 	if success then
@@ -67,7 +68,7 @@ end
 exports.qtarget:Object({
 	options = {
 		{
-			label = 'Pick lock',
+			label = locale('pick_lock'),
 			icon = 'fas fa-user-lock',
 			action = pickLock,
 			canInteract = canPickLock,
@@ -183,7 +184,7 @@ local function newDoorlock()
 	exports.qtarget:Object({
 		options = {
 			{
-				label = 'Add doorlock',
+				label = locale('add_lock'),
 				icon = 'fas fa-file-circle-plus',
 				action = addDoorlock,
 				canInteract = entityIsNotDoor,
@@ -203,7 +204,7 @@ local function newDoorlock()
 	end
 
 	TriggerServerEvent('ox_doorlock:editDoorlock', false, data)
-	exports.qtarget:RemoveObject('Add doorlock')
+	exports.qtarget:RemoveObject(locale('add_lock'))
 	table.wipe(tempData)
 end
 
@@ -272,7 +273,7 @@ end
 
 local function removeTarget(res)
 	if not res or res == 'ox_doorlock' then
-		exports.qtarget:RemoveObject({'Remove doorlock', 'Edit doorlock', 'Add doorlock', 'Pick lock'})
+		exports.qtarget:RemoveObject({locale('remove_lock'), locale('edit_lock'), locale('add_lock'), locale('pick_lock')})
 	end
 end
 
@@ -286,13 +287,13 @@ RegisterNetEvent('ox_doorlock:triggeredCommand', function(edit)
 			return exports.qtarget:Object({
 				options = {
 					{
-						label = 'Edit doorlock',
+						label = locale('edit_lock'),
 						icon = 'fas fa-file-pen',
 						action = editDoorlock,
 						canInteract = getDoorFromEntity
 					},
 					{
-						label = 'Remove doorlock',
+						label = locale('remove_lock'),
 						icon = 'fas fa-file-circle-minus',
 						action = removeDoorlock,
 						canInteract = getDoorFromEntity

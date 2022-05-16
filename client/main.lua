@@ -1,3 +1,4 @@
+lib.locale()
 TriggerServerEvent('ox_doorlock:getDoors')
 
 local function createDoor(door)
@@ -112,13 +113,13 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 			lib.notify({
 				type = 'success',
 				icon = 'unlock',
-				description = 'Unlocked door'
+				description = locale('unlocked_door')
 			})
 		else
 			lib.notify({
 				type = 'success',
 				icon = 'lock',
-				description = 'Locked door'
+				description = locale('locked_door')
 			})
 		end
 	end
@@ -194,8 +195,8 @@ end)
 
 CreateThread(function()
 	local lastTriggered = 0
-	local lockDoor = '[E] Lock door'
-	local unlockDoor = '[E] Unlock door'
+	local lockDoor = locale('lock_door')
+	local unlockDoor = locale('unlock_door')
 	local closestDoor
 	local showUI
 	local drawSprite = Config.DrawSprite
@@ -256,8 +257,8 @@ CreateThread(function()
 
 			if IsDisabledControlJustReleased(0, 38) then
 				if closestDoor.passcode then
-					local input = lib.inputDialog('Door lock', {
-						{ type = "input", label = "Passcode", password = true, icon = 'lock' },
+					local input = lib.inputDialog(locale('door_lock'), {
+						{ type = "input", label = locale("passcode"), password = true, icon = 'lock' },
 					})
 
 					if input then
