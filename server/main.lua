@@ -1,3 +1,5 @@
+lib.locale()
+
 local doors = {}
 
 local function getDoor(door)
