@@ -60,7 +60,7 @@ CreateThread(function()
 								},
 								{
 									coords = double[2].objCoords,
-									heading = math.floor(double[1].objHeading + 0.5),
+									heading = math.floor(double[2].objHeading + 0.5),
 									model = double[2].objHash,
 								},
 							},
