@@ -67,24 +67,25 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 
 					if entity ~= 0 then
 						local min, max = GetModelDimensions(door.model)
-						local vecs = {
-							GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, min.z),
-							GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, max.z),
-							GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, max.z),
-							GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, min.z),
-							GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, min.z),
-							GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, max.z),
-							GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, max.z),
-							GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, min.z)
+						local points = {
+							GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, min.z).xy,
+							GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, max.z).xy,
+							GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, max.z).xy,
+							GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, min.z).xy,
+							GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, min.z).xy,
+							GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, max.z).xy,
+							GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, max.z).xy,
+							GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, min.z).xy
 						}
 
-						local centroid = vec(0,0,0)
+						local centroid = vec(0, 0)
 
 						for i = 1, 8 do
-							centroid += vecs[i]
+							centroid += points[i]
 						end
 
-						door.coords = centroid / 8
+						centroid /= 8
+						door.coords = vec3(centroid.x, centroid.y, door.coords.z)
 						door.entity = entity
 						Entity(entity).state.doorId = door.id
 					end
