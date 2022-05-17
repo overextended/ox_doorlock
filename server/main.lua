@@ -91,8 +91,9 @@ local function createDoor(id, door, name)
 		end
 	else
 		door.hash = joaat(('ox_door_%s'):format(id))
-		door.coords = vector3(door.coords.x, door.coords.y, door.coords.z)
 	end
+
+	door.coords = vector3(door.coords.x, door.coords.y, door.coords.z)
 
 	if not door.state then
 		door.state = 1
