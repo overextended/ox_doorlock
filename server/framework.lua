@@ -48,11 +48,11 @@ function isAuthorised(source, door, lockpick, passcode)
 		return true
 	end
 
-	if authorised ~= false and door.groups then
+	if door.groups then
 		authorised = hasGroup(player, door.groups)
 	end
 
-	if authorised ~= false and door.items then
+	if not authorised and door.items then
 		authorised = hasItem(player, door.items)
 	end
 
