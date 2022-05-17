@@ -178,14 +178,16 @@ end)
 RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 	local door = doors[id]
 
-	if not data and door.entity then
-		Entity(door.entity).state.doorId = nil
+	if not data then
 		local double = door.doors
 
-		if double then
+		if double and double[1].entity then
+			Entity(double[1].entity).state.doorId = nil
+			Entity(double[2].entity).state.doorId = nil
 			DoorSystemSetDoorState(double[1].hash, 0, false, false)
 			DoorSystemSetDoorState(double[2].hash, 0, false, false)
-		else
+		elseif door.entity then
+			Entity(door.entity).state.doorId = nil
 			DoorSystemSetDoorState(door.hash, 0, false, false)
 		end
 	end
