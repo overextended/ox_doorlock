@@ -72,6 +72,11 @@ CreateThread(function()
 							end
 						end
 
+						if double and not data.coords then
+							double = data.doors
+							data.coords = double[1].coords - ((double[1].coords - double[2].coords) / 2)
+						end
+
 						queries[j] = {
 							query = query, values = { ('%s %s'):format(fileName, j), json.encode(data) }
 						}
