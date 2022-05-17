@@ -86,7 +86,9 @@ local function createDoor(id, door, name)
 			double[i].coords = vector3(coords.x, coords.y, coords.z)
 		end
 
-		door.coords = double[1].coords - ((double[1].coords - double[2].coords) / 2)
+		if not door.coords then
+			door.coords = double[1].coords - ((double[1].coords - double[2].coords) / 2)
+		end
 	else
 		door.hash = joaat(('ox_door_%s'):format(id))
 		door.coords = vector3(door.coords.x, door.coords.y, door.coords.z)
@@ -191,6 +193,17 @@ end
 
 RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 	if IsPlayerAceAllowed(source, 'command.doorlock') then
+		if data then
+			if not data.coords then
+				local double = data.doors
+				data.coords = double[1].coords - ((double[1].coords - double[2].coords) / 2)
+			end
+
+			if not data.name then
+				data.name = tostring(data.coords)
+			end
+		end
+
 		if id then
 			if data then
 				MySQL.Async.execute('UPDATE ox_doorlock SET name = ?, data = ? WHERE id = ?', { data.name, encodeData(data), id })
