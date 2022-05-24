@@ -149,6 +149,8 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 			Wait(0)
 		end
 
+		if door.state ~= state then return end
+
 		DoorSystemSetDoorState(double[1].hash, door.state, false, false)
 		DoorSystemSetDoorState(double[2].hash, door.state, false, false)
 	else
@@ -157,6 +159,8 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 			if heading == door.heading then break end
 			Wait(0)
 		end
+
+		if door.state ~= state then return end
 
 		DoorSystemSetDoorState(door.hash, door.state, false, false)
 	end
