@@ -1,0 +1,17 @@
+{
+	"unlocked_door": "Dveře odemčeny",
+    "locked_door": "Dveře zamčeny",
+    "lock_door": "[E] Zamknout dveře",
+    "unlock_door": "[E] Odemknout dveře",
+    "door_lock": "Zámek dveří",
+    "passcode": "Heslo",
+    "lockpick_broke": "Šperhák se zlomil",
+    "pick_lock": "Vypáčit zámek",
+    "add_lock": "Přidat dveře",
+    "edit_lock": "Upravit dveře",
+    "remove_lock": "Odebrat dveře",
+    "lock": "zamknout",
+    "unlock": "odemknout",
+    "unable_to": "Nelze %s dveře",
+    "create_modify_lock": "Vytvořit dveře, nebo upravit existující"
+}
