@@ -1,0 +1,17 @@
+{
+	"unlocked_door": "Otključana vrata",
+    "locked_door": "Zaključana vrata",
+    "lock_door": "[E] Zaključaj vrata",
+    "unlock_door": "[E] Otključaj vrata",
+    "door_lock": "Brava",
+    "passcode": "Lozinka",
+    "lockpick_broke": "Tvoj alat za obijanje se polomio",
+    "pick_lock": "Obij bravu",
+    "add_lock": "Dodajte bravu",
+    "edit_lock": "Uredi bravu",
+    "remove_lock": "Obriši bravu",
+    "lock": "zakljucaj",
+    "unlock": "otkljucaj",
+    "unable_to": "Nije moguce %s vrata",
+    "create_modify_lock": "Kreiraj bravu, ili uredi već postojeću"
+}
