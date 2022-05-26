@@ -1,0 +1,17 @@
+{
+	"unlocked_door": "Tür aufgeschlossen",
+    "locked_door": "Tür verschlossen",
+    "lock_door": "[E] Tür verschließen",
+    "unlock_door": "[E] Tür aufschließen",
+    "door_lock": "Türschloss",
+    "passcode": "Zugangscode",
+    "lockpick_broke": "Dein Dietrich ist zerbrochen",
+    "pick_lock": "Tür aufbrechen",
+    "add_lock": "Türschloss hinzufügen",
+    "edit_lock": "Türschloss bearbeiten",
+    "remove_lock": "Türschloss entfernen",
+    "lock": "zu verschließen",
+    "unlock": "aufzuschließen",
+    "unable_to": "Es ist nicht möglich die Tür %s",
+    "create_modify_lock": "Erstelle ein Türschloss oder bearbeite ein vorhandenes"
+}
