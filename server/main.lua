@@ -1,4 +1,4 @@
-local success, msg = lib.checkDependency('ox_lib', '2.3.2')
+local success, msg = lib.checkDependency('ox_lib', '2.4.0')
 if not success then error(msg) end
 
 lib.versionCheck('overextended/ox_doorlock')

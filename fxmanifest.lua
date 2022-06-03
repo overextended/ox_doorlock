@@ -6,7 +6,7 @@ game         'gta5'
 
 --[[ Resource Information ]]--
 name         'ox_doorlock'
-version      '1.0.5'
+version      '1.1.0'
 license      'GPL-3.0-or-later'
 author       'Overextended'
 repository   'https://github.com/overextended/ox_doorlock'
@@ -37,5 +37,5 @@ files {
 
 dependencies {
 	'ox_lib',
-	'qtarget'
+	'qtarget',
 }
