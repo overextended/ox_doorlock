@@ -1,0 +1,17 @@
+{
+	  "unlocked_door": "Otključana vrata",
+    "locked_door": "Zaključana vrata",
+    "lock_door": "[E] Zaključaj vrata",
+    "unlock_door": "[E] Otključaj vrata",
+    "door_lock": "Lokot",
+    "passcode": "Lozinka",
+    "lockpick_broke": "Polomila Vam se brava",
+    "pick_lock": "Odaberi bravu",
+    "add_lock": "Dodaj lokot",
+    "edit_lock": "Uredi lokot",
+    "remove_lock": "Obriši lokot",
+    "lock": "zaključaj",
+    "unlock": "otključaj",
+    "unable_to": "Unable to %s door",
+    "create_modify_lock": "Dodaj lokot na vrata ili uredi postojeći"
+}
