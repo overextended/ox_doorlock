@@ -3,7 +3,7 @@ local ox_inventory = exports.ox_inventory
 
 local function hasItem(player, items)
 	if items[2] then
-		for name, count in pairs(ox_inventory:Search(player, 'count', items)) do
+		for name, count in pairs(ox_inventory:Search(player.source, 'count', items)) do
 			if count > 0 then
 				return name
 			end
@@ -12,11 +12,11 @@ local function hasItem(player, items)
 		end
 	end
 
-	return ox_inventory:GetItem(player, items[1], false, true) > 0 and items[1]
+	return ox_inventory:GetItem(player.source, items[1], false, true) > 0 and items[1]
 end
 
 local function removeItem(player, item)
-	ox_inventory:RemoveItem(player, item, 1)
+	ox_inventory:RemoveItem(player.source, item, 1)
 end
 
 function isAuthorised(source, door, lockpick, passcode)
