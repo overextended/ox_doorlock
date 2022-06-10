@@ -223,6 +223,6 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 	end
 end)
 
-lib.addCommand('group.admin', 'doorlock', function(source, args)
+lib.addCommand(Config.CommandPrincipal, 'doorlock', function(source, args)
 	TriggerClientEvent('ox_doorlock:triggeredCommand', source, args.edit)
 end, {'edit'}, locale('create_modify_lock'))

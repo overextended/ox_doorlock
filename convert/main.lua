@@ -1,6 +1,4 @@
-Config = {
-	DoorList = {}
-}
+Config.DoorList = {}
 
 CreateThread(function()
 	local files = {}
