@@ -39,6 +39,10 @@ function isAuthorised(source, door, lockpick, passcode)
 		authorised = hasItem(player, door.items)
 	end
 
+	if not authorised and Config.PlayerAceAuthorised then
+		authorised = IsPlayerAceAllowed(source, 'command.doorlock')
+	end
+
 	return authorised
 end
 

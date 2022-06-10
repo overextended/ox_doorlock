@@ -12,3 +12,6 @@ Config.DrawSprite = {
 
 -- Allow the following ACL principal to use 'command.doorlock'
 Config.CommandPrincipal = 'group.admin'
+
+-- Allow players with 'command.doorlock' permission to open any doors
+Config.PlayerAceAuthorised = false
