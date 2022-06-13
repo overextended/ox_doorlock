@@ -1,22 +1,23 @@
 local Core = lib.getCore()
 local ox_inventory = exports.ox_inventory
 
-local function hasItem(player, items)
-	if items[2] then
-		for name, count in pairs(ox_inventory:Search(player.source, 'count', items)) do
-			if count > 0 then
-				return name
-			end
-
-			return false
-		end
-	end
-
-	return ox_inventory:GetItem(player.source, items[1], false, true) > 0 and items[1]
+local function removeItem(player, item, slot)
+	ox_inventory:RemoveItem(player.source, item, 1, nil, slot)
 end
 
-local function removeItem(player, item)
-	ox_inventory:RemoveItem(player.source, item, 1)
+local function hasItem(player, items)
+	for i = 1, #items do
+		local item = items[i]
+		local data = ox_inventory:Search(player.source, 1, item.name, item.metadata)[1]
+
+		if data and data.count > 0 then
+			if item.remove then
+				removeItem(player, item.name, data.slot)
+			end
+
+			return true
+		end
+	end
 end
 
 function isAuthorised(source, door, lockpick, passcode)
