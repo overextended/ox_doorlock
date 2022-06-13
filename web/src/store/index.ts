@@ -7,7 +7,7 @@ export interface StoreState {
   doorName: StringField;
   passcode: StringField;
   autolockInterval: NumberField;
-  itemFields: StringField[];
+  itemFields: { name: StringField; metadata?: StringField; remove?: boolean }[];
   groupFields: { name: StringField; grade: NumberField }[];
   interactDistance: NumberField;
   lockSound: StringField;
@@ -47,7 +47,7 @@ export const useStore = create<StoreState>((set: SetState<StoreState>) => ({
   doorName: '',
   passcode: '',
   autolockInterval: '',
-  itemFields: [''],
+  itemFields: [{ name: '', metadata: '', remove: false }],
   groupFields: [{ name: '', grade: '' }],
   interactDistance: '',
   lockSound: null,

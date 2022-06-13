@@ -12,7 +12,7 @@ const Buttons: React.FC<{ type: string }> = ({ type }) => {
 
   const createField = () => {
     type === 'item'
-      ? setItemFields((prevState) => [...prevState, ''])
+      ? setItemFields((prevState) => [...prevState, { name: '', metadata: '', remove: false }])
       : setGroupFields((prevState) => [
           ...prevState,
           {
@@ -25,7 +25,9 @@ const Buttons: React.FC<{ type: string }> = ({ type }) => {
   // Why keep empty fields when going back? So filter them
   const filterFields = () => {
     if (type === 'item')
-      setItemFields((prevState) => prevState.filter((item, index) => index === 0 || item !== ''));
+      setItemFields((prevState) =>
+        prevState.filter((item, index) => index === 0 || item.name !== ''),
+      );
     else
       setGroupFields((prevState) =>
         prevState.filter((item, index) => item.name !== '' || item.grade !== '' || index === 0),

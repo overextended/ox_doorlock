@@ -13,11 +13,15 @@ const Submit: React.FC = () => {
     if (data.passcode === '') data.passcode = null;
     data.autolockInterval = data.autolockInterval ? +data.autolockInterval : null;
     data.interactDistance = data.interactDistance ? +data.interactDistance : null;
-    for (let i = 0; i < data.itemFields.length; i++)
-      if (data.itemFields[i] === '') data.itemFields[i] = null;
+    for (let i = 0; i < data.itemFields.length; i++) {
+      const itemField = data.itemFields[i];
+      if (itemField.name === '') itemField.name = null;
+      if (itemField.metadata === '') itemField.metadata = null;
+    }
     for (let i = 0; i < data.groupFields.length; i++) {
-      if (data.groupFields[i].name === '') data.groupFields[i].name = null;
-      data.groupFields[i].grade = data.groupFields[i].grade ? +data.groupFields[i].grade! : null;
+      const groupField = data.groupFields[i];
+      if (groupField.name === '') groupField.name = null;
+      groupField.grade = groupField.grade ? +groupField.grade! : null;
     }
     setSettingsVisible(false);
     fetchNui('createDoor', data);
