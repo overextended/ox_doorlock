@@ -163,15 +163,10 @@ local function parseTempData()
 	for i = 1, #tempData.itemFields do
 		local item = tempData.itemFields[i]
 
-		if item ~= '' then
+		if item?.name then
 			itemSize += 1
+			item.remove = item.remove == true or nil
 			data.items[itemSize] = item
-		end
-	end
-
-	for i = 1, #tempData.itemFields do
-		if tempData.itemFields[i] == '' then
-			tempData.itemFields[i] = nil
 		end
 	end
 
