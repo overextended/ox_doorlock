@@ -29,7 +29,7 @@ const ItemFields: React.FC = () => {
     const items = [...itemFields];
     switch (e.target.id) {
       case 'name':
-        if (index) items[index].name = e.target.value;
+        if (index !== undefined) items[index].name = e.target.value;
         break;
       case 'metadata':
         items[dialog.index].metadata = e.target.value;
