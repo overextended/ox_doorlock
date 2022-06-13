@@ -54,18 +54,38 @@ if Core.resource == 'qb-core' then
 
 	function hasItem(player, items)
 		for i = 1, #items do
-			local item = player.Functions.GetItemByName(items[i])
+			local item = items[i]
 
-			if item?.count > 0 then
-				return item.name
+			if item.metadata then
+				local playerItems = player.Functions.GetItemsByName(item.name)
+
+				for j = 1, #playerItems do
+					local data = playerItems[j]
+
+					if data.info.type == item.metadata then
+						if item.remove then
+							removeItem(player, item.name, data.slot)
+						end
+
+						return true
+					end
+				end
+			else
+				local data = player.Functions.GetItemByName(item.name)
+
+				if data then
+					if item.remove then
+						removeItem(player, item.name, data.slot)
+					end
+
+					return true
+				end
 			end
 		end
-
-		return false
 	end
 
-	function removeItem(player, item)
-		player.Functions.RemoveItem(item, 1)
+	function removeItem(player, item, slot)
+		player.Functions.RemoveItem(item, 1, slot)
 	end
 elseif Core.resource == 'es_extended' then
 	function getPlayer(source)
@@ -75,9 +95,14 @@ elseif Core.resource == 'es_extended' then
 	if not Core.GetConfig().OxInventory then
 		function hasItem(player, items)
 			for i = 1, #items do
-				local item = player.getInventoryItem(items[i])
+				local item = items[i]
+				local data = player.getInventoryItem(item.name)
 
-				if item?.count > 0 then
+				if data?.count > 0 then
+					if item.remove then
+						removeItem(player, item.name)
+					end
+
 					return item.name
 				end
 			end
@@ -86,7 +111,7 @@ elseif Core.resource == 'es_extended' then
 		end
 
 		function removeItem(player, item)
-			Core:removeInventoryItem(player.source, item, 1)
+			player.removeInventoryItem(item, 1)
 		end
 	end
 end
