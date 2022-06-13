@@ -84,14 +84,14 @@ const ItemFields: React.FC = () => {
               variant="standard"
               fullWidth
               id="metadata"
-              value={itemFields[dialog.index].metadata || ''}
+              value={itemFields[dialog.index]?.metadata || ''}
               onChange={(e) => handleChange(e)}
             />
             <FormControlLabel
               control={
                 <Switch
                   id="remove"
-                  checked={itemFields[dialog.index].remove || false}
+                  checked={itemFields[dialog.index]?.remove || false}
                   onChange={(e) => handleSwitchChange(e)}
                 />
               }
