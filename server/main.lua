@@ -6,6 +6,38 @@ lib.locale()
 
 local doors = {}
 
+local function encodeData(door)
+	local double = door.doors
+
+	return json.encode({
+		auto = door.auto,
+		autolock = door.autolock,
+		coords = door.coords,
+		doors = double and {
+			{
+				coords = double[1].coords,
+				heading = double[1].heading,
+				model = double[1].model,
+			},
+			{
+				coords = double[2].coords,
+				heading = double[2].heading,
+				model = double[2].model,
+			},
+		},
+		groups = door.groups,
+		heading = door.heading,
+		items = door.items,
+		lockpick = door.lockpick,
+		lockSound = door.lockSound,
+		maxDistance = door.maxDistance,
+		model = door.model,
+		state = door.state,
+		unlockSound = door.unlockSound,
+		passcode = door.passcode
+	})
+end
+
 local function getDoor(door)
 	door = type(door) == 'table' and door or doors[door]
 
@@ -99,6 +131,20 @@ local function createDoor(id, door, name)
 		door.state = 1
 	end
 
+	if type(door.items?[1]) == 'string' then
+		local items = {}
+
+		for i = 1, #door.items do
+			items[i] = {
+				name = door.items[i],
+				remove = false,
+			}
+		end
+
+		door.items = items
+		MySQL.Async.execute('UPDATE ox_doorlock SET data = ? WHERE id = ?', { encodeData(door), id })
+	end
+
 	doors[id] = door
 	return door
 end
@@ -159,38 +205,6 @@ RegisterNetEvent('ox_doorlock:getDoors', function()
 	while not isLoaded do Wait(100) end
 	TriggerClientEvent('ox_doorlock:setDoors', source, doors, sounds)
 end)
-
-local function encodeData(door)
-	local double = door.doors
-
-	return json.encode({
-		auto = door.auto,
-		autolock = door.autolock,
-		coords = door.coords,
-		doors = double and {
-			{
-				coords = double[1].coords,
-				heading = double[1].heading,
-				model = double[1].model,
-			},
-			{
-				coords = double[2].coords,
-				heading = double[2].heading,
-				model = double[2].model,
-			},
-		},
-		groups = door.groups,
-		heading = door.heading,
-		items = door.items,
-		lockpick = door.lockpick,
-		lockSound = door.lockSound,
-		maxDistance = door.maxDistance,
-		model = door.model,
-		state = door.state,
-		unlockSound = door.unlockSound,
-		passcode = door.passcode
-	})
-end
 
 RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 	if IsPlayerAceAllowed(source, 'command.doorlock') then
