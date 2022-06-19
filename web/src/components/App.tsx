@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import Settings from './settings';
 import Auth from './auth';
 import Sound from './sound';
@@ -11,7 +11,7 @@ const App: React.FC = () => {
 
   useNuiEvent('playSound', async (data: { sound: string; volume: number }) => {
     const sound = new Audio(`${process.env.PUBLIC_URL}/sounds/${data.sound}.ogg`);
-    sound.volume = data.volume || 1;
+    sound.volume = data.volume;
     await sound.play();
   });
 
