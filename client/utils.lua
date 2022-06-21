@@ -143,7 +143,7 @@ local function parseTempData()
 		auto = tempData.checkboxes?.automatic or nil,
 		state = tempData.checkboxes?.locked and 1 or 0,
 		lockpick = tempData.checkboxes?.lockpick or nil,
-		showUi = tempData.checkboxes?.showUi or nil,
+		hideUi = tempData.checkboxes?.hideUi or nil,
 		doors = tempData.checkboxes?.double and true or nil,
 		groups = {},
 		items = {},
@@ -243,7 +243,7 @@ local function parseDoorData(door)
 			automatic = door.auto,
 			locked = door.state == 1,
 			lockpick = door.lockpick,
-			showUi = door.showUi,
+			hideUi = door.hideUi,
 			double = door.doors and true,
 		}
 	}

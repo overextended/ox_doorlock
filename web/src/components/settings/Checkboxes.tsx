@@ -7,7 +7,7 @@ const Checkboxes: React.FC = () => {
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    type: 'double' | 'automatic' | 'locked' | 'lockpick' | 'showUi',
+    type: 'double' | 'automatic' | 'locked' | 'lockpick' | 'hideUi',
   ) => {
     toggleCheckbox(type);
   };
@@ -43,6 +43,20 @@ const Checkboxes: React.FC = () => {
             }
             sx={{ margin: 0 }}
           />
+          
+          <FormControlLabel
+            label="Hide UI"
+            control={
+              <Tooltip title="Hide UI indicators" disableInteractive enterDelay={500}>
+                <Checkbox
+                  name="hideUi"
+                  onChange={(e) => handleChange(e, 'hideUi')}
+                  checked={checkboxes.hideUi}
+                />
+              </Tooltip>
+            }
+            sx={{ margin: 0 }}
+          />
         </Box>
         <Box display="flex" justifyContent="space-evenly" flexDirection="column">
           <FormControlLabel
@@ -66,19 +80,6 @@ const Checkboxes: React.FC = () => {
                   name="lockpick"
                   onChange={(e) => handleChange(e, 'lockpick')}
                   checked={checkboxes.lockpick}
-                />
-              </Tooltip>
-            }
-            sx={{ margin: 0 }}
-          />
-          <FormControlLabel
-            label="Show UI"
-            control={
-              <Tooltip title="Display ui elements" disableInteractive enterDelay={500}>
-                <Checkbox
-                  name="showUi"
-                  onChange={(e) => handleChange(e, 'showUi')}
-                  checked={checkboxes.showUi}
                 />
               </Tooltip>
             }

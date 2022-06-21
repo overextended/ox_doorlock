@@ -238,7 +238,7 @@ CreateThread(function()
 						closestDoor = door
 					end
 
-					if drawSprite and door.showUi then
+					if drawSprite and not door.hideUi then
 						local sprite = drawSprite[door.state]
 
 						if sprite then
@@ -253,10 +253,10 @@ CreateThread(function()
 
 		if closestDoor and closestDoor.distance < closestDoor.maxDistance then
 			if Config.DrawTextUI then
-				if closestDoor.state == 0 and showUI ~= 0 and closestDoor.showUi then
+				if closestDoor.state == 0 and showUI ~= 0 and not closestDoor.hideUi then
 					lib.showTextUI(lockDoor)
 					showUI = 0
-				elseif closestDoor.state == 1 and showUI ~= 1 and closestDoor.showUi then
+				elseif closestDoor.state == 1 and showUI ~= 1 and not closestDoor.hideUi then
 					lib.showTextUI(unlockDoor)
 					showUI = 1
 				end

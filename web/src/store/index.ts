@@ -17,7 +17,7 @@ export interface StoreState {
     double: boolean;
     automatic: boolean;
     lockpick: boolean;
-    showUi: boolean;
+    hideUi: boolean;
   };
 }
 
@@ -31,7 +31,7 @@ interface StateSetters {
   setAutolockInterval: (value: StoreState['autolockInterval']) => void;
   setItemFields: (fn: (state: StoreState['itemFields']) => StoreState['itemFields']) => void;
   setGroupFields: (fn: (state: StoreState['groupFields']) => StoreState['groupFields']) => void;
-  toggleCheckbox: (type: 'locked' | 'double' | 'automatic' | 'lockpick' | 'showUi') => void;
+  toggleCheckbox: (type: 'locked' | 'double' | 'automatic' | 'lockpick' | 'hideUi') => void;
   setInteractDistance: (value: StoreState['interactDistance']) => void;
 }
 
@@ -58,7 +58,7 @@ export const useStore = create<StoreState>((set: SetState<StoreState>) => ({
     double: false,
     automatic: false,
     lockpick: false,
-    showUi: false,
+    hideUi: false,
   },
 }));
 
