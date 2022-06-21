@@ -13,7 +13,7 @@ const Checkboxes: React.FC = () => {
   };
 
   return (
-    <>
+    <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <Box display="flex">
         <Box display="flex" justifyContent="space-evenly" flexDirection="column">
           <FormControlLabel
@@ -38,20 +38,6 @@ const Checkboxes: React.FC = () => {
                   name="automatic"
                   onChange={(e) => handleChange(e, 'automatic')}
                   checked={checkboxes.automatic}
-                />
-              </Tooltip>
-            }
-            sx={{ margin: 0 }}
-          />
-          
-          <FormControlLabel
-            label="Hide UI"
-            control={
-              <Tooltip title="Hide UI indicators" disableInteractive enterDelay={500}>
-                <Checkbox
-                  name="hideUi"
-                  onChange={(e) => handleChange(e, 'hideUi')}
-                  checked={checkboxes.hideUi}
                 />
               </Tooltip>
             }
@@ -87,7 +73,20 @@ const Checkboxes: React.FC = () => {
           />
         </Box>
       </Box>
-    </>
+      <FormControlLabel
+        label="Hide UI"
+        control={
+          <Tooltip title="Hide UI indicators" disableInteractive enterDelay={500}>
+            <Checkbox
+              name="hideUi"
+              onChange={(e) => handleChange(e, 'hideUi')}
+              checked={checkboxes.hideUi}
+            />
+          </Tooltip>
+        }
+        sx={{ margin: 0 }}
+      />
+    </Box>
   );
 };
 
