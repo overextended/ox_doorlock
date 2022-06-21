@@ -45,7 +45,7 @@ CreateThread(function()
 							groups = door.authorizedJobs,
 							items = door.items,
 							lockpick = door.lockpick,
-							hideUi = not door.showNUI,
+							hideUi = door.showNUI ~= nil and not door.showNUI or false,
 							lockSound = door.audioLock?.file and door.audioLock.file:gsub('%.ogg', ''),
 							unlockSound = door.audioUnlock?.file and door.audioUnlock.file:gsub('%.ogg', ''),
 							maxDistance = door.maxDistance,
