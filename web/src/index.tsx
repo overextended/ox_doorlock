@@ -31,6 +31,7 @@ debugData<boolean | StoreState>([
         double: true,
         automatic: true,
         lockpick: true,
+        showUi: true,
       },
     },
   },
