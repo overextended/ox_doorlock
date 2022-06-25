@@ -28,12 +28,13 @@ CreateThread(function()
 			if file then
 				load(file)()
 
-				if #Config.DoorList > 0 then
+				if next(Config.DoorList) then
+					local size = 0
 					local query = 'INSERT INTO ox_doorlock (name, data) VALUES (?, ?)'
 					local queries = {}
 
-					for j = 1, #Config.DoorList do
-						local door = Config.DoorList[j]
+					for k, door in pairs(Config.DoorList) do
+						size += 1
 						local double = door.doors
 
 						local data = {
@@ -76,8 +77,8 @@ CreateThread(function()
 							data.coords = double[1].coords - ((double[1].coords - double[2].coords) / 2)
 						end
 
-						queries[j] = {
-							query = query, values = { ('%s %s'):format(fileName, j), json.encode(data) }
+						queries[size] = {
+							query = query, values = { ('%s %s'):format(fileName, k), json.encode(data) }
 						}
 					end
 
