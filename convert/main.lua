@@ -36,6 +36,31 @@ CreateThread(function()
 					for k, door in pairs(Config.DoorList) do
 						size += 1
 						local double = door.doors
+						local qb = door.objName or (double and double[1].objName)
+
+						if qb then
+							if double then
+								for j = 1, 2 do
+									double[j].objHash = double[j].objName
+									double[j].objHeading = double[j].objYaw or 0
+								end
+							else
+								door.objHash = door.objName
+								door.objHeading = door.objYaw or 0
+							end
+
+							local groups = door.authorizedJobs or {}
+
+							if door.authorizedGangs then
+								for gang, grade in pairs(door.authorizedGangs) do
+									groups[gang] = grade
+								end
+							end
+
+							door.authorizedJobs = next(groups) and groups
+							door.lockpick = door.pickable
+							door.showNUI = not door.hideLabel
+						end
 
 						local data = {
 							auto = door.slides or door.garage,
@@ -85,6 +110,7 @@ CreateThread(function()
 					table.wipe(Config.DoorList)
 
 					if MySQL.Sync.transaction(queries) then
+						print(('Converted %s doors from %s.lua'):format(size, fileName))
 						SaveResourceFile('ox_doorlock', ('convert/%s.lua'):format(fileName), '', -1)
 					end
 				end
