@@ -1,0 +1,17 @@
+{
+    "unlocked_door": "Open deur",
+    "locked_door": "Gesloten deur",
+    "lock_door": "[E] Sluiten",
+    "unlock_door": "[E] Openen",
+    "door_lock": "Deurslot",
+    "passcode": "Toegangscode",
+    "lockpick_broke": "Je lockpick is gebroken",
+    "pick_lock": "Pick lock",
+    "add_lock": "Deurslot toevoegen",
+    "edit_lock": "Deurslot aanpassen",
+    "remove_lock": "Deurslot verwijderen",
+    "lock": "sluiten",
+    "unlock": "openen",
+    "unable_to": "Niet mogelijk om de deur te %s",
+    "create_modify_lock": "Maak een slot of pas er een aan"
+}
