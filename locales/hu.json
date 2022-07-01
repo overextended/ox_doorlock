@@ -10,8 +10,8 @@
     "add_lock": "Ajtózár hozzáadása",
     "edit_lock": "Ajtózár szerkesztése",
     "remove_lock": "Ajtóár törlése",
-    "lock": "zárva",
-    "unlock": "kinyitva",
-    "unable_to": "Unable to %s door",
+    "lock": "bezárni",
+    "unlock": "kinyitni",
+    "unable_to": "Nem tudtad %s az ajtót",
     "create_modify_lock": "Készíts vagy szerkessz egy ajtózárat."
 }
