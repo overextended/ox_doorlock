@@ -1,0 +1,17 @@
+{
+	"unlocked_door": "Ajtó kinyitva",
+    "locked_door": "Ajtó bezárva",
+    "lock_door": "[E] Bezárás",
+    "unlock_door": "[E] Kinyitás",
+    "door_lock": "Ajtózár",
+    "passcode": "Jelszó",
+    "lockpick_broke": "A zárfeltörőd eltört",
+    "pick_lock": "Válassz zárat",
+    "add_lock": "Ajtózár hozzáadása",
+    "edit_lock": "Ajtózár szerkesztése",
+    "remove_lock": "Ajtóár törlése",
+    "lock": "bezárni",
+    "unlock": "kinyitni",
+    "unable_to": "Nem tudtad %s az ajtót",
+    "create_modify_lock": "Készíts vagy szerkessz egy ajtózárat."
+}
