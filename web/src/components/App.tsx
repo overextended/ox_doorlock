@@ -10,7 +10,7 @@ const App: React.FC = () => {
   const setSounds = useSetters((setter) => setter.setSounds);
 
   useNuiEvent('playSound', async (data: { sound: string; volume: number }) => {
-    const sound = new Audio(`${process.env.PUBLIC_URL}/sounds/${data.sound}.ogg`);
+    const sound = new Audio(`./sounds/${data.sound}.ogg`);
     sound.volume = data.volume;
     await sound.play();
   });
