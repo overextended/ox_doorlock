@@ -19,7 +19,13 @@ const Checkboxes: React.FC = () => {
           <FormControlLabel
             label="Double door"
             control={
-              <Tooltip title="Door is a double door" disableInteractive enterDelay={500}>
+              <Tooltip
+                arrow
+                title="Door is a double door"
+                placement="left"
+                disableInteractive
+                enterDelay={500}
+              >
                 <Checkbox onChange={(e) => handleChange(e, 'double')} checked={checkboxes.double} />
               </Tooltip>
             }
@@ -30,6 +36,8 @@ const Checkboxes: React.FC = () => {
             label="Automatic"
             control={
               <Tooltip
+                arrow
+                placement="left"
                 title="Door automatically moves (garage, sliding, etc...)"
                 disableInteractive
                 enterDelay={500}
@@ -48,7 +56,13 @@ const Checkboxes: React.FC = () => {
           <FormControlLabel
             label="Locked"
             control={
-              <Tooltip title="Door is locked by default" disableInteractive enterDelay={500}>
+              <Tooltip
+                placement="top"
+                arrow
+                title="Door is locked by default"
+                disableInteractive
+                enterDelay={500}
+              >
                 <Checkbox
                   name="locked"
                   onChange={(e) => handleChange(e, 'locked')}
@@ -61,7 +75,13 @@ const Checkboxes: React.FC = () => {
           <FormControlLabel
             label="Lockpick"
             control={
-              <Tooltip title="Door can be lockpicked" disableInteractive enterDelay={500}>
+              <Tooltip
+                arrow
+                placement="top"
+                title="Door can be lockpicked"
+                disableInteractive
+                enterDelay={500}
+              >
                 <Checkbox
                   name="lockpick"
                   onChange={(e) => handleChange(e, 'lockpick')}
@@ -76,7 +96,13 @@ const Checkboxes: React.FC = () => {
       <FormControlLabel
         label="Hide UI"
         control={
-          <Tooltip title="Hide UI indicators" disableInteractive enterDelay={500}>
+          <Tooltip
+            placement="left"
+            arrow
+            title="Hide UI indicators"
+            disableInteractive
+            enterDelay={500}
+          >
             <Checkbox
               name="hideUi"
               onChange={(e) => handleChange(e, 'hideUi')}
