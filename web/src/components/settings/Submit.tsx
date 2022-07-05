@@ -13,6 +13,7 @@ const Submit: React.FC = () => {
     if (data.passcode === '') data.passcode = null;
     data.autolockInterval = data.autolockInterval ? +data.autolockInterval : null;
     data.interactDistance = data.interactDistance ? +data.interactDistance : null;
+    data.doorRate = data.doorRate ? +data.doorRate : null;
     for (let i = 0; i < data.itemFields.length; i++) {
       const itemField = data.itemFields[i];
       if (itemField.name === '') itemField.name = null;

@@ -5,9 +5,11 @@ const TextFields: React.FC = () => {
   const passcode = useStore((state) => state.passcode);
   const autolockInterval = useStore((state) => state.autolockInterval);
   const interactDistance = useStore((state) => state.interactDistance);
+  const doorRate = useStore((state) => state.doorRate);
   const setPasscode = useSetters((setter) => setter.setPasscode);
   const setInteractDistance = useSetters((setter) => setter.setInteractDistance);
   const setAutolockInterval = useSetters((setter) => setter.setAutolockInterval);
+  const setDoorRate = useSetters((setter) => setter.setDoorRate);
 
   return (
     <>
@@ -33,6 +35,14 @@ const TextFields: React.FC = () => {
         style={{ marginBottom: '0.7rem' }}
         value={interactDistance}
         onChange={(e) => setInteractDistance(e.target.value)}
+      />
+      <TextField
+        fullWidth
+        label="Door rate"
+        type="number"
+        style={{ marginBottom: '0.7rem' }}
+        value={doorRate}
+        onChange={(e) => setDoorRate(e.target.value)}
       />
     </>
   );

@@ -10,6 +10,7 @@ export interface StoreState {
   itemFields: { name: StringField; metadata?: StringField; remove?: boolean }[];
   groupFields: { name: StringField; grade: NumberField }[];
   interactDistance: NumberField;
+  doorRate: NumberField;
   lockSound: StringField;
   unlockSound: StringField;
   checkboxes: {
@@ -33,6 +34,7 @@ interface StateSetters {
   setGroupFields: (fn: (state: StoreState['groupFields']) => StoreState['groupFields']) => void;
   toggleCheckbox: (type: 'locked' | 'double' | 'automatic' | 'lockpick' | 'hideUi') => void;
   setInteractDistance: (value: StoreState['interactDistance']) => void;
+  setDoorRate: (value: StoreState['doorRate']) => void;
 }
 
 interface VisibilityState {
@@ -51,6 +53,7 @@ export const useStore = create<StoreState>((set: SetState<StoreState>) => ({
   itemFields: [{ name: '', metadata: '', remove: false }],
   groupFields: [{ name: '', grade: '' }],
   interactDistance: '',
+  doorRate: '',
   lockSound: null,
   unlockSound: null,
   checkboxes: {
@@ -87,6 +90,7 @@ export const useSetters = create<StateSetters>(
       useStore.setState(({ groupFields }) => ({
         groupFields: fn(groupFields),
       })),
+    setDoorRate: (value: StoreState['doorRate']) => useStore.setState({ doorRate: value }),
   }),
 );
 
