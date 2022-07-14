@@ -155,11 +155,21 @@ end
 local isLoaded = false
 
 MySQL.ready(function()
-	local results = MySQL.query.await('SELECT id, name, data FROM ox_doorlock')
+	while Config.DoorList do Wait(100) end
 
-	if results then
-		for i = 1, #results do
-			local door = results[i]
+	local success, result = pcall(MySQL.query.await, 'SELECT id, name, data FROM ox_doorlock')
+
+	if not success then
+		-- because some people can't run sql files
+		MySQL.query([[CREATE TABLE `ox_doorlock` (
+			`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+			`name` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+			`data` LONGTEXT NOT NULL COLLATE 'utf8mb4_unicode_ci',
+			PRIMARY KEY (`id`) USING BTREE
+		) COLLATE='utf8mb4_unicode_ci' ENGINE=InnoDB; ]])
+	elseif result then
+		for i = 1, #result do
+			local door = result[i]
 			createDoor(door.id, json.decode(door.data), door.name)
 		end
 	end
