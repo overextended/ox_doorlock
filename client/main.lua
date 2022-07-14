@@ -191,26 +191,42 @@ end)
 RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 	if source == '' then return end
 
-	if data then
-		local door = doors[id]
-		local double = door.doors
+	local door = doors[id]
+	local double = door.doors
+	local doorState = data and data.state or 0
+	local doorRate = data and data.doorRate or (door.doorRate and 0.0)
 
-		-- hacky method to resolve a bug with "closest door" by forcing a distance recalculation
-		if door.distance < 20 then door.distance = 80 end
+	-- hacky method to resolve a bug with "closest door" by forcing a distance recalculation
+	if data and door.distance < 20 then door.distance = 80 end
 
-		if double then
-			for i = 1, 2 do
-				DoorSystemSetDoorState(double[i].hash, data.state, false, false)
+	if double then
+		for i = 1, 2 do
+			if doorRate then
+				DoorSystemSetAutomaticRate(double[i].hash, doorRate, false, false)
+			end
 
-				if data.doorRate then
-					DoorSystemSetAutomaticRate(double[i].hash, data.doorRate, false, false)
+			DoorSystemSetDoorState(double[i].hash, doorState, false, false)
+
+			if not data then
+				RemoveDoorFromSystem(double[i].hash)
+
+				if double[i].entity then
+					Entity(double[i].entity).state.doorId = nil
 				end
 			end
-		else
-			DoorSystemSetDoorState(door.hash, data.state, false, false)
+		end
+	else
+		if doorRate then
+			DoorSystemSetAutomaticRate(door.hash, doorRate, false, false)
+		end
 
-			if data.doorRate then
-				DoorSystemSetAutomaticRate(door.hash, data.doorRate, false, false)
+		DoorSystemSetDoorState(door.hash, doorState, false, false)
+
+		if not data then
+			RemoveDoorFromSystem(door.hash)
+
+			if door.entity then
+				Entity(door.entity).state.doorId = nil
 			end
 		end
 	end
