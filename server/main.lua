@@ -1,5 +1,7 @@
-local success, msg = lib.checkDependency('ox_lib', '2.4.0')
-if not success then error(msg) end
+do
+	local success, msg = lib.checkDependency('ox_lib', '2.4.0')
+	if not success then error(msg) end
+end
 
 lib.versionCheck('overextended/ox_doorlock')
 lib.locale()
@@ -81,7 +83,7 @@ exports('editDoor', function(id, data)
 			end
 		end
 
-		MySQL.Async.execute('UPDATE ox_doorlock SET name = ?, data = ? WHERE id = ?', { door.name, encodeData(door), id })
+		MySQL.update('UPDATE ox_doorlock SET name = ?, data = ? WHERE id = ?', { door.name, encodeData(door), id })
 		TriggerClientEvent('ox_doorlock:editDoorlock', -1, id, door)
 	end
 end)
@@ -90,7 +92,7 @@ local sounds do
 	local files = {}
 	local system = os.getenv('OS')
 	local command = system and system:match('Windows') and 'dir "' or 'ls "'
-	local path = GetResourcePath(GetCurrentResourceName())
+	local path = GetResourcePath(cache.resource)
 	local types = path:gsub('//', '/') .. '/web/build/sounds'
 	local suffix = command == 'dir "' and '/" /b' or '/"'
 	local dir = io.popen(command .. types .. suffix)
@@ -143,7 +145,7 @@ local function createDoor(id, door, name)
 		end
 
 		door.items = items
-		MySQL.Async.execute('UPDATE ox_doorlock SET data = ? WHERE id = ?', { encodeData(door), id })
+		MySQL.update('UPDATE ox_doorlock SET data = ? WHERE id = ?', { encodeData(door), id })
 	end
 
 	doors[id] = door
@@ -153,7 +155,7 @@ end
 local isLoaded = false
 
 MySQL.ready(function()
-	local results = MySQL.Sync.fetchAll('SELECT id, name, data FROM ox_doorlock')
+	local results = MySQL.query.await('SELECT id, name, data FROM ox_doorlock')
 
 	if results then
 		for i = 1, #results do
@@ -222,15 +224,15 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 
 		if id then
 			if data then
-				MySQL.Async.execute('UPDATE ox_doorlock SET name = ?, data = ? WHERE id = ?', { data.name, encodeData(data), id })
+				MySQL.update('UPDATE ox_doorlock SET name = ?, data = ? WHERE id = ?', { data.name, encodeData(data), id })
 			else
-				MySQL.Async.execute('DELETE FROM ox_doorlock WHERE id = ?', { id })
+				MySQL.update('DELETE FROM ox_doorlock WHERE id = ?', { id })
 			end
 
 			doors[id] = data
 			TriggerClientEvent('ox_doorlock:editDoorlock', -1, id, data)
 		else
-			local insertId = MySQL.Sync.insert('INSERT INTO ox_doorlock (name, data) VALUES (?, ?)', { data.name, encodeData(data) })
+			local insertId = MySQL.insert.await('INSERT INTO ox_doorlock (name, data) VALUES (?, ?)', { data.name, encodeData(data) })
 			local door = createDoor(insertId, data, data.name)
 
 			TriggerClientEvent('ox_doorlock:setState', -1, door.id, door.state, false, door)

@@ -5,9 +5,14 @@ Successor to nui_doorlock with less scuff and more stuff.
 
 ## Dependencies
 
-### [oxmysql](https://github.com/overextended/oxmysql) or [mysql-async](https://github.com/brouznouf/fivem-mysql-async)
+### [oxmysql](https://github.com/overextended/oxmysql)
 
 Doors are stored in a database for ease-of-use and to allow data to be easily cleared or shared.
+
+mysql-async is no longer supported.
+  - does not support error-catching (pcall)
+  - people use older versions which do not support parameters as arrays
+  - it isn't maintained and has issues that will never be resolved
 
 ### [ox_lib](https://github.com/overextended/ox_lib) (v2.3.0 or higher)
 
