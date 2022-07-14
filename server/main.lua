@@ -207,11 +207,7 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick, passcode)
 		end
 	end
 
-	TriggerClientEvent('ox_lib:notify', source, {
-		type = 'error',
-		icon = 'lock',
-		description = locale('unable_to', state == 0 and locale('unlock') or locale('lock'))
-	})
+    lib.notify(source, { type = 'error', icon = 'lock', description = state == 0 and 'cannot_unlock' or 'cannot_lock' })
 end)
 
 RegisterNetEvent('ox_doorlock:getDoors', function()
