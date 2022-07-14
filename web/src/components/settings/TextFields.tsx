@@ -44,7 +44,7 @@ const TextFields: React.FC = () => {
       >
         <TextField
           fullWidth
-          label="Door rate"
+          label="Automatic door rate"
           type="number"
           style={{ marginBottom: '0.7rem' }}
           value={doorRate}

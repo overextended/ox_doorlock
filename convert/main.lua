@@ -75,6 +75,7 @@ MySQL.ready(function()
 							lockSound = door.audioLock?.file and door.audioLock.file:gsub('%.ogg', ''),
 							unlockSound = door.audioUnlock?.file and door.audioUnlock.file:gsub('%.ogg', ''),
 							maxDistance = door.maxDistance,
+							doorRate = door.doorRate,
 							state = door.locked and 1 or 0,
 							passcode = door.passcode,
 							doors = double and {

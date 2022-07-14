@@ -33,6 +33,7 @@ debugData<boolean | StoreState>([
         lockpick: true,
         hideUi: true,
       },
+      doorRate: null
     },
   },
 ]);

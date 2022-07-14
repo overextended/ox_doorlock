@@ -9,11 +9,19 @@ local function createDoor(door)
 			AddDoorToSystem(double[i].hash, double[i].model, double[i].coords.x, double[i].coords.y, double[i].coords.z, false, false, false)
 			DoorSystemSetDoorState(double[i].hash, 4, false, false)
 			DoorSystemSetDoorState(double[i].hash, door.state, false, false)
+
+			if door.doorRate then
+				DoorSystemSetAutomaticRate(double[i].hash, door.doorRate, false, false)
+			end
 		end
 	else
 		AddDoorToSystem(door.hash, door.model, door.coords.x, door.coords.y, door.coords.z, false, false, false)
 		DoorSystemSetDoorState(door.hash, 4, false, false)
 		DoorSystemSetDoorState(door.hash, door.state, false, false)
+
+		if door.doorRate then
+			DoorSystemSetAutomaticRate(door.hash, door.doorRate, false, false)
+		end
 	end
 end
 
@@ -181,19 +189,29 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 end)
 
 RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
-	local door = doors[id]
+	if source == '' then return end
 
-	if not data then
+	if data then
+		local door = doors[id]
 		local double = door.doors
 
-		if double and double[1].entity then
-			Entity(double[1].entity).state.doorId = nil
-			Entity(double[2].entity).state.doorId = nil
-			DoorSystemSetDoorState(double[1].hash, 0, false, false)
-			DoorSystemSetDoorState(double[2].hash, 0, false, false)
-		elseif door.entity then
-			Entity(door.entity).state.doorId = nil
-			DoorSystemSetDoorState(door.hash, 0, false, false)
+		-- hacky method to resolve a bug with "closest door" by forcing a distance recalculation
+		if door.distance < 20 then door.distance = 80 end
+
+		if double then
+			for i = 1, 2 do
+				DoorSystemSetDoorState(double[i].hash, data.state, false, false)
+
+				if data.doorRate then
+					DoorSystemSetAutomaticRate(double[i].hash, data.doorRate, false, false)
+				end
+			end
+		else
+			DoorSystemSetDoorState(door.hash, data.state, false, false)
+
+			if data.doorRate then
+				DoorSystemSetAutomaticRate(door.hash, data.doorRate, false, false)
+			end
 		end
 	end
 
