@@ -117,7 +117,7 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 		createDoor(data)
 	end
 
-	if source == cache.serverId then
+	if Config.Notify and source == cache.serverId then
 		if state == 0 then
 			lib.notify({
 				type = 'success',

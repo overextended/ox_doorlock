@@ -1,6 +1,10 @@
 Config = {}
 
-Config.DrawTextUI = true
+-- Send a notification when the door is successfully locked/unlocked.
+Config.Notify = false
+
+-- Draw a persistent notification while in-range of a door, with a prompt to lock/unlock.
+Config.DrawTextUI = false
 
 Config.DrawSprite = {
     -- Unlocked
