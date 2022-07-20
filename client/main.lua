@@ -112,6 +112,8 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 end)
 
 RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
+	if not doors then return end
+
 	if data then
 		doors[id] = data
 		createDoor(data)
