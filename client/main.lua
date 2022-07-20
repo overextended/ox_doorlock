@@ -159,8 +159,6 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 			Wait(0)
 		end
 
-		if door.state ~= state then return end
-
 		DoorSystemSetDoorState(double[1].hash, door.state, false, false)
 		DoorSystemSetDoorState(double[2].hash, door.state, false, false)
 	else
@@ -170,12 +168,10 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 			Wait(0)
 		end
 
-		if door.state ~= state then return end
-
 		DoorSystemSetDoorState(door.hash, door.state, false, false)
 	end
 
-	if door.distance and door.distance < 20 then
+	if door.state == state and door.distance and door.distance < 20 then
 		local volume = (0.01 * GetProfileSetting(300)) / (door.distance / 2)
 		if volume > 1 then volume = 1 end
 		local sound = state == 0 and door.unlockSound or door.lockSound or 'door-bolt-4'
