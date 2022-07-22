@@ -162,12 +162,18 @@ MySQL.ready(function()
 
 	if not success then
 		-- because some people can't run sql files
-		MySQL.query([[CREATE TABLE `ox_doorlock` (
+		success, result = pcall(MySQL.query, [[CREATE TABLE `ox_doorlock` (
 			`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 			`name` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
 			`data` LONGTEXT NOT NULL COLLATE 'utf8mb4_unicode_ci',
 			PRIMARY KEY (`id`) USING BTREE
 		) COLLATE='utf8mb4_unicode_ci' ENGINE=InnoDB; ]])
+
+		if not success then
+			return error(result)
+		end
+
+		print("Created table 'ox_doorlock' in MySQL database.")
 	elseif result then
 		for i = 1, #result do
 			local door = result[i]
