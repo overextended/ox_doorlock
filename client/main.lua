@@ -140,33 +140,38 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 	door.state = state
 
 	if double then
-		while not door.auto and door.state == 1 and double[1].entity do
-			local doorOneHeading = double[1].heading
-			local doorOneCurrentHeading = math.floor(GetEntityHeading(double[1].entity) + 0.5)
+		-- Disabled a consistent methood of accelerating a locked door is found.
+		-- Some users reported doors getting stuck in the incorrect state.
+		-- while not door.auto and door.state == 1 and double[1].entity do
+		-- 	local doorOneHeading = double[1].heading
+		-- 	local doorOneCurrentHeading = math.floor(GetEntityHeading(double[1].entity) + 0.5)
 
-			if doorOneHeading == doorOneCurrentHeading then
-				DoorSystemSetDoorState(double[1].hash, door.state, false, false)
-			end
+		-- 	if doorOneHeading == doorOneCurrentHeading then
+		-- 		DoorSystemSetDoorState(double[1].hash, door.state, false, false)
+		-- 	end
 
-			local doorTwoHeading = double[2].heading
-			local doorTwoCurrentHeading = math.floor(GetEntityHeading(double[2].entity) + 0.5)
+		-- 	local doorTwoHeading = double[2].heading
+		-- 	local doorTwoCurrentHeading = math.floor(GetEntityHeading(double[2].entity) + 0.5)
 
-			if doorTwoHeading == doorTwoCurrentHeading then
-				DoorSystemSetDoorState(double[2].hash, door.state, false, false)
-			end
+		-- 	if doorTwoHeading == doorTwoCurrentHeading then
+		-- 		DoorSystemSetDoorState(double[2].hash, door.state, false, false)
+		-- 	end
 
-			if doorOneHeading == doorOneCurrentHeading and doorTwoHeading == doorTwoCurrentHeading then break end
-			Wait(0)
+		-- 	if doorOneHeading == doorOneCurrentHeading and doorTwoHeading == doorTwoCurrentHeading then break end
+		-- 	Wait(0)
+		-- end
+
+		for i = 1, 2 do
+			DoorSystemSetDoorState(double[i].hash, door.state, false, false)
 		end
-
-		DoorSystemSetDoorState(double[1].hash, door.state, false, false)
-		DoorSystemSetDoorState(double[2].hash, door.state, false, false)
 	else
-		while not door.auto and door.state == 1 and door.entity do
-			local heading = math.floor(GetEntityHeading(door.entity) + 0.5)
-			if heading == door.heading then break end
-			Wait(0)
-		end
+		-- Disabled a consistent methood of accelerating a locked door is found.
+		-- Some users reported doors getting stuck in the incorrect state.
+		-- while not door.auto and door.state == 1 and door.entity do
+		-- 	local heading = math.floor(GetEntityHeading(door.entity) + 0.5)
+		-- 	if heading == door.heading then break end
+		-- 	Wait(0)
+		-- end
 
 		DoorSystemSetDoorState(door.hash, door.state, false, false)
 	end

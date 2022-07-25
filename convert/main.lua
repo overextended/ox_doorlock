@@ -1,3 +1,4 @@
+---@type table?
 Config.DoorList = {}
 
 MySQL.ready(function()
