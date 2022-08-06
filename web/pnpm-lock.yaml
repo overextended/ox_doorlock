@@ -8,6 +8,7 @@ specifiers:
   '@emotion/styled': ^11.8.1
   '@mantine/core': ^5.0.3
   '@mantine/hooks': ^5.0.3
+  '@tanstack/react-table': ^8.5.11
   '@types/node': ^16.11.18
   '@types/react': ^17.0.2
   '@types/react-dom': ^17.0.2
@@ -27,6 +28,7 @@ dependencies:
   '@emotion/styled': 11.8.1_2yyxvdh6xxwpikwje2j6z7jzuu
   '@mantine/core': 5.0.3_lq35anvhewix4q2hbnhvgesn5i
   '@mantine/hooks': 5.0.3_react@17.0.2
+  '@tanstack/react-table': 8.5.11_sfoxds7t5ydpegc3knd667wn6m
   '@types/node': 16.11.26
   '@types/react': 17.0.43
   '@types/react-dom': 17.0.14
@@ -979,6 +981,23 @@ packages:
     dependencies:
       estree-walker: 2.0.2
       picomatch: 2.3.1
+    dev: false
+
+  /@tanstack/react-table/8.5.11_sfoxds7t5ydpegc3knd667wn6m:
+    resolution: {integrity: sha512-bIegBJ3VPUX3Z7rMnFEnTRCRgPccTsciilQA1ib/pA6M7Qq1boTNPjNjSbEHmBKytaxPrPfcUfzkZLogYtvu3g==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@tanstack/table-core': 8.5.11
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
+
+  /@tanstack/table-core/8.5.11:
+    resolution: {integrity: sha512-ZN61ockLaIAiiPbZfMKT2S03nbWx28OHg/nAiDnNfmN4QmAMcdwVajPn2QQwnNVGAr4jS4nbhbYzCcjq8livXQ==}
+    engines: {node: '>=12'}
     dev: false
 
   /@types/node/16.11.26:

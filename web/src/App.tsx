@@ -48,7 +48,7 @@ const App: React.FC = () => {
   return (
     <Box className={classes.container}>
       <Box className={classes.main}>
-        <Stack align="center" p={16}>
+        <Stack align="center" pt={16} pb={16}>
           <Routes>
             <Route path="/" element={<Doors />} />
             <Route path="/settings" element={<Settings />} />

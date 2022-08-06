@@ -16,7 +16,7 @@ const Doors: React.FC = () => {
   const { classes } = useStyles();
   return (
     <>
-      <TextInput icon={<Search size={20} />} className={classes.search} />
+      <TextInput icon={<Search size={20} />} className={classes.search} placeholder="Search" />
       <DoorTable />
     </>
   );
