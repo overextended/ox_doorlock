@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/App';
+import App from './App';
 import { debugData } from './utils/debugData';
 import { MantineProvider } from '@mantine/core';
 import { customTheme } from './theme';
 import { isEnvBrowser } from './utils/misc';
 import { StoreState } from './store';
+import { HashRouter } from 'react-router-dom';
 
 debugData<boolean | StoreState>([
   {
@@ -55,7 +56,9 @@ if (isEnvBrowser()) {
 ReactDOM.render(
   <React.StrictMode>
     <MantineProvider withNormalizeCSS withGlobalStyles theme={customTheme}>
-      <App />
+      <HashRouter>
+        <App />
+      </HashRouter>
     </MantineProvider>
   </React.StrictMode>,
   document.getElementById('root'),
