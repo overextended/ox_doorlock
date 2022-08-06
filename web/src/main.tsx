@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import { debugData } from './utils/debugData';
-import { ThemeProvider } from '@mui/material';
+import { MantineProvider } from '@mantine/core';
 import { customTheme } from './theme';
 import { isEnvBrowser } from './utils/misc';
 import { StoreState } from './store';
@@ -15,10 +15,7 @@ debugData<boolean | StoreState>([
       doorName: 'Door name',
       passcode: 'Supersecret123',
       autolockInterval: '300',
-      itemFields: [
-        { name: 'mrpd_key', metadata: 'office_key', remove: true },
-        { name: 'lockpick' },
-      ],
+      itemFields: [{ name: 'mrpd_key', metadata: 'office_key', remove: true }, { name: 'lockpick' }],
       groupFields: [
         { name: 'police', grade: '0' },
         { name: 'ambulance', grade: '3' },
@@ -33,7 +30,7 @@ debugData<boolean | StoreState>([
         lockpick: true,
         hideUi: true,
       },
-      doorRate: null
+      doorRate: null,
     },
   },
 ]);
@@ -57,9 +54,9 @@ if (isEnvBrowser()) {
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={customTheme}>
+    <MantineProvider withNormalizeCSS withGlobalStyles theme={customTheme}>
       <App />
-    </ThemeProvider>
+    </MantineProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
