@@ -48,12 +48,10 @@ const App: React.FC = () => {
   return (
     <Box className={classes.container}>
       <Box className={classes.main}>
-        <Stack align="center" pt={16} pb={16}>
-          <Routes>
-            <Route path="/" element={<Doors />} />
-            <Route path="/settings" element={<Settings />} />
-          </Routes>
-        </Stack>
+        <Routes>
+          <Route path="/" element={<Doors />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
       </Box>
     </Box>
   );
