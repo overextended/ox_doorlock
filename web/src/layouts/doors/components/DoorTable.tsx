@@ -1,4 +1,4 @@
-import { ActionIcon, Table, Tooltip, UnstyledButton, Text, Group } from '@mantine/core';
+import { ActionIcon, Table, Tooltip, UnstyledButton, Text, Group, Center, Stack } from '@mantine/core';
 import {
   ColumnDef,
   flexRender,
@@ -8,8 +8,10 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { useMemo, useState } from 'react';
-import { Settings, Trash, Selector, ChevronDown, ChevronUp } from 'tabler-icons-react';
+import { useEffect, useMemo, useState } from 'react';
+import { Settings, Trash, Selector, ChevronDown, ChevronUp, Search } from 'tabler-icons-react';
+import useDebounce from '../../../hooks/useDebounce';
+import { useSearch } from '../../../store/search';
 
 interface DoorColumn {
   id: number;
@@ -23,13 +25,9 @@ const data: DoorColumn[] = [
   { id: 3, name: 'pillbox-lockers', zone: 'Pillbox Hill' },
 ];
 
-interface Props {
-  globalFilter: string;
-  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const DoorTable: React.FC<Props> = ({ globalFilter, setGlobalFilter }) => {
+const DoorTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const globalFilter = useSearch((state) => state.debouncedValue);
 
   // const [data, setData] = useState<DoorColumn[]>([
   //   {
@@ -94,7 +92,7 @@ const DoorTable: React.FC<Props> = ({ globalFilter, setGlobalFilter }) => {
       sorting,
       globalFilter,
     },
-    onGlobalFilterChange: setGlobalFilter,
+    onGlobalFilterChange: useSearch((state) => state.setValue),
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -102,43 +100,52 @@ const DoorTable: React.FC<Props> = ({ globalFilter, setGlobalFilter }) => {
   });
 
   return (
-    <Table>
-      <thead>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th key={header.id}>
-                <UnstyledButton onClick={header.column.getToggleSortingHandler()}>
-                  <Group>
-                    <Text>{flexRender(header.column.columnDef.header, header.getContext())}</Text>
-                    {header.column.getIsSorted() === 'desc' ? (
-                      <ChevronDown />
-                    ) : header.column.getIsSorted() === 'asc' ? (
-                      <ChevronUp />
-                    ) : !header.column.getCanHide() ? (
-                      <Selector />
-                    ) : (
-                      <></>
-                    )}
-                  </Group>
-                </UnstyledButton>
-              </th>
+    <>
+      {table.getFilteredRowModel().rows.length > 0 ? (
+        <Table>
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id}>
+                    <UnstyledButton onClick={header.column.getToggleSortingHandler()}>
+                      <Group>
+                        <Text>{flexRender(header.column.columnDef.header, header.getContext())}</Text>
+                        {header.column.getIsSorted() === 'desc' ? (
+                          <ChevronDown />
+                        ) : header.column.getIsSorted() === 'asc' ? (
+                          <ChevronUp />
+                        ) : !header.column.getCanHide() ? (
+                          <Selector />
+                        ) : (
+                          <></>
+                        )}
+                      </Group>
+                    </UnstyledButton>
+                  </th>
+                ))}
+              </tr>
             ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
-            {row.getAllCells().map((cell) => (
-              <>
-                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-              </>
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getAllCells().map((cell) => (
+                  <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                ))}
+              </tr>
             ))}
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+          </tbody>
+        </Table>
+      ) : (
+        <Center sx={{ height: '100%' }}>
+          <Stack align="center">
+            <Search size={48} />
+            <Text size="lg">No results found</Text>
+          </Stack>
+        </Center>
+      )}
+    </>
   );
 };
 

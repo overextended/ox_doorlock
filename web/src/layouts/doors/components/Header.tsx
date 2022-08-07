@@ -1,5 +1,6 @@
 import { ActionIcon, CloseButton, createStyles, Group, TextInput, Tooltip } from '@mantine/core';
-import { Plus, Search } from 'tabler-icons-react';
+import { Plus } from 'tabler-icons-react';
+import Searchbar from './Search';
 
 const useStyles = createStyles({
   main: {
@@ -8,19 +9,9 @@ const useStyles = createStyles({
     alignItems: 'center',
     padding: 16,
   },
-
-  search: {
-    flex: '1 1 auto',
-    padding: 2,
-  },
 });
 
-interface Props {
-  globalFilter: string;
-  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const Header: React.FC<Props> = ({ globalFilter, setGlobalFilter }) => {
+const Header: React.FC = () => {
   const { classes } = useStyles();
 
   return (
@@ -30,13 +21,7 @@ const Header: React.FC<Props> = ({ globalFilter, setGlobalFilter }) => {
           <Plus size={20} />
         </ActionIcon>
       </Tooltip>
-      <TextInput
-        icon={<Search size={20} />}
-        placeholder="Search"
-        className={classes.search}
-        value={globalFilter ?? ''}
-        onChange={(e) => setGlobalFilter(e.target.value)}
-      />
+      <Searchbar />
       <CloseButton iconSize={20} size="lg" />
     </Group>
   );
