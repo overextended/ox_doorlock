@@ -1,16 +1,16 @@
-import { ActionIcon, Table, Tooltip, UnstyledButton, Text, Group, Center, Stack } from '@mantine/core';
+import { ActionIcon, Table, Tooltip, UnstyledButton, Text, Group, Center, Stack, Pagination, Box } from '@mantine/core';
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Settings, Trash, Selector, ChevronDown, ChevronUp, Search } from 'tabler-icons-react';
-import useDebounce from '../../../hooks/useDebounce';
 import { useSearch } from '../../../store/search';
 
 interface DoorColumn {
@@ -88,6 +88,12 @@ const DoorTable: React.FC = () => {
   const table = useReactTable({
     data,
     columns,
+    initialState: {
+      pagination: {
+        pageSize: 8,
+        pageIndex: 0,
+      },
+    },
     state: {
       sorting,
       globalFilter,
@@ -97,10 +103,11 @@ const DoorTable: React.FC = () => {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
-    <>
+    <Stack justify="space-between" align="center" sx={{ height: '100%', paddingBottom: 16 }} spacing={0}>
       {table.getFilteredRowModel().rows.length > 0 ? (
         <Table>
           <thead>
@@ -145,7 +152,10 @@ const DoorTable: React.FC = () => {
           </Stack>
         </Center>
       )}
-    </>
+      {table.getPageCount() > 1 && (
+        <Pagination total={table.getPageCount()} onChange={(e) => table.setPageIndex(e - 1)} />
+      )}
+    </Stack>
   );
 };
 

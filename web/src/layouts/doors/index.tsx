@@ -4,7 +4,7 @@ import DoorTable from './components/DoorTable';
 
 const Doors: React.FC = () => {
   return (
-    <Stack>
+    <Stack sx={{ height: '100%' }}>
       <Header />
       <DoorTable />
     </Stack>

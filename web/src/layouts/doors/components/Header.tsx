@@ -8,6 +8,7 @@ const useStyles = createStyles({
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 16,
+    paddingBottom: 0,
   },
 });
 
