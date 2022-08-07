@@ -1,4 +1,4 @@
-import { Button, CloseButton, createStyles, Group, TextInput } from '@mantine/core';
+import { ActionIcon, CloseButton, createStyles, Group, TextInput, Tooltip } from '@mantine/core';
 import { Plus, Search } from 'tabler-icons-react';
 
 const useStyles = createStyles({
@@ -14,16 +14,19 @@ const useStyles = createStyles({
     padding: 2,
   },
 });
+
 const Header: React.FC = () => {
   const { classes } = useStyles();
 
   return (
     <Group className={classes.main}>
-      <Button leftIcon={<Plus size={20} />} variant="light">
-        Create Door
-      </Button>
+      <Tooltip label="Create a new door" transition="pop">
+        <ActionIcon variant="light" color="blue" size="lg">
+          <Plus size={20} />
+        </ActionIcon>
+      </Tooltip>
       <TextInput icon={<Search size={20} />} placeholder="Search" className={classes.search} />
-      <CloseButton iconSize={20} />
+      <CloseButton iconSize={20} size="lg" />
     </Group>
   );
 };
