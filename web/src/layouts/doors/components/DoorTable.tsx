@@ -4,6 +4,7 @@ import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
+  getFilteredRowModel,
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
@@ -22,7 +23,12 @@ const data: DoorColumn[] = [
   { id: 3, name: 'pillbox-lockers', zone: 'Pillbox Hill' },
 ];
 
-const DoorTable: React.FC = () => {
+interface Props {
+  globalFilter: string;
+  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const DoorTable: React.FC<Props> = ({ globalFilter, setGlobalFilter }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   // const [data, setData] = useState<DoorColumn[]>([
@@ -41,6 +47,7 @@ const DoorTable: React.FC = () => {
         accessorKey: 'id',
         cell: (info) => info.getValue(),
         enableHiding: false,
+        enableGlobalFilter: false, // id is of type number so it breaks filter function
       },
       {
         id: 'name',
@@ -85,10 +92,13 @@ const DoorTable: React.FC = () => {
     columns,
     state: {
       sorting,
+      globalFilter,
     },
+    onGlobalFilterChange: setGlobalFilter,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
   });
 
   return (

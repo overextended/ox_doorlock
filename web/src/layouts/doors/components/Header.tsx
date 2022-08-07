@@ -15,7 +15,12 @@ const useStyles = createStyles({
   },
 });
 
-const Header: React.FC = () => {
+interface Props {
+  globalFilter: string;
+  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Header: React.FC<Props> = ({ globalFilter, setGlobalFilter }) => {
   const { classes } = useStyles();
 
   return (
@@ -25,7 +30,13 @@ const Header: React.FC = () => {
           <Plus size={20} />
         </ActionIcon>
       </Tooltip>
-      <TextInput icon={<Search size={20} />} placeholder="Search" className={classes.search} />
+      <TextInput
+        icon={<Search size={20} />}
+        placeholder="Search"
+        className={classes.search}
+        value={globalFilter ?? ''}
+        onChange={(e) => setGlobalFilter(e.target.value)}
+      />
       <CloseButton iconSize={20} size="lg" />
     </Group>
   );
