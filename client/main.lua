@@ -289,11 +289,11 @@ CreateThread(function()
 		else closestDoor = nil end
 
 		if closestDoor and closestDoor.distance < closestDoor.maxDistance then
-			if Config.DrawTextUI then
-				if closestDoor.state == 0 and showUI ~= 0 and not closestDoor.hideUi then
+			if Config.DrawTextUI and not closestDoor.hideUi then
+				if closestDoor.state == 0 and showUI ~= 0 then
 					lib.showTextUI(lockDoor)
 					showUI = 0
-				elseif closestDoor.state == 1 and showUI ~= 1 and not closestDoor.hideUi then
+				elseif closestDoor.state == 1 and showUI ~= 1 then
 					lib.showTextUI(unlockDoor)
 					showUI = 1
 				end
