@@ -10,6 +10,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Settings, Trash, Selector, ChevronDown, ChevronUp, Search } from 'tabler-icons-react';
 import { useSearch } from '../../../store/search';
 
@@ -28,6 +29,7 @@ const data: DoorColumn[] = [
 const DoorTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const globalFilter = useSearch((state) => state.debouncedValue);
+  const navigate = useNavigate();
 
   // const [data, setData] = useState<DoorColumn[]>([
   //   {
@@ -65,7 +67,7 @@ const DoorTable: React.FC = () => {
         id: 'edit',
         cell: () => (
           <Tooltip label="Edit">
-            <ActionIcon color="blue" variant="transparent">
+            <ActionIcon color="blue" variant="transparent" onClick={() => navigate('/settings')}>
               <Settings size={20} />
             </ActionIcon>
           </Tooltip>
