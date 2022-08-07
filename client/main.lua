@@ -50,8 +50,8 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 
 			if double then
 				if door.distance < 80 then
-					if not double[1].entity and IsModelValid(double[1].model) and IsModelValid(double[2].model) then
-						for i = 1, 2 do
+					for i = 1, 2 do
+						if not double[i].entity and IsModelValid(double[i].model) then
 							local entity = GetClosestObjectOfType(double[i].coords.x, double[i].coords.y, double[i].coords.z, 1.0, double[i].model, false, false, false)
 
 							if entity ~= 0 then
@@ -64,7 +64,7 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 					if door.distance < 20 then
 						nearbyDoors[#nearbyDoors + 1] = door
 					end
-				elseif double[1].entity then
+				else
 					for i = 1, 2 do
 						double[i].entity = nil
 					end
