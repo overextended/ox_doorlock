@@ -4,6 +4,7 @@ import { TbSettings, TbBriefcase, TbBottle, TbBell } from 'react-icons/tb';
 import General from './views/general/general';
 import Groups from './views/groups/groups';
 import Items from './views/items/items';
+import Sound from './views/sound/sound';
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const Settings: React.FC = () => {
             <Route path="/general" element={<General />} />
             <Route path="/groups" element={<Groups />} />
             <Route path="/items" element={<Items />} />
-            <Route path="/sound" element={<>Sound</>} />
+            <Route path="/sound" element={<Sound />} />
           </Routes>
         </Box>
       </Box>
