@@ -1,17 +1,13 @@
-import { Box, Input, Stack, Button, Group, NumberInput, Text, Tooltip } from '@mantine/core';
+import { Box, Input, Stack, Button, Group, NumberInput, Tooltip } from '@mantine/core';
 import { TbPlus } from 'react-icons/tb';
 
 const Groups: React.FC = () => {
   return (
     <Stack justify="space-between" align="center" sx={{ height: '100%' }}>
-      <Box>
-        <Group p={8}>
-          <Input placeholder="Group" />
-          <NumberInput placeholder="Grade" />
-        </Group>
-        <Group p={8}>
-          <Input placeholder="Group" />
-          <NumberInput placeholder="Grade" />
+      <Box sx={{ width: '100%' }}>
+        <Group p={8} position="center">
+          <Input placeholder="Group" sx={{ width: '40%' }} />
+          <NumberInput placeholder="Grade" sx={{ width: '40%' }} />
         </Group>
       </Box>
 

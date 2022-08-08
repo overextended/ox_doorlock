@@ -1,4 +1,4 @@
-import { Box, Input, Stack, Button, Group, ActionIcon, Tooltip, Modal, TextInput, Switch } from '@mantine/core';
+import { Box, Stack, Button, Group, ActionIcon, Tooltip, Modal, TextInput, Switch } from '@mantine/core';
 import { useState } from 'react';
 import { TbPlus, TbSettings } from 'react-icons/tb';
 
@@ -8,9 +8,9 @@ const Items: React.FC = () => {
   return (
     <>
       <Stack justify="space-between" align="center" sx={{ height: '100%' }}>
-        <Box>
-          <Group p={8}>
-            <Input placeholder="Item" />
+        <Box sx={{ width: '100%' }}>
+          <Group p={8} sx={{ width: '100%' }} position="center">
+            <TextInput placeholder="Item" sx={{ width: '90%' }} />
             <Tooltip label="Item options" withArrow>
               <ActionIcon color="blue" variant="transparent" onClick={() => setOpened(true)}>
                 <TbSettings size={24} />
