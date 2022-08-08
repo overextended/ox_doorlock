@@ -36,7 +36,7 @@ const General: React.FC = () => {
       </Box>
 
       <Center>
-        <Button leftIcon={<TbCheck />} color="teal">
+        <Button leftIcon={<TbCheck size={20} />} color="teal">
           Confirm Door
         </Button>
       </Center>
