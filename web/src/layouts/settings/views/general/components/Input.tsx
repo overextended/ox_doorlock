@@ -1,5 +1,5 @@
-import { Box, Grid, Tooltip, TextInput, Text, NumberInput, ThemeIcon } from '@mantine/core';
-import { InfoCircle } from 'tabler-icons-react';
+import { Box, Grid, Tooltip, TextInput, NumberInput, ThemeIcon } from '@mantine/core';
+import { BsQuestionCircle } from 'react-icons/bs';
 
 interface Props {
   label: string;
@@ -17,9 +17,9 @@ const Input: React.FC<Props> = ({ label, type, infoCircle, span }) => {
             label={label}
             rightSection={
               infoCircle && (
-                <Tooltip label={infoCircle}>
-                  <ThemeIcon variant="light">
-                    <InfoCircle size={18} />
+                <Tooltip label={infoCircle} withArrow arrowSize={10} multiline width={200}>
+                  <ThemeIcon variant="light" mr={10}>
+                    <BsQuestionCircle size={18} />
                   </ThemeIcon>
                 </Tooltip>
               )
@@ -35,7 +35,7 @@ const Input: React.FC<Props> = ({ label, type, infoCircle, span }) => {
               infoCircle && (
                 <Tooltip label={infoCircle} withArrow arrowSize={10} multiline width={200}>
                   <ThemeIcon variant="light" mr={10}>
-                    <InfoCircle size={18} />
+                    <BsQuestionCircle size={18} />
                   </ThemeIcon>
                 </Tooltip>
               )

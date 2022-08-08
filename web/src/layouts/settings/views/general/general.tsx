@@ -1,18 +1,7 @@
-import {
-  Box,
-  SimpleGrid,
-  TextInput,
-  NumberInput,
-  Grid,
-  Text,
-  Switch,
-  Center,
-  Button,
-  Stack,
-  Group,
-} from '@mantine/core';
-import { Check } from 'tabler-icons-react';
+import { Box, SimpleGrid, Grid, Switch, Center, Button, Stack } from '@mantine/core';
+import { TbCheck } from 'react-icons/tb';
 import Input from './components/Input';
+import TooltipSwitch from './components/TooltipSwitch';
 
 const General: React.FC = () => {
   return (
@@ -35,16 +24,19 @@ const General: React.FC = () => {
         </Grid>
 
         <SimpleGrid cols={2} pt={16}>
-          <Switch label="Locked" />
-          <Switch label="Double" />
-          <Switch label="Automatic" />
-          <Switch label="Lockpick" />
-          <Switch label="Hide UI" />
+          <TooltipSwitch label="Locked" infoCircle="Sets whether the targeting door is locked by default" />
+          <TooltipSwitch label="Double" infoCircle="Enable if the targeting door is a double door" />
+          <TooltipSwitch
+            label="Automatic"
+            infoCircle="Enable if the targeting door is moving automatically (Garage, poles, etc...)"
+          />
+          <TooltipSwitch label="Lockpick" infoCircle="Enables the targeting door to be lockpicked" />
+          <TooltipSwitch label="Hide UI" infoCircle="Hides UI indicators for the targeting door" />
         </SimpleGrid>
       </Box>
 
       <Center>
-        <Button leftIcon={<Check />} color="teal">
+        <Button leftIcon={<TbCheck />} color="teal">
           Confirm Door
         </Button>
       </Center>

@@ -1,6 +1,6 @@
 import { TextInput } from '@mantine/core';
 import { useEffect } from 'react';
-import { Search } from 'tabler-icons-react';
+import { TbSearch } from 'react-icons/tb';
 import useDebounce from '../../../hooks/useDebounce';
 import { useSearch } from '../../../store/search';
 
@@ -16,7 +16,7 @@ const Searchbar: React.FC = () => {
     <>
       <TextInput
         sx={{ flex: '1 1 auto', padding: 2 }}
-        icon={<Search size={20} />}
+        icon={<TbSearch size={20} />}
         placeholder="Search"
         value={search.value ?? ''}
         onChange={(e) => search.setValue(e.target.value)}

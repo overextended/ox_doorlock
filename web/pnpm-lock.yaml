@@ -16,9 +16,9 @@ specifiers:
   cross-env: ^7.0.3
   react: ^17.0.2
   react-dom: ^17.0.2
+  react-icons: ^4.4.0
   react-router-dom: ^6.3.0
   rimraf: ^3.0.2
-  tabler-icons-react: ^1.54.0
   typescript: ^4.5.5
   vite: ^2.9.13
   zustand: ^3.7.2
@@ -35,8 +35,8 @@ dependencies:
   '@vitejs/plugin-react': 1.3.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-icons: 4.4.0_react@17.0.2
   react-router-dom: 6.3.0_sfoxds7t5ydpegc3knd667wn6m
-  tabler-icons-react: 1.54.0_react@17.0.2
   typescript: 4.6.3
   vite: 2.9.13
   zustand: 3.7.2_react@17.0.2
@@ -1654,6 +1654,14 @@ packages:
       scheduler: 0.20.2
     dev: false
 
+  /react-icons/4.4.0_react@17.0.2:
+    resolution: {integrity: sha512-fSbvHeVYo/B5/L4VhB7sBA1i2tS8MkT0Hb9t2H1AVPkwGfVHLJCqyr2Py9dKMxsyM63Eng1GkdZfbWj+Fmv8Rg==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 17.0.2
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -1796,14 +1804,6 @@ packages:
   /supports-preserve-symlinks-flag/1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
-    dev: false
-
-  /tabler-icons-react/1.54.0_react@17.0.2:
-    resolution: {integrity: sha512-k+OlS1qm4Ab0RaSapBG3cyMTd2sFJOaBAhzXHek+Y7wZayoACYTOUtcNAtkD/Y+MmFM1DTs0dqOKGan3VXKyPA==}
-    peerDependencies:
-      react: '>= 16.8.0'
-    dependencies:
-      react: 17.0.2
     dev: false
 
   /to-fast-properties/2.0.0:

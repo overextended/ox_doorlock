@@ -11,7 +11,7 @@ import {
 } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Settings, Trash, Selector, ChevronDown, ChevronUp, Search } from 'tabler-icons-react';
+import { TbSettings, TbTrash, TbSelector, TbChevronDown, TbChevronUp, TbSearch } from 'react-icons/tb';
 import { useSearch } from '../../../store/search';
 
 interface DoorColumn {
@@ -68,7 +68,7 @@ const DoorTable: React.FC = () => {
         cell: () => (
           <Tooltip label="Edit">
             <ActionIcon color="blue" variant="transparent" onClick={() => navigate('/settings')}>
-              <Settings size={20} />
+              <TbSettings size={20} />
             </ActionIcon>
           </Tooltip>
         ),
@@ -78,7 +78,7 @@ const DoorTable: React.FC = () => {
         cell: () => (
           <Tooltip label="Delete">
             <ActionIcon color="red" variant="transparent">
-              <Trash size={20} />
+              <TbTrash size={20} />
             </ActionIcon>
           </Tooltip>
         ),
@@ -121,11 +121,11 @@ const DoorTable: React.FC = () => {
                       <Group>
                         <Text>{flexRender(header.column.columnDef.header, header.getContext())}</Text>
                         {header.column.getIsSorted() === 'desc' ? (
-                          <ChevronDown />
+                          <TbChevronDown />
                         ) : header.column.getIsSorted() === 'asc' ? (
-                          <ChevronUp />
+                          <TbChevronUp />
                         ) : !header.column.getCanHide() ? (
-                          <Selector />
+                          <TbSelector />
                         ) : (
                           <></>
                         )}
@@ -149,7 +149,7 @@ const DoorTable: React.FC = () => {
       ) : (
         <Center sx={{ height: '100%' }}>
           <Stack align="center">
-            <Search size={48} />
+            <TbSearch size={48} />
             <Text size="lg">No results found</Text>
           </Stack>
         </Center>

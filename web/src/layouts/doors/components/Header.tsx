@@ -1,5 +1,5 @@
 import { ActionIcon, CloseButton, createStyles, Group, TextInput, Tooltip } from '@mantine/core';
-import { Plus } from 'tabler-icons-react';
+import { TbPlus } from 'react-icons/tb';
 import Searchbar from './Search';
 
 const useStyles = createStyles({
@@ -19,7 +19,7 @@ const Header: React.FC = () => {
     <Group className={classes.main}>
       <Tooltip label="Create a new door" transition="pop">
         <ActionIcon variant="light" color="blue" size="lg">
-          <Plus size={20} />
+          <TbPlus size={20} />
         </ActionIcon>
       </Tooltip>
       <Searchbar />

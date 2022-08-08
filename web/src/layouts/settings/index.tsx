@@ -1,6 +1,6 @@
 import { Box, Stack, Tabs, Group } from '@mantine/core';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
-import { Settings as SettingsIcon, Briefcase, Bottle, Bell } from 'tabler-icons-react';
+import { TbSettings, TbBriefcase, TbBottle, TbBell } from 'react-icons/tb';
 import General from './views/general/general';
 
 const Settings: React.FC = () => {
@@ -18,16 +18,16 @@ const Settings: React.FC = () => {
           onTabChange={(value) => navigate(`/settings/${value}`)}
         >
           <Tabs.List>
-            <Tabs.Tab value="general" icon={<SettingsIcon size={20} />}>
+            <Tabs.Tab value="general" icon={<TbSettings size={20} />}>
               General
             </Tabs.Tab>
-            <Tabs.Tab value="groups" icon={<Briefcase size={20} />}>
+            <Tabs.Tab value="groups" icon={<TbBriefcase size={20} />}>
               Groups
             </Tabs.Tab>
-            <Tabs.Tab value="items" icon={<Bottle size={20} />}>
+            <Tabs.Tab value="items" icon={<TbBottle size={20} />}>
               Items
             </Tabs.Tab>
-            <Tabs.Tab value="sound" icon={<Bell size={20} />}>
+            <Tabs.Tab value="sound" icon={<TbBell size={20} />}>
               Sound
             </Tabs.Tab>
           </Tabs.List>
