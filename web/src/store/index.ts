@@ -1,7 +1,7 @@
 import create, { GetState, SetState } from 'zustand';
 
-type StringField = string | null;
-type NumberField = number | string | null;
+type StringField = string | null | undefined;
+type NumberField = number | null | undefined;
 
 export interface StoreState {
   doorName: StringField;
@@ -40,11 +40,11 @@ interface StateSetters {
 export const useStore = create<StoreState>((set: SetState<StoreState>) => ({
   doorName: '',
   passcode: '',
-  autolockInterval: '',
+  autolockInterval: 0,
   itemFields: [{ name: '', metadata: '', remove: false }],
-  groupFields: [{ name: '', grade: '' }],
-  interactDistance: '',
-  doorRate: '',
+  groupFields: [{ name: '', grade: 0 }],
+  interactDistance: 0,
+  doorRate: 0,
   lockSound: null,
   unlockSound: null,
   checkboxes: {

@@ -16,15 +16,15 @@ debugData<boolean | StoreState>([
     data: {
       doorName: 'Door name',
       passcode: 'Supersecret123',
-      autolockInterval: '300',
+      autolockInterval: 300,
       itemFields: [{ name: 'mrpd_key', metadata: 'office_key', remove: true }, { name: 'lockpick' }],
       groupFields: [
-        { name: 'police', grade: '0' },
-        { name: 'ambulance', grade: '3' },
+        { name: 'police', grade: 0 },
+        { name: 'ambulance', grade: 0 },
       ],
       lockSound: null,
       unlockSound: null,
-      interactDistance: '15.2',
+      interactDistance: 15.2,
       checkboxes: {
         locked: true,
         double: true,
