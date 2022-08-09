@@ -1,10 +1,10 @@
 import { Box, Stack, Tabs, Group } from '@mantine/core';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import { TbSettings, TbBriefcase, TbBottle, TbBell, TbArrowBackUp } from 'react-icons/tb';
-import General from './views/general/general';
-import Groups from './views/groups/groups';
-import Items from './views/items/items';
-import Sound from './views/sound/sound';
+import General from './views/general';
+import Groups from './views/groups';
+import Items from './views/items';
+import Sound from './views/sound';
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
