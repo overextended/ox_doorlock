@@ -1,12 +1,12 @@
-import { Box, createStyles, Stack } from '@mantine/core';
-import { HashRouter, Routes, Route } from 'react-router-dom';
-// import Settings from './settings';
-// import Auth from './components/auth';
-// import Sound from './components/sound';
+import { Box, createStyles, Transition } from '@mantine/core';
+import { Routes, Route } from 'react-router-dom';
 import { useNuiEvent } from './hooks/useNuiEvent';
-import { useSetters } from './store';
+import { defaultState, StoreState, useSetters, useStore } from './store';
 import Doors from './layouts/doors';
 import Settings from './layouts/settings';
+import { useVisibility } from './store/visibility';
+import { useExitListener } from './hooks/useExitListener';
+import type { DoorColumn } from './layouts/doors/components/DoorTable';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -36,6 +36,7 @@ const useStyles = createStyles((theme) => ({
 const App: React.FC = () => {
   const { classes } = useStyles();
   const setSounds = useSetters((setter) => setter.setSounds);
+  const [visible, setVisible] = useVisibility((state) => [state.visible, state.setVisible]);
 
   useNuiEvent('playSound', async (data: { sound: string; volume: number }) => {
     const sound = new Audio(`./sounds/${data.sound}.ogg`);
@@ -45,14 +46,26 @@ const App: React.FC = () => {
 
   useNuiEvent('setSoundFiles', (data: string[]) => setSounds(data));
 
+  useNuiEvent('setVisible', (data: DoorColumn[] | StoreState | boolean) => {
+    setVisible(true);
+    if (Array.isArray(data)) return; // set column data here
+    return useStore.setState(typeof data === 'object' ? data : defaultState, true);
+  });
+
+  useExitListener(setVisible);
+
   return (
     <Box className={classes.container}>
-      <Box className={classes.main}>
-        <Routes>
-          <Route path="/" element={<Doors />} />
-          <Route path="/settings/*" element={<Settings />} />
-        </Routes>
-      </Box>
+      <Transition transition="slide-up" mounted={visible}>
+        {(style) => (
+          <Box className={classes.main} style={style}>
+            <Routes>
+              <Route path="/" element={<Doors />} />
+              <Route path="/settings/*" element={<Settings />} />
+            </Routes>
+          </Box>
+        )}
+      </Transition>
     </Box>
   );
 };

@@ -15,7 +15,7 @@ import { TbSettings, TbTrash, TbSelector, TbChevronDown, TbChevronUp, TbSearch }
 import { useSearch } from '../../../store/search';
 import { openConfirmModal } from '@mantine/modals';
 
-interface DoorColumn {
+export interface DoorColumn {
   id: number;
   name: string;
   zone: string;

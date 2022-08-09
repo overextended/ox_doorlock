@@ -37,15 +37,6 @@ interface StateSetters {
   setDoorRate: (value: StoreState['doorRate']) => void;
 }
 
-interface VisibilityState {
-  settingsVisible: boolean;
-  authVisible: boolean;
-  soundVisible: boolean;
-  setSettingsVisible: (state: boolean) => void;
-  setAuthVisible: (state: boolean) => void;
-  setSoundVisible: (state: boolean) => void;
-}
-
 export const useStore = create<StoreState>((set: SetState<StoreState>) => ({
   doorName: '',
   passcode: '',
@@ -67,38 +58,26 @@ export const useStore = create<StoreState>((set: SetState<StoreState>) => ({
 
 export const defaultState = useStore.getState();
 
-export const useSetters = create<StateSetters>(
-  (set: SetState<StateSetters>, get: GetState<StateSetters>) => ({
-    sounds: [''],
-    setSounds: (value) => set({ sounds: value }),
-    setLockSound: (value) => useStore.setState({ lockSound: value }),
-    setUnlockSound: (value) => useStore.setState({ unlockSound: value }),
-    setDoorName: (value) => useStore.setState({ doorName: value }),
-    setPasscode: (value: StoreState['passcode']) => useStore.setState({ passcode: value }),
-    setAutolockInterval: (value: StoreState['autolockInterval']) =>
-      useStore.setState({ autolockInterval: value }),
-    toggleCheckbox: (type) =>
-      useStore.setState(({ checkboxes }) => ({
-        checkboxes: { ...checkboxes, [type]: !checkboxes[type] },
-      })),
-    setInteractDistance: (value: StoreState['interactDistance']) =>
-      useStore.setState(() => ({ interactDistance: value })),
-    // Returns previous state, works like usual state setter except if you
-    // want to set state straight away, you still have to call the function
-    setItemFields: (fn) => useStore.setState(({ itemFields }) => ({ itemFields: fn(itemFields) })),
-    setGroupFields: (fn) =>
-      useStore.setState(({ groupFields }) => ({
-        groupFields: fn(groupFields),
-      })),
-    setDoorRate: (value: StoreState['doorRate']) => useStore.setState({ doorRate: value }),
-  }),
-);
-
-export const useVisibilityStore = create((set: SetState<VisibilityState>) => ({
-  settingsVisible: false,
-  authVisible: false,
-  soundVisible: false,
-  setSettingsVisible: (state: boolean) => set({ settingsVisible: state }),
-  setAuthVisible: (state: boolean) => set({ authVisible: state }),
-  setSoundVisible: (state: boolean) => set({ soundVisible: state }),
+export const useSetters = create<StateSetters>((set: SetState<StateSetters>, get: GetState<StateSetters>) => ({
+  sounds: [''],
+  setSounds: (value) => set({ sounds: value }),
+  setLockSound: (value) => useStore.setState({ lockSound: value }),
+  setUnlockSound: (value) => useStore.setState({ unlockSound: value }),
+  setDoorName: (value) => useStore.setState({ doorName: value }),
+  setPasscode: (value: StoreState['passcode']) => useStore.setState({ passcode: value }),
+  setAutolockInterval: (value: StoreState['autolockInterval']) => useStore.setState({ autolockInterval: value }),
+  toggleCheckbox: (type) =>
+    useStore.setState(({ checkboxes }) => ({
+      checkboxes: { ...checkboxes, [type]: !checkboxes[type] },
+    })),
+  setInteractDistance: (value: StoreState['interactDistance']) =>
+    useStore.setState(() => ({ interactDistance: value })),
+  // Returns previous state, works like usual state setter except if you
+  // want to set state straight away, you still have to call the function
+  setItemFields: (fn) => useStore.setState(({ itemFields }) => ({ itemFields: fn(itemFields) })),
+  setGroupFields: (fn) =>
+    useStore.setState(({ groupFields }) => ({
+      groupFields: fn(groupFields),
+    })),
+  setDoorRate: (value: StoreState['doorRate']) => useStore.setState({ doorRate: value }),
 }));
