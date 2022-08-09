@@ -1,5 +1,6 @@
 import { ActionIcon, CloseButton, createStyles, Group, TextInput, Tooltip } from '@mantine/core';
 import { TbPlus } from 'react-icons/tb';
+import { useNavigate } from 'react-router-dom';
 import Searchbar from './Search';
 
 const useStyles = createStyles({
@@ -14,11 +15,12 @@ const useStyles = createStyles({
 
 const Header: React.FC = () => {
   const { classes } = useStyles();
+  const navigate = useNavigate();
 
   return (
     <Group className={classes.main}>
       <Tooltip label="Create a new door" transition="pop">
-        <ActionIcon variant="light" color="blue" size="lg">
+        <ActionIcon variant="light" color="blue" size="lg" onClick={() => navigate('/settings')}>
           <TbPlus size={20} />
         </ActionIcon>
       </Tooltip>
