@@ -12,8 +12,9 @@
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.8.1",
-    "@mantine/core": "^5.0.3",
-    "@mantine/hooks": "^5.0.3",
+    "@mantine/core": "^5.1.1",
+    "@mantine/hooks": "^5.1.1",
+    "@mantine/modals": "^5.1.1",
     "@tanstack/react-table": "^8.5.11",
     "@types/node": "^16.11.18",
     "@types/react": "^17.0.2",

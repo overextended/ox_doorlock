@@ -13,6 +13,7 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TbSettings, TbTrash, TbSelector, TbChevronDown, TbChevronUp, TbSearch } from 'react-icons/tb';
 import { useSearch } from '../../../store/search';
+import { openConfirmModal } from '@mantine/modals';
 
 interface DoorColumn {
   id: number;
@@ -67,7 +68,7 @@ const DoorTable: React.FC = () => {
         id: 'edit',
         cell: () => (
           <Tooltip label="Edit">
-            <ActionIcon color="blue" variant="transparent" onClick={() => navigate('/settings')}>
+            <ActionIcon color="blue.4" variant="transparent" onClick={() => navigate('/settings')}>
               <TbSettings size={20} />
             </ActionIcon>
           </Tooltip>
@@ -75,9 +76,31 @@ const DoorTable: React.FC = () => {
       },
       {
         id: 'delete',
-        cell: () => (
+        cell: (data) => (
           <Tooltip label="Delete">
-            <ActionIcon color="red" variant="transparent">
+            <ActionIcon
+              color="red.4"
+              variant="transparent"
+              onClick={() =>
+                openConfirmModal({
+                  title: 'Confirm deletion',
+                  centered: true,
+                  withCloseButton: false,
+                  children: (
+                    <Text>
+                      Are you sure you want to delete
+                      <Text component="span" weight={700}>{` ${data.row.getValue('name')}`}</Text>?
+                    </Text>
+                  ),
+                  labels: { confirm: 'Confirm', cancel: 'Cancel' },
+                  confirmProps: { color: 'red' },
+                  onConfirm: () => {
+                    // fetchNui
+                    // Remove row from data
+                  },
+                })
+              }
+            >
               <TbTrash size={20} />
             </ActionIcon>
           </Tooltip>

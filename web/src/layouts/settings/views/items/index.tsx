@@ -1,10 +1,9 @@
 import { Box, Stack, Button, Group, ActionIcon, Tooltip, Modal, TextInput, Switch } from '@mantine/core';
+import { closeAllModals, openModal } from '@mantine/modals';
 import { useState } from 'react';
 import { TbPlus, TbSettings } from 'react-icons/tb';
 
 const Items: React.FC = () => {
-  const [opened, setOpened] = useState(false);
-
   return (
     <>
       <Stack justify="space-between" align="center" sx={{ height: '100%' }}>
@@ -12,7 +11,27 @@ const Items: React.FC = () => {
           <Group p={8} sx={{ width: '100%' }} position="center">
             <TextInput placeholder="Item" sx={{ width: '90%' }} />
             <Tooltip label="Item options" withArrow>
-              <ActionIcon color="blue" variant="transparent" onClick={() => setOpened(true)}>
+              <ActionIcon
+                color="blue.4"
+                variant="transparent"
+                onClick={() =>
+                  openModal({
+                    title: 'Item options',
+                    withCloseButton: false,
+                    centered: true,
+                    size: 'xs',
+                    children: (
+                      <Stack>
+                        <TextInput label="Metadata type" />
+                        <Switch label="Remove on use" />
+                        <Button uppercase variant="light" onClick={() => closeAllModals()}>
+                          Confirm
+                        </Button>
+                      </Stack>
+                    ),
+                  })
+                }
+              >
                 <TbSettings size={24} />
               </ActionIcon>
             </Tooltip>
@@ -25,24 +44,6 @@ const Items: React.FC = () => {
           </Button>
         </Tooltip>
       </Stack>
-
-      <Modal
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title="Item options"
-        withCloseButton={false}
-        centered
-        size="xs"
-        transition="slide-up"
-      >
-        <Stack>
-          <TextInput label="Metadata type" />
-          <Switch label="Remove on use" />
-          <Button uppercase variant="light" onClick={() => setOpened(false)}>
-            Confirm
-          </Button>
-        </Stack>
-      </Modal>
     </>
   );
 };

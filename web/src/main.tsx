@@ -8,6 +8,7 @@ import { customTheme } from './theme';
 import { isEnvBrowser } from './utils/misc';
 import { StoreState } from './store';
 import { HashRouter } from 'react-router-dom';
+import { ModalsProvider } from '@mantine/modals';
 
 debugData<boolean | StoreState>([
   {
@@ -56,9 +57,11 @@ if (isEnvBrowser()) {
 ReactDOM.render(
   <React.StrictMode>
     <MantineProvider withNormalizeCSS withGlobalStyles theme={customTheme}>
-      <HashRouter>
-        <App />
-      </HashRouter>
+      <ModalsProvider modalProps={{ transition: 'slide-up' }}>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </ModalsProvider>
     </MantineProvider>
   </React.StrictMode>,
   document.getElementById('root'),
