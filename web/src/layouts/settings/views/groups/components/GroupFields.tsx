@@ -1,12 +1,11 @@
 import { Group, Input, NumberInput } from '@mantine/core';
 import { useStore, useSetters } from '../../../../../store';
 
-const Fields: React.FC = () => {
+const GroupFields: React.FC = () => {
   const groupFields = useStore((state) => state.groupFields);
   const setGroupFields = useSetters((setter) => setter.setGroupFields);
 
   const handleChange = (value: string | number | undefined, index: number, property: 'name' | 'grade') => {
-    // i hate this
     setGroupFields((prevState) => {
       return prevState.map((item, indx) => (index === indx ? { ...item, [property]: value } : item));
     });
@@ -34,4 +33,4 @@ const Fields: React.FC = () => {
   );
 };
 
-export default Fields;
+export default GroupFields;

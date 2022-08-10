@@ -1,45 +1,30 @@
-import { Box, Stack, Button, Group, ActionIcon, Tooltip, Modal, TextInput, Switch } from '@mantine/core';
-import { closeAllModals, openModal } from '@mantine/modals';
-import { useState } from 'react';
-import { TbPlus, TbSettings } from 'react-icons/tb';
+import { Box, Stack, Button, Tooltip } from '@mantine/core';
+import { useEffect } from 'react';
+import { TbPlus } from 'react-icons/tb';
+import { useSetters } from '../../../../store';
+import ItemFields from './components/ItemFields';
 
 const Items: React.FC = () => {
+  const setItemFields = useSetters((setter) => setter.setItemFields);
+
+  // Clear empty item fields when leaving the page
+  useEffect(() => {
+    return () => {
+      setItemFields((prevState) => prevState.filter((item, index) => index === 0 || item.name !== ''));
+    };
+  }, []);
+
   return (
     <>
       <Stack justify="space-between" align="center" sx={{ height: '100%' }}>
-        <Box sx={{ width: '100%' }}>
-          <Group p={8} sx={{ width: '100%' }} position="center">
-            <TextInput placeholder="Item" sx={{ width: '90%' }} />
-            <Tooltip label="Item options" withArrow>
-              <ActionIcon
-                color="blue.4"
-                variant="transparent"
-                onClick={() =>
-                  openModal({
-                    title: 'Item options',
-                    withCloseButton: false,
-                    centered: true,
-                    size: 'xs',
-                    children: (
-                      <Stack>
-                        <TextInput label="Metadata type" />
-                        <Switch label="Remove on use" />
-                        <Button uppercase variant="light" onClick={() => closeAllModals()}>
-                          Confirm
-                        </Button>
-                      </Stack>
-                    ),
-                  })
-                }
-              >
-                <TbSettings size={24} />
-              </ActionIcon>
-            </Tooltip>
-          </Group>
-        </Box>
+        <ItemFields />
 
         <Tooltip label="Create a new row" withArrow arrowSize={10}>
-          <Button fullWidth variant="light">
+          <Button
+            fullWidth
+            variant="light"
+            onClick={() => setItemFields((prevState) => [...prevState, { name: '', metadata: '', remove: false }])}
+          >
             <TbPlus size={24} />
           </Button>
         </Tooltip>
