@@ -1,10 +1,33 @@
-import { Stack, Autocomplete } from '@mantine/core';
+import { Stack, Select } from '@mantine/core';
+import { useSetters, useStore } from '../../../../store';
 
 const Sound: React.FC = () => {
+  const sounds = useSetters((state) => state.sounds);
+  const lockSound = useStore((state) => state.lockSound);
+  const unlockSound = useStore((state) => state.unlockSound);
+  const setLockSound = useSetters((setter) => setter.setLockSound);
+  const setUnlockSound = useSetters((setter) => setter.setUnlockSound);
+
   return (
     <Stack>
-      <Autocomplete data={['Option 1', 'Option 2', 'Option 3', 'Option 4']} label="Lock sound" />
-      <Autocomplete data={['Option 1', 'Option 2', 'Option 3', 'Option 4']} label="Unlock sound" />
+      <Select
+        data={sounds}
+        label="Lock sound"
+        value={lockSound || ''}
+        searchable
+        clearable
+        nothingFound="No such sound"
+        onChange={(e) => setLockSound(e)}
+      />
+      <Select
+        data={sounds}
+        label="Unlock sound"
+        value={unlockSound || ''}
+        searchable
+        clearable
+        nothingFound="No such sound"
+        onChange={(e) => setUnlockSound(e)}
+      />
     </Stack>
   );
 };
