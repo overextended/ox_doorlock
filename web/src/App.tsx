@@ -6,7 +6,8 @@ import Doors from './layouts/doors';
 import Settings from './layouts/settings';
 import { useVisibility } from './store/visibility';
 import { useExitListener } from './hooks/useExitListener';
-import type { DoorColumn } from './layouts/doors/components/DoorTable';
+import { useDoors } from './store/doors';
+import { DoorColumn } from './store/doors';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -37,6 +38,7 @@ const App: React.FC = () => {
   const { classes } = useStyles();
   const setSounds = useSetters((setter) => setter.setSounds);
   const [visible, setVisible] = useVisibility((state) => [state.visible, state.setVisible]);
+  const setDoors = useDoors((state) => state.setDoors);
 
   useNuiEvent('playSound', async (data: { sound: string; volume: number }) => {
     const sound = new Audio(`./sounds/${data.sound}.ogg`);
@@ -48,7 +50,7 @@ const App: React.FC = () => {
 
   useNuiEvent('setVisible', (data: DoorColumn[] | StoreState | boolean) => {
     setVisible(true);
-    if (Array.isArray(data)) return; // set column data here
+    if (Array.isArray(data)) return setDoors(data); // set column data here
     return useStore.setState(typeof data === 'object' ? data : defaultState, true);
   });
 

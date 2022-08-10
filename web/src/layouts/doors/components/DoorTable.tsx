@@ -14,31 +14,15 @@ import { useNavigate } from 'react-router-dom';
 import { TbSettings, TbTrash, TbSelector, TbChevronDown, TbChevronUp, TbSearch } from 'react-icons/tb';
 import { useSearch } from '../../../store/search';
 import { openConfirmModal } from '@mantine/modals';
-
-export interface DoorColumn {
-  id: number;
-  name: string;
-  zone: string;
-}
-
-const data: DoorColumn[] = [
-  { id: 1, name: 'mrpd-armoury', zone: 'Mission Row' },
-  { id: 2, name: 'mrpd-lockers', zone: 'Mission Row' },
-  { id: 3, name: 'pillbox-lockers', zone: 'Pillbox Hill' },
-];
+import { useDoors, type DoorColumn } from '../../../store/doors';
+import { fetchNui } from '../../../utils/fetchNui';
+import { useStore } from '../../../store';
 
 const DoorTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const globalFilter = useSearch((state) => state.debouncedValue);
   const navigate = useNavigate();
-
-  // const [data, setData] = useState<DoorColumn[]>([
-  //   {
-  //     id: 0,
-  //     name: '',
-  //     zone: '',
-  //   },
-  // ]);
+  const data = useDoors((state) => state.doors);
 
   const columns = useMemo<ColumnDef<DoorColumn>[]>(
     () => [
@@ -66,9 +50,17 @@ const DoorTable: React.FC = () => {
       },
       {
         id: 'edit',
-        cell: () => (
+        cell: (data) => (
           <Tooltip label="Edit">
-            <ActionIcon color="blue.4" variant="transparent" onClick={() => navigate('/settings')}>
+            <ActionIcon
+              color="blue.4"
+              variant="transparent"
+              onClick={async () => {
+                const doorData = await fetchNui('editDoor', data.row.getValue('id'));
+                useStore.setState(doorData, true);
+                navigate('/settings');
+              }}
+            >
               <TbSettings size={20} />
             </ActionIcon>
           </Tooltip>
@@ -95,7 +87,7 @@ const DoorTable: React.FC = () => {
                   labels: { confirm: 'Confirm', cancel: 'Cancel' },
                   confirmProps: { color: 'red' },
                   onConfirm: () => {
-                    // fetchNui
+                    fetchNui('deleteDoor', data.row.getValue('id'));
                     // Remove row from data
                   },
                 })
