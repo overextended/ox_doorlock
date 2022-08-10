@@ -55,22 +55,24 @@ const ItemFields: React.FC = () => {
         size="xs"
         withCloseButton={false}
       >
-        <Stack>
-          <TextInput
-            label="Metadata type"
-            id="metadata"
-            value={itemFields[modal.index].metadata || ''}
-            onChange={(e) => handleChange(e, modal.index)}
-          />
-          <Switch
-            label="Remove on use"
-            checked={itemFields[modal.index].remove || false}
-            onChange={(e) => handleSwitchChange(e, modal.index)}
-          />
-          <Button uppercase variant="light" onClick={() => setModal({ ...modal, opened: false })}>
-            Confirm
-          </Button>
-        </Stack>
+        {itemFields[modal.index] && (
+          <Stack>
+            <TextInput
+              label="Metadata type"
+              id="metadata"
+              value={itemFields[modal.index].metadata || ''}
+              onChange={(e) => handleChange(e, modal.index)}
+            />
+            <Switch
+              label="Remove on use"
+              checked={itemFields[modal.index].remove || false}
+              onChange={(e) => handleSwitchChange(e, modal.index)}
+            />
+            <Button uppercase variant="light" onClick={() => setModal({ ...modal, opened: false })}>
+              Confirm
+            </Button>
+          </Stack>
+        )}
       </Modal>
     </Box>
   );
