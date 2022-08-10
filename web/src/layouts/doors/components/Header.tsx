@@ -1,6 +1,8 @@
 import { ActionIcon, CloseButton, createStyles, Group, TextInput, Tooltip } from '@mantine/core';
 import { TbPlus } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
+import { useVisibility } from '../../../store/visibility';
+import { fetchNui } from '../../../utils/fetchNui';
 import Searchbar from './Search';
 
 const useStyles = createStyles({
@@ -16,6 +18,7 @@ const useStyles = createStyles({
 const Header: React.FC = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
+  const setVisible = useVisibility((state) => state.setVisible);
 
   return (
     <Group className={classes.main}>
@@ -25,7 +28,14 @@ const Header: React.FC = () => {
         </ActionIcon>
       </Tooltip>
       <Searchbar />
-      <CloseButton iconSize={20} size="lg" />
+      <CloseButton
+        iconSize={20}
+        size="lg"
+        onClick={() => {
+          setVisible(false);
+          fetchNui('exit');
+        }}
+      />
     </Group>
   );
 };
