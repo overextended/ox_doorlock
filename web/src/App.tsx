@@ -58,7 +58,7 @@ const App: React.FC = () => {
 
   return (
     <Box className={classes.container}>
-      <Transition transition="slide-up" mounted={visible}>
+      <Transition transition="fade" mounted={visible}>
         {(style) => (
           <Box className={classes.main} style={style}>
             <Routes>
