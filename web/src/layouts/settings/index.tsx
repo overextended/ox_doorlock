@@ -1,5 +1,5 @@
-import { Box, Stack, Tabs, Group } from '@mantine/core';
-import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import { Box, Tabs } from '@mantine/core';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { TbSettings, TbBriefcase, TbBottle, TbBell, TbArrowBackUp } from 'react-icons/tb';
 import General from './views/general';
 import Groups from './views/groups';
@@ -8,7 +8,7 @@ import Sound from './views/sound';
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
-  const { tabValue } = useParams();
+  const location = useLocation();
 
   return (
     <>
@@ -17,7 +17,7 @@ const Settings: React.FC = () => {
           orientation="vertical"
           color="blue"
           sx={{ height: '100%' }}
-          value={tabValue}
+          value={location.pathname.substring(10)}
           onTabChange={(value) => navigate(`/settings/${value}`)}
         >
           <Tabs.List>
