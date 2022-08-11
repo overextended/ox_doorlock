@@ -3,6 +3,7 @@ TriggerServerEvent('ox_doorlock:getDoors')
 
 local function createDoor(door)
 	local double = door.doors
+	door.zone = GetLabelText(GetNameOfZone(door.coords.x, door.coords.y, door.coords.z))
 
 	if double then
 		for i = 1, 2 do
