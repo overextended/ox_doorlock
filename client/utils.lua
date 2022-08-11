@@ -315,39 +315,45 @@ end
 local displayTarget
 
 RegisterNetEvent('ox_doorlock:triggeredCommand', function(edit)
-	if edit then
-		displayTarget = not displayTarget
+	-- print(json.encode(doors, { with_hole = false, indent=true }))
+	SetNuiFocus(true, true)
+	SendNuiMessage(json.encode({
+		action = 'setVisible',
+		data = doors
+	}, { with_hole = false }))
+	-- if edit then
+	-- 	displayTarget = not displayTarget
 
-		if displayTarget then
-			local options = {
-				options = {
-					{
-						label = locale('edit_lock'),
-						icon = 'fas fa-file-pen',
-						action = editDoorlock,
-						canInteract = getDoorFromEntity
-					},
-					{
-						label = locale('remove_lock'),
-						icon = 'fas fa-file-circle-minus',
-						action = removeDoorlock,
-						canInteract = getDoorFromEntity
-					},
-				},
-				distance = 10
-			}
+	-- 	if displayTarget then
+	-- 		local options = {
+	-- 			options = {
+	-- 				{
+	-- 					label = locale('edit_lock'),
+	-- 					icon = 'fas fa-file-pen',
+	-- 					action = editDoorlock,
+	-- 					canInteract = getDoorFromEntity
+	-- 				},
+	-- 				{
+	-- 					label = locale('remove_lock'),
+	-- 					icon = 'fas fa-file-circle-minus',
+	-- 					action = removeDoorlock,
+	-- 					canInteract = getDoorFromEntity
+	-- 				},
+	-- 			},
+	-- 			distance = 10
+	-- 		}
 
-			if target.name == 'qtarget' then
-				return target:Object(options)
-			else
-				return target:AddGlobalObject(options)
-			end
-		end
+	-- 		if target.name == 'qtarget' then
+	-- 			return target:Object(options)
+	-- 		else
+	-- 			return target:AddGlobalObject(options)
+	-- 		end
+	-- 	end
 
-		removeTarget()
-	else
-		newDoorlock()
-	end
+	-- 	removeTarget()
+	-- else
+	-- 	newDoorlock()
+	-- end
 end)
 
 AddEventHandler('onResourceStop', removeTarget)
