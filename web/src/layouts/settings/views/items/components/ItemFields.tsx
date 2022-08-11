@@ -5,7 +5,7 @@ import { TbSettings } from 'react-icons/tb';
 import { useSetters, useStore } from '../../../../../store';
 
 const ItemFields: React.FC = () => {
-  const itemFields = useStore((state) => state.itemFields);
+  const itemFields = useStore((state) => state.items);
   const setItemFields = useSetters((setter) => setter.setItemFields);
   const [modal, setModal] = useState<{ opened: boolean; index: number }>({ opened: false, index: 0 });
 
@@ -30,22 +30,23 @@ const ItemFields: React.FC = () => {
 
   return (
     <Box sx={{ width: '100%', overflowY: 'auto', maxHeight: 410 }}>
-      {itemFields.map((field, index) => (
-        <Group p={8} sx={{ width: '100%' }} position="center" key={`item-field-${index}`}>
-          <TextInput
-            placeholder="Item"
-            sx={{ width: '90%' }}
-            value={(field.name as string) || ''}
-            id="name"
-            onChange={(e) => handleChange(e, index)}
-          />
-          <Tooltip label="Item options" withArrow>
-            <ActionIcon color="blue.4" variant="transparent" onClick={() => setModal({ opened: true, index })}>
-              <TbSettings size={24} />
-            </ActionIcon>
-          </Tooltip>
-        </Group>
-      ))}
+      {itemFields.length > 0 &&
+        itemFields.map((field, index) => (
+          <Group p={8} sx={{ width: '100%' }} position="center" key={`item-field-${index}`}>
+            <TextInput
+              placeholder="Item"
+              sx={{ width: '90%' }}
+              value={(field.name as string) || ''}
+              id="name"
+              onChange={(e) => handleChange(e, index)}
+            />
+            <Tooltip label="Item options" withArrow>
+              <ActionIcon color="blue.4" variant="transparent" onClick={() => setModal({ opened: true, index })}>
+                <TbSettings size={24} />
+              </ActionIcon>
+            </Tooltip>
+          </Group>
+        ))}
       <Modal
         opened={modal.opened}
         onClose={() => setModal({ ...modal, opened: false })}

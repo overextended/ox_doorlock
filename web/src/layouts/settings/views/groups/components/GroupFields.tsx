@@ -2,7 +2,7 @@ import { Group, Input, NumberInput } from '@mantine/core';
 import { useStore, useSetters } from '../../../../../store';
 
 const GroupFields: React.FC = () => {
-  const groupFields = useStore((state) => state.groupFields);
+  const groupFields = useStore((state) => state.groups);
   const setGroupFields = useSetters((setter) => setter.setGroupFields);
 
   const handleChange = (value: string | number | undefined, index: number, property: 'name' | 'grade') => {

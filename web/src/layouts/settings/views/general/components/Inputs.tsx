@@ -10,10 +10,10 @@ const Inputs: React.FC = () => {
   //     state.interactDistance,
   //     state.doorRate,
   //   ]);
-  const doorName = useStore((state) => state.doorName);
+  const doorName = useStore((state) => state.name);
   const passcode = useStore((state) => state.passcode);
-  const autolockInterval = useStore((state) => state.autolockInterval);
-  const interactDistance = useStore((state) => state.interactDistance);
+  const autolockInterval = useStore((state) => state.autolock);
+  const interactDistance = useStore((state) => state.maxDistance);
   const doorRate = useStore((state) => state.doorRate);
 
   //   const [setDoorName, setPasscode, setAutolockInterval, setInteractDistance, setDoorRate] = useSetters((setter) => [
@@ -24,10 +24,10 @@ const Inputs: React.FC = () => {
   //     setter.setDoorRate,
   //   ]);
 
-  const setDoorName = useSetters((setter) => setter.setDoorName);
+  const setDoorName = useSetters((setter) => setter.setName);
   const setPasscode = useSetters((setter) => setter.setPasscode);
-  const setAutolockInterval = useSetters((setter) => setter.setAutolockInterval);
-  const setInteractDistance = useSetters((setter) => setter.setInteractDistance);
+  const setAutolockInterval = useSetters((setter) => setter.setAutolock);
+  const setInteractDistance = useSetters((setter) => setter.setMaxDistance);
   const setDoorRate = useSetters((setter) => setter.setDoorRate);
 
   return (

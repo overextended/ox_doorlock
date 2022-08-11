@@ -11,18 +11,19 @@ const General: React.FC = () => {
   const handleSubmit = () => {
     const state = useStore.getState();
     const data = { ...state };
-    if (data.doorName === '') data.doorName = null;
+    if (data.name === '') data.name = null;
     if (data.passcode === '') data.passcode = null;
-    data.autolockInterval = data.autolockInterval || null;
-    data.interactDistance = data.interactDistance || null;
+    data.autolock = data.autolock || null;
+    data.maxDistance = data.maxDistance || null;
     data.doorRate = data.doorRate || null;
-    for (let i = 0; i < data.itemFields.length; i++) {
-      const itemField = data.itemFields[i];
+    for (let i = 0; i < data.items.length; i++) {
+      const itemField = data.items[i];
       if (itemField.name === '') itemField.name = null;
       if (itemField.metadata === '') itemField.metadata = null;
     }
-    for (let i = 0; i < data.groupFields.length; i++) {
-      const groupField = data.groupFields[i];
+    let groupsObj: { [key: string]: number } = {};
+    for (let i = 0; i < data.groups.length; i++) {
+      const groupField = data.groups[i];
       if (groupField.name === '') groupField.name = null;
       groupField.grade = groupField.grade || null;
     }

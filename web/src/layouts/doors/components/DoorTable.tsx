@@ -16,7 +16,9 @@ import { useSearch } from '../../../store/search';
 import { openConfirmModal } from '@mantine/modals';
 import { useDoors, type DoorColumn } from '../../../store/doors';
 import { fetchNui } from '../../../utils/fetchNui';
-import { useStore } from '../../../store';
+import { StoreState, useStore } from '../../../store';
+
+const parseData = () => {};
 
 const DoorTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -55,9 +57,17 @@ const DoorTable: React.FC = () => {
             <ActionIcon
               color="blue.4"
               variant="transparent"
-              onClick={async () => {
-                const doorData = await fetchNui('editDoor', data.row.getValue('id'));
-                useStore.setState(doorData, true);
+              onClick={() => {
+                // Converts {[key: string]: number} into [{name: string, grade: number}]
+                const doorData = data.row.original;
+                const doorGroupsData = Object.entries(doorData.groups);
+                let newGroupsData: { name: string; grade: number }[] = [];
+                for (let i = 0; i < doorGroupsData.length; i++) {
+                  const groupObj = doorGroupsData[i];
+                  newGroupsData[i] = { name: groupObj[0], grade: groupObj[1] };
+                }
+                const stateData: StoreState = { ...doorData, groups: [...newGroupsData] };
+                useStore.setState(stateData, false);
                 navigate('/settings');
               }}
             >

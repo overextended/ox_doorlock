@@ -99,6 +99,7 @@ local tempData = {}
 RegisterNUICallback('createDoor', function(data, cb)
 	cb(1)
 	tempData = data
+	SetNuiFocus(false, false)
 end)
 
 RegisterNUICallback('deleteDoor', function(id, cb)
@@ -139,23 +140,23 @@ end
 
 local function parseTempData()
 	local data = {
-		name = tempData.doorName,
+		name = tempData.name,
 		passcode = tempData.passcode,
-		autolock = tempData.autolockInterval,
-		maxDistance = tempData.interactDistance or 2,
+		autolock = tempData.autolock,
+		maxDistance = tempData.maxDistance or 2,
 		doorRate = (tempData.doorRate and tempData.doorRate + 0.0) or nil,
 		lockSound = tempData.lockSound,
 		unlockSound = tempData.unlockSound,
-		auto = tempData.checkboxes?.automatic or nil,
-		state = tempData.checkboxes?.locked and 1 or 0,
-		lockpick = tempData.checkboxes?.lockpick or nil,
-		hideUi = tempData.checkboxes?.hideUi or nil,
-		doors = tempData.checkboxes?.double and true or nil,
+		auto = tempData.auto or nil,
+		state = tempData.state and 1 or 0,
+		lockpick = tempData.lockpick or nil,
+		hideUi = tempData.hideUi or nil,
+		doors = tempData.doors and true or nil,
 		groups = {},
 		items = {},
 	}
 
-	for _, group in pairs(tempData.groupFields) do
+	for _, group in pairs(tempData.groups) do
 		if group?.name then
 			data.groups[group.name] = group.grade or 0
 		end
@@ -167,8 +168,8 @@ local function parseTempData()
 
 	local itemSize = 0
 
-	for i = 1, #tempData.itemFields do
-		local item = tempData.itemFields[i]
+	for i = 1, #tempData.items do
+		local item = tempData.items[i]
 
 		if item?.name then
 			itemSize += 1
@@ -315,7 +316,6 @@ end
 local displayTarget
 
 RegisterNetEvent('ox_doorlock:triggeredCommand', function(edit)
-	-- print(json.encode(doors, { with_hole = false, indent=true }))
 	SetNuiFocus(true, true)
 	SendNuiMessage(json.encode({
 		action = 'setVisible',

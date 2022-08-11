@@ -9,31 +9,34 @@ import { isEnvBrowser } from './utils/misc';
 import { StoreState } from './store';
 import { HashRouter } from 'react-router-dom';
 import { ModalsProvider } from '@mantine/modals';
+import { DoorColumn } from './store/doors';
 
-debugData<boolean | StoreState>([
+debugData<DoorColumn[]>([
   {
     action: 'setVisible',
-    data: {
-      doorName: 'Door name',
-      passcode: 'Supersecret123',
-      autolockInterval: 300,
-      itemFields: [{ name: 'mrpd_key', metadata: 'office_key', remove: true }, { name: 'lockpick' }],
-      groupFields: [
-        { name: 'police', grade: 0 },
-        { name: 'ambulance', grade: 0 },
-      ],
-      lockSound: null,
-      unlockSound: null,
-      interactDistance: 15.2,
-      checkboxes: {
-        locked: true,
-        double: true,
-        automatic: true,
+    data: [
+      {
+        name: 'Door name',
+        passcode: 'Supersecret123',
+        autolock: 300,
+        id: 0,
+        zone: 'Mission Row',
+        groups: {
+          ['police']: 0,
+          ['ambulance']: 1,
+        },
+        items: [{ name: 'mrpd_key', metadata: 'lspd_key', remove: true }],
+        lockSound: null,
+        unlockSound: null,
+        maxDistance: 15.2,
+        state: true,
+        doors: true,
+        auto: true,
         lockpick: true,
         hideUi: true,
+        doorRate: null,
       },
-      doorRate: null,
-    },
+    ],
   },
 ]);
 

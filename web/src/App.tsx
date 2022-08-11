@@ -48,7 +48,7 @@ const App: React.FC = () => {
 
   useNuiEvent('setSoundFiles', (data: string[]) => setSounds(data));
 
-  useNuiEvent('setVisible', (data: { [index: number]: DoorColumn } | StoreState | boolean) => {
+  useNuiEvent('setVisible', (data: DoorColumn[]) => {
     setVisible(true);
     setDoors(Object.values(data));
     // if (Array.isArray(data)) return setDoors(data);
