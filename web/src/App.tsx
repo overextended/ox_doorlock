@@ -48,11 +48,20 @@ const App: React.FC = () => {
 
   useNuiEvent('setSoundFiles', (data: string[]) => setSounds(data));
 
-  useNuiEvent('setVisible', (data: DoorColumn[]) => {
+  useNuiEvent('setVisible', (data: DoorColumn | { [key: string]: DoorColumn }) => {
     setVisible(true);
-    setDoors(Object.values(data));
-    // if (Array.isArray(data)) return setDoors(data);
-    // return useStore.setState(typeof data === 'object' ? data : defaultState, true);
+    if (!isNaN(parseInt(Object.keys(data)[0]))) return setDoors(Object.values(data));
+    const doorGroupsData = Object.entries(data.groups);
+    let newGroupsData: { name: string; grade: number }[] = [];
+    for (let i = 0; i < doorGroupsData.length; i++) {
+      const groupObj = doorGroupsData[i];
+      console.log(groupObj);
+      newGroupsData[i] = { name: groupObj[0], grade: groupObj[1] };
+    }
+    // @ts-ignore
+    const newState: StoreState = { ...data, groups: newGroupsData };
+
+    return useStore.setState(newState, true);
   });
 
   useExitListener(setVisible);

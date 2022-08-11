@@ -188,10 +188,10 @@ end
 local function newDoorlock()
 	SetNuiFocus(true, true)
 
-	SendNUIMessage({
+	SendNuiMessage(json.encode({
 		action = 'setVisible',
-		data = true
-	})
+		data = doors
+	}, { with_hole = false }))
 
 	repeat Wait(50) until next(tempData)
 
@@ -238,35 +238,33 @@ end
 
 local function parseDoorData(door)
 	local data = {
-		doorName = door.name,
+		name = door.name,
 		passcode = door.passcode,
-		autolockInterval = door.autolock,
-		interactDistance = door.maxDistance,
+		autolock = door.autolock,
+		maxDistance = door.maxDistance,
 		doorRate = (door.doorRate and door.doorRate + 0.0),
 		lockSound = door.lockSound,
 		unlockSound = door.unlockSound,
-		groupFields = {},
-		itemFields = door.items or {},
-		checkboxes = {
-			automatic = door.auto,
-			locked = door.state == 1,
-			lockpick = door.lockpick,
-			hideUi = door.hideUi,
-			double = door.doors and true,
-		}
+		groups = door.groups,
+		items = door.items or {},
+		auto = door.auto,
+		state = door.state == 1,
+		lockpick = door.lockpick,
+		hideUi = door.hideUi,
+		doors = door.doors and true
 	}
 
-	local groupSize = 0
+	-- local groupSize = 0
 
-	if door.groups then
-		for name, grade in pairs(door.groups) do
-			groupSize += 1
-			data.groupFields[groupSize] = {
-				name = name,
-				grade = grade
-			}
-		end
-	end
+	-- if door.groups then
+	-- 	for name, grade in pairs(door.groups) do
+	-- 		groupSize += 1
+	-- 		data.groupFields[groupSize] = {
+	-- 			name = name,
+	-- 			grade = grade
+	-- 		}
+	-- 	end
+	-- end
 
 	return data
 end
@@ -274,12 +272,14 @@ end
 local function editDoorlock(entity)
 	local door = doors[Entity(entity).state?.doorId]
 
+	print(1)
 	if door then
 		SetNuiFocus(true, true)
 
+		print(json.encode(door, {indent=true}))
 		SendNUIMessage({
 			action = 'setVisible',
-			data = parseDoorData(door)
+			data = parseDoorData(door),
 		})
 
 		repeat Wait(50) until next(tempData)
@@ -316,44 +316,39 @@ end
 local displayTarget
 
 RegisterNetEvent('ox_doorlock:triggeredCommand', function(edit)
-	SetNuiFocus(true, true)
-	SendNuiMessage(json.encode({
-		action = 'setVisible',
-		data = doors
-	}, { with_hole = false }))
-	-- if edit then
-	-- 	displayTarget = not displayTarget
+	if edit then
+		displayTarget = not displayTarget
 
-	-- 	if displayTarget then
-	-- 		local options = {
-	-- 			options = {
-	-- 				{
-	-- 					label = locale('edit_lock'),
-	-- 					icon = 'fas fa-file-pen',
-	-- 					action = editDoorlock,
-	-- 					canInteract = getDoorFromEntity
-	-- 				},
-	-- 				{
-	-- 					label = locale('remove_lock'),
-	-- 					icon = 'fas fa-file-circle-minus',
-	-- 					action = removeDoorlock,
-	-- 					canInteract = getDoorFromEntity
-	-- 				},
-	-- 			},
-	-- 			distance = 10
-	-- 		}
+		if displayTarget then
+			local options = {
+				options = {
+					{
+						label = locale('edit_lock'),
+						icon = 'fas fa-file-pen',
+						action = editDoorlock,
+						canInteract = getDoorFromEntity
+					},
+					{
+						label = locale('remove_lock'),
+						icon = 'fas fa-file-circle-minus',
+						action = removeDoorlock,
+						canInteract = getDoorFromEntity
+					},
+				},
+				distance = 10
+			}
 
-	-- 		if target.name == 'qtarget' then
-	-- 			return target:Object(options)
-	-- 		else
-	-- 			return target:AddGlobalObject(options)
-	-- 		end
-	-- 	end
+			if target.name == 'qtarget' then
+				return target:Object(options)
+			else
+				return target:AddGlobalObject(options)
+			end
+		end
 
-	-- 	removeTarget()
-	-- else
-	-- 	newDoorlock()
-	-- end
+		removeTarget()
+	else
+		newDoorlock()
+	end
 end)
 
 AddEventHandler('onResourceStop', removeTarget)
