@@ -101,6 +101,11 @@ RegisterNUICallback('createDoor', function(data, cb)
 	tempData = data
 end)
 
+RegisterNUICallback('deleteDoor', function(id, cb)
+	cb(1)
+	TriggerServerEvent('ox_doorlock:editDoorlock', id)
+end)
+
 RegisterNUICallback('exit', function(_, cb)
 	cb(1)
 	SetNuiFocus(false, false)
