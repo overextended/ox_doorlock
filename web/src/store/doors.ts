@@ -1,6 +1,7 @@
 import create from 'zustand';
+import type { StoreState } from './';
 
-export interface DoorColumn {
+export interface DoorColumn extends StoreState {
   id: number;
   name: string;
   zone: string;

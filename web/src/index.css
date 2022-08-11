@@ -10,6 +10,7 @@ body {
   height: 100vh;
   user-select: none;
   background: none !important;
+  overflow: hidden;
 }
 
 #root {

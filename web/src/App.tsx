@@ -48,17 +48,18 @@ const App: React.FC = () => {
 
   useNuiEvent('setSoundFiles', (data: string[]) => setSounds(data));
 
-  useNuiEvent('setVisible', (data: DoorColumn[] | StoreState | boolean) => {
+  useNuiEvent('setVisible', (data: { [index: number]: DoorColumn } | StoreState | boolean) => {
     setVisible(true);
-    if (Array.isArray(data)) return setDoors(data); // set column data here
-    return useStore.setState(typeof data === 'object' ? data : defaultState, true);
+    setDoors(Object.values(data));
+    // if (Array.isArray(data)) return setDoors(data);
+    // return useStore.setState(typeof data === 'object' ? data : defaultState, true);
   });
 
   useExitListener(setVisible);
 
   return (
     <Box className={classes.container}>
-      <Transition transition="fade" mounted={visible}>
+      <Transition transition="slide-up" mounted={visible}>
         {(style) => (
           <Box className={classes.main} style={style}>
             <Routes>
