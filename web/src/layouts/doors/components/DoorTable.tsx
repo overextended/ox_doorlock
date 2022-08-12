@@ -16,7 +16,7 @@ import { useSearch } from '../../../store/search';
 import { openConfirmModal } from '@mantine/modals';
 import { useDoors, type DoorColumn } from '../../../store/doors';
 import { fetchNui } from '../../../utils/fetchNui';
-import { StoreState, useStore } from '../../../store';
+import { useStore } from '../../../store';
 import { HiOutlineClipboardCopy } from 'react-icons/all';
 import { useClipboard } from '../../../store/clipboard';
 import { convertData } from '../../../utils/convertData';
@@ -78,7 +78,7 @@ const DoorTable: React.FC = () => {
               variant="transparent"
               onClick={() => {
                 useStore.setState(convertData(data.row.original), false);
-                navigate('/settings');
+                navigate('/settings/general');
               }}
             >
               <TbSettings size={20} />
