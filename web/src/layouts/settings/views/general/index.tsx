@@ -53,8 +53,8 @@ const General: React.FC = () => {
             sx={{ width: 36, height: 36 }}
             color="blue"
             onClick={() => {
-              const storeObj = clipboard;
-              useStore.setState(storeObj, true);
+              if (!clipboard) return;
+              useStore.setState(clipboard, true);
               fetchNui('notify', 'Settings applied');
             }}
           >

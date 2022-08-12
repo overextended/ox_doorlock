@@ -19,6 +19,7 @@ import { fetchNui } from '../../../utils/fetchNui';
 import { StoreState, useStore } from '../../../store';
 import { HiOutlineClipboardCopy } from 'react-icons/all';
 import { useClipboard } from '../../../store/clipboard';
+import { convertData } from '../../../utils/convertData';
 
 const DoorTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -59,15 +60,7 @@ const DoorTable: React.FC = () => {
               variant="transparent"
               color="blue.4"
               onClick={() => {
-                const doorData = data.row.original;
-                const doorGroupsData = Object.entries(doorData.groups);
-                let newGroupsData: { name: string; grade: number }[] = [];
-                for (let i = 0; i < doorGroupsData.length; i++) {
-                  const groupObj = doorGroupsData[i];
-                  newGroupsData[i] = { name: groupObj[0], grade: groupObj[1] };
-                }
-                const stateData: StoreState = { ...doorData, groups: [...newGroupsData] };
-                setClipboard(stateData);
+                setClipboard(convertData(data.row.original));
                 fetchNui('notify', 'Settings copied');
               }}
             >
@@ -84,16 +77,7 @@ const DoorTable: React.FC = () => {
               color="blue.4"
               variant="transparent"
               onClick={() => {
-                // Converts {[key: string]: number} into [{name: string, grade: number}]
-                const doorData = data.row.original;
-                const doorGroupsData = Object.entries(doorData.groups);
-                let newGroupsData: { name: string; grade: number }[] = [];
-                for (let i = 0; i < doorGroupsData.length; i++) {
-                  const groupObj = doorGroupsData[i];
-                  newGroupsData[i] = { name: groupObj[0], grade: groupObj[1] };
-                }
-                const stateData: StoreState = { ...doorData, groups: [...newGroupsData] };
-                useStore.setState(stateData, false);
+                useStore.setState(convertData(data.row.original), false);
                 navigate('/settings');
               }}
             >
