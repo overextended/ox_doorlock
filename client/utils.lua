@@ -165,6 +165,11 @@ end
 
 local isAddingDoorlock = false
 
+RegisterNUICallback('notify', function(data, cb)
+    cb(1)
+    lib.notify({title = data})
+end)
+
 RegisterNUICallback('createDoor', function(data, cb)
 	cb(1)
 	SetNuiFocus(false, false)
