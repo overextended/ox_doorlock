@@ -5,13 +5,13 @@ import { useSetters } from '../../../../store';
 import GroupFields from './components/GroupFields';
 
 const Groups: React.FC = () => {
-  const setGroupFields = useSetters((setter) => setter.setGroupFields);
+  const setGroups = useSetters((setter) => setter.setGroups);
 
   // Remove empty fields on unmount
   useEffect(() => {
     return () => {
-      setGroupFields((prevState) =>
-        prevState.filter((item, index) => item.name !== '' || item.grade !== null || index === 0),
+      setGroups((prevState) =>
+        prevState.filter((item, index) => item.name !== '' || item.grade !== null || index === 0)
       );
     };
   }, []);
@@ -26,7 +26,7 @@ const Groups: React.FC = () => {
         <Button
           fullWidth
           variant="light"
-          onClick={() => setGroupFields((prevState) => [...prevState, { name: '', grade: null }])}
+          onClick={() => setGroups((prevState) => [...prevState, { name: '', grade: null }])}
         >
           <TbPlus size={24} />
         </Button>

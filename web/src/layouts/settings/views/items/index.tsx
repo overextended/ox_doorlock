@@ -5,7 +5,7 @@ import { useSetters } from '../../../../store';
 import ItemFields from './components/ItemFields';
 
 const Items: React.FC = () => {
-  const setItemFields = useSetters((setter) => setter.setItemFields);
+  const setItemFields = useSetters((setter) => setter.setItems);
 
   // Clear empty item fields when leaving the page
   useEffect(() => {

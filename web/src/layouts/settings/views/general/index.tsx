@@ -1,12 +1,15 @@
-import { Box, Center, Button, Stack } from '@mantine/core';
+import { Box, Center, Button, Stack, ActionIcon, Tooltip, Group } from '@mantine/core';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { useStore } from '../../../../store';
+import { StoreState, useStore } from '../../../../store';
 import { useVisibility } from '../../../../store/visibility';
 import Inputs from './components/Inputs';
 import Switches from './components/Switches';
+import { HiOutlineClipboardCheck } from 'react-icons/all';
+import { useClipboard } from '../../../../store/clipboard';
 
 const General: React.FC = () => {
   const setVisible = useVisibility((state) => state.setVisible);
+  const clipboard = useClipboard((state) => state.clipboard);
 
   const handleSubmit = () => {
     const state = useStore.getState();
@@ -39,9 +42,25 @@ const General: React.FC = () => {
       </Box>
 
       <Center>
-        <Button color="blue" fullWidth uppercase onClick={() => handleSubmit()}>
+        <Button color="blue" uppercase onClick={() => handleSubmit()} fullWidth>
           Confirm door
         </Button>
+        <Tooltip label="Apply copied settings" withArrow arrowSize={10}>
+          <ActionIcon
+            variant="outline"
+            size="lg"
+            ml={16}
+            sx={{ width: 36, height: 36 }}
+            color="blue"
+            onClick={() => {
+              const storeObj = clipboard;
+              useStore.setState(storeObj, true);
+              fetchNui('notify', 'Settings applied');
+            }}
+          >
+            <HiOutlineClipboardCheck size={20} />
+          </ActionIcon>
+        </Tooltip>
       </Center>
     </Stack>
   );

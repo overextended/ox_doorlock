@@ -2,18 +2,18 @@ import { Group, Input, NumberInput } from '@mantine/core';
 import { useStore, useSetters } from '../../../../../store';
 
 const GroupFields: React.FC = () => {
-  const groupFields = useStore((state) => state.groups);
-  const setGroupFields = useSetters((setter) => setter.setGroupFields);
+  const groups = useStore((state) => state.groups);
+  const setGroups = useSetters((setter) => setter.setGroups);
 
   const handleChange = (value: string | number | undefined, index: number, property: 'name' | 'grade') => {
-    setGroupFields((prevState) => {
+    setGroups((prevState) => {
       return prevState.map((item, indx) => (index === indx ? { ...item, [property]: value } : item));
     });
   };
 
   return (
     <>
-      {groupFields.map((field, index) => (
+      {groups.map((field, index) => (
         <Group p={8} position="center" key={`group-${index}`} noWrap>
           <Input
             sx={{ width: '100%' }}

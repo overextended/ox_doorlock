@@ -1,4 +1,4 @@
-import { ActionIcon, Table, Tooltip, UnstyledButton, Text, Group, Center, Stack, Pagination, Box } from '@mantine/core';
+import { ActionIcon, Table, Tooltip, UnstyledButton, Text, Group, Center, Stack, Pagination } from '@mantine/core';
 import {
   ColumnDef,
   flexRender,
@@ -17,13 +17,14 @@ import { openConfirmModal } from '@mantine/modals';
 import { useDoors, type DoorColumn } from '../../../store/doors';
 import { fetchNui } from '../../../utils/fetchNui';
 import { StoreState, useStore } from '../../../store';
-
-const parseData = () => {};
+import { HiOutlineClipboardCopy } from 'react-icons/all';
+import { useClipboard } from '../../../store/clipboard';
 
 const DoorTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const globalFilter = useSearch((state) => state.debouncedValue);
   const navigate = useNavigate();
+  const setClipboard = useClipboard((state) => state.setClipboard);
   const data = useDoors((state) => state.doors);
 
   const columns = useMemo<ColumnDef<DoorColumn>[]>(
@@ -49,6 +50,31 @@ const DoorTable: React.FC = () => {
         accessorKey: 'zone',
         cell: (info) => info.getValue(),
         enableHiding: false,
+      },
+      {
+        id: 'copy',
+        cell: (data) => (
+          <Tooltip label="Copy settings">
+            <ActionIcon
+              variant="transparent"
+              color="blue.4"
+              onClick={() => {
+                const doorData = data.row.original;
+                const doorGroupsData = Object.entries(doorData.groups);
+                let newGroupsData: { name: string; grade: number }[] = [];
+                for (let i = 0; i < doorGroupsData.length; i++) {
+                  const groupObj = doorGroupsData[i];
+                  newGroupsData[i] = { name: groupObj[0], grade: groupObj[1] };
+                }
+                const stateData: StoreState = { ...doorData, groups: [...newGroupsData] };
+                setClipboard(stateData);
+                fetchNui('notify', 'Settings copied');
+              }}
+            >
+              <HiOutlineClipboardCopy size={20} />
+            </ActionIcon>
+          </Tooltip>
+        ),
       },
       {
         id: 'edit',
@@ -109,7 +135,7 @@ const DoorTable: React.FC = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   const table = useReactTable({

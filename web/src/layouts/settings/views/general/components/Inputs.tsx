@@ -33,29 +33,19 @@ const Inputs: React.FC = () => {
   return (
     <>
       <Grid columns={2} sx={{ fontSize: 16 }}>
-        <Input
-          label="Door name"
-          type="text"
-          value={doorName || undefined}
-          setValue={(value: string) => setDoorName(value)}
-        />
-        <Input
-          label="Passcode"
-          type="text"
-          value={passcode || undefined}
-          setValue={(value: string) => setPasscode(value)}
-        />
+        <Input label="Door name" type="text" value={doorName || ''} setValue={(value: string) => setDoorName(value)} />
+        <Input label="Passcode" type="text" value={passcode || ''} setValue={(value: string) => setPasscode(value)} />
         <Input
           label="Autolock Interval"
           type="number"
-          value={autolockInterval || undefined}
+          value={autolockInterval || 0}
           setValue={(value: number) => setAutolockInterval(value)}
           infoCircle="Time in milliseconds after which the door will be locked"
         />
         <Input
           label="Interact Distance"
           type="number"
-          value={interactDistance || undefined}
+          value={interactDistance || 0}
           setValue={(value: number) => setInteractDistance(value)}
           infoCircle="Controls the distance from which the player can interact with the door"
         />
@@ -63,7 +53,7 @@ const Inputs: React.FC = () => {
           label="Door Rate"
           type="number"
           span={2}
-          value={doorRate || undefined}
+          value={doorRate || 0}
           setValue={(value: number) => setDoorRate(value)}
           infoCircle="Speed the automatic door will move at"
         />

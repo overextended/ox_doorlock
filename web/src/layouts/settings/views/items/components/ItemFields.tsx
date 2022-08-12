@@ -1,12 +1,11 @@
 import { Box, Group, TextInput, Tooltip, ActionIcon, Stack, Switch, Button, Modal } from '@mantine/core';
-import { openModal, closeAllModals } from '@mantine/modals';
 import { useState } from 'react';
 import { TbSettings } from 'react-icons/tb';
 import { useSetters, useStore } from '../../../../../store';
 
 const ItemFields: React.FC = () => {
   const itemFields = useStore((state) => state.items);
-  const setItemFields = useSetters((setter) => setter.setItemFields);
+  const setItemFields = useSetters((setter) => setter.setItems);
   const [modal, setModal] = useState<{ opened: boolean; index: number }>({ opened: false, index: 0 });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {

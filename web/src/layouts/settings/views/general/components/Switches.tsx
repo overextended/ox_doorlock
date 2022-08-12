@@ -18,31 +18,31 @@ const Switches: React.FC = () => {
         <TooltipSwitch
           label="Locked"
           infoCircle="Sets whether the targeting door is locked by default"
-          value={locked}
+          value={locked || false}
           toggle={() => toggleCheckbox('state')}
         />
         <TooltipSwitch
           label="Double"
           infoCircle="Enable if the targeting door is a double door"
-          value={double}
+          value={double || false}
           toggle={() => toggleCheckbox('doors')}
         />
         <TooltipSwitch
           label="Automatic"
           infoCircle="Enable if the targeting door is moving automatically (Garage, poles, etc...)"
-          value={automatic}
+          value={automatic || false}
           toggle={() => toggleCheckbox('auto')}
         />
         <TooltipSwitch
           label="Lockpick"
           infoCircle="Enables the targeting door to be lockpicked"
-          value={lockpick}
+          value={lockpick || false}
           toggle={() => toggleCheckbox('lockpick')}
         />
         <TooltipSwitch
           label="Hide UI"
           infoCircle="Hides UI indicators for the targeting door"
-          value={hideUi}
+          value={hideUi || false}
           toggle={() => toggleCheckbox('hideUi')}
         />
       </SimpleGrid>
