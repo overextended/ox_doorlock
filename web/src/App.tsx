@@ -1,5 +1,5 @@
 import { Box, createStyles, Transition } from '@mantine/core';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useNuiEvent } from './hooks/useNuiEvent';
 import { defaultState, StoreState, useSetters, useStore } from './store';
 import Doors from './layouts/doors';
@@ -8,6 +8,7 @@ import { useVisibility } from './store/visibility';
 import { useExitListener } from './hooks/useExitListener';
 import { useDoors } from './store/doors';
 import { DoorColumn } from './store/doors';
+import { convertData } from './utils/convertData';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -39,6 +40,7 @@ const App: React.FC = () => {
   const setSounds = useSetters((setter) => setter.setSounds);
   const [visible, setVisible] = useVisibility((state) => [state.visible, state.setVisible]);
   const setDoors = useDoors((state) => state.setDoors);
+  const navigate = useNavigate();
 
   useNuiEvent('playSound', async (data: { sound: string; volume: number }) => {
     const sound = new Audio(`./sounds/${data.sound}.ogg`);
@@ -50,18 +52,12 @@ const App: React.FC = () => {
 
   useNuiEvent('setVisible', (data: DoorColumn | { [key: string]: DoorColumn }) => {
     setVisible(true);
+    // Doors data for the table is passed
     if (!isNaN(parseInt(Object.keys(data)[0]))) return setDoors(Object.values(data));
-    const doorGroupsData = Object.entries(data.groups);
-    let newGroupsData: { name: string; grade: number }[] = [];
-    for (let i = 0; i < doorGroupsData.length; i++) {
-      const groupObj = doorGroupsData[i];
-      console.log(groupObj);
-      newGroupsData[i] = { name: groupObj[0], grade: groupObj[1] };
-    }
+    // Single door object data so move to settings
+    navigate('/settings/general');
     // @ts-ignore
-    const newState: StoreState = { ...data, groups: newGroupsData };
-
-    return useStore.setState(newState, true);
+    return useStore.setState(convertData(data), true);
   });
 
   useExitListener(setVisible);
