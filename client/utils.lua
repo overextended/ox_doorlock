@@ -94,32 +94,57 @@ do
 	end
 end
 
-local tempData = {}
+local function parseNuiData(data)
+	local door = {
+		name = data.name,
+		passcode = data.passcode,
+		autolock = data.autolock,
+		maxDistance = data.maxDistance or 2,
+		doorRate = (data.doorRate and data.doorRate + 0.0) or nil,
+		lockSound = data.lockSound,
+		unlockSound = data.unlockSound,
+		auto = data.auto or nil,
+		state = data.state and 1 or 0,
+		lockpick = data.lockpick or nil,
+		hideUi = data.hideUi or nil,
+		doors = data.doors and true or nil,
+		groups = {},
+		items = {},
+		id = data.id,
+	}
 
-RegisterNUICallback('createDoor', function(data, cb)
-	cb(1)
-	tempData = data
-	SetNuiFocus(false, false)
-end)
-
-RegisterNUICallback('deleteDoor', function(id, cb)
-	cb(1)
-	TriggerServerEvent('ox_doorlock:editDoorlock', id)
-end)
-
-RegisterNUICallback('exit', function(_, cb)
-	cb(1)
-	SetNuiFocus(false, false)
-end)
-
-
-local function removeDoorlock(entity)
-	local door = doors[Entity(entity).state?.doorId]
-
-	if door then
-		return TriggerServerEvent('ox_doorlock:editDoorlock', door.id)
+	if data.groups then
+		for _, group in pairs(data.groups) do
+			if group?.name then
+				door.groups[group.name] = group.grade or 0
+			end
+		end
 	end
+
+	if not next(door.groups) then
+		door.groups = nil
+	end
+
+	local itemSize = 0
+
+	for i = 1, (#data.items or 0) do
+		local item = data.items[i]
+
+		if item?.name then
+			itemSize += 1
+			item.remove = item.remove == true or nil
+			door.items[itemSize] = item
+		end
+	end
+
+	if not next(door.items) then
+		door.items = nil
+	end
+
+	return door
 end
+
+local tempData = {}
 
 local function addDoorlock(entity)
 	local model = GetEntityModel(entity)
@@ -138,168 +163,95 @@ local function addDoorlock(entity)
 	RemoveDoorFromSystem(`temp`)
 end
 
-local function parseTempData()
-	local data = {
-		name = tempData.name,
-		passcode = tempData.passcode,
-		autolock = tempData.autolock,
-		maxDistance = tempData.maxDistance or 2,
-		doorRate = (tempData.doorRate and tempData.doorRate + 0.0) or nil,
-		lockSound = tempData.lockSound,
-		unlockSound = tempData.unlockSound,
-		auto = tempData.auto or nil,
-		state = tempData.state and 1 or 0,
-		lockpick = tempData.lockpick or nil,
-		hideUi = tempData.hideUi or nil,
-		doors = tempData.doors and true or nil,
-		groups = {},
-		items = {},
-	}
+local isAddingDoorlock = false
 
-	for _, group in pairs(tempData.groups) do
-		if group?.name then
-			data.groups[group.name] = group.grade or 0
+RegisterNUICallback('createDoor', function(data, cb)
+	cb(1)
+	SetNuiFocus(false, false)
+
+	local door = parseNuiData(data)
+
+	if not door.id then
+		isAddingDoorlock = true
+
+		local options = {
+			{
+				label = locale('add_lock'),
+				icon = 'fas fa-file-circle-plus',
+				action = addDoorlock,
+				canInteract = entityIsNotDoor,
+				distance = 10
+			},
+		}
+
+		if target.name == 'qtarget' then
+			target:Object({ options = options })
+		else
+			target:AddGlobalObject({ options = options })
 		end
-	end
 
-	if not next(data.groups) then
-		data.groups = nil
-	end
-
-	local itemSize = 0
-
-	for i = 1, #tempData.items do
-		local item = tempData.items[i]
-
-		if item?.name then
-			itemSize += 1
-			item.remove = item.remove == true or nil
-			data.items[itemSize] = item
+		if door.doors then
+			repeat Wait(50) until tempData[2]
+			door.doors = tempData
+		else
+			repeat Wait(50) until tempData[1]
+			door.model = tempData[1].model
+			door.coords = tempData[1].coords
+			door.heading = tempData[1].heading
 		end
+	else
+		if data.doors then
+			for i = 1, 2 do
+				local coords = data.doors[i].coords
+				data.doors[i].coords = vector3(coords.x, coords.y, coords.z)
+				data.doors[i].heading = data.heading
+				data.doors[i].model = data.model
+				entity = nil
+			end
+
+			door.doors = data.doors
+		else
+			door.heading = data.heading
+			door.model = data.model
+			door.hash = data.hash
+		end
+
+		door.coords = vector3(data.coords.x, data.coords.y, data.coords.z)
 	end
 
-	if not next(data.items) then
-		data.items = nil
+	if isAddingDoorlock then
+		if target.name == 'qtarget' then
+			target:RemoveObject(locale('add_lock'))
+		else
+			target:RemoveGlobalObject(locale('add_lock'))
+		end
+
+		isAddingDoorlock = false
 	end
 
-	return data
-end
+	TriggerServerEvent('ox_doorlock:editDoorlock', door.id or false, door)
+end)
 
-local function newDoorlock()
+RegisterNUICallback('deleteDoor', function(id, cb)
+	cb(1)
+	TriggerServerEvent('ox_doorlock:editDoorlock', id)
+end)
+
+RegisterNUICallback('exit', function(_, cb)
+	cb(1)
+	SetNuiFocus(false, false)
+end)
+
+local function openUi()
+	if source == '' or isAddingDoorlock then return end
 	SetNuiFocus(true, true)
-
 	SendNuiMessage(json.encode({
 		action = 'setVisible',
 		data = doors
 	}, { with_hole = false }))
-
-	repeat Wait(50) until next(tempData)
-
-	local data = parseTempData()
-
-	SetNuiFocus(false, false)
-	table.wipe(tempData)
-
-	local options = {
-		{
-			label = locale('add_lock'),
-			icon = 'fas fa-file-circle-plus',
-			action = addDoorlock,
-			canInteract = entityIsNotDoor,
-			distance = 10
-		},
-	}
-
-	if target.name == 'qtarget' then
-		target:Object({ options = options })
-	else
-		target:AddGlobalObject({ options = options })
-	end
-
-	if data.doors then
-		repeat Wait(50) until tempData[2]
-		data.doors = tempData
-	else
-		repeat Wait(50) until tempData[1]
-		data.model = tempData[1].model
-		data.coords = tempData[1].coords
-		data.heading = tempData[1].heading
-	end
-
-	TriggerServerEvent('ox_doorlock:editDoorlock', false, data)
-	table.wipe(tempData)
-
-	if target.name == 'qtarget' then
-		target:RemoveObject(locale('add_lock'))
-	else
-		target:RemoveGlobalObject(locale('add_lock'))
-	end
 end
 
-local function parseDoorData(door)
-	local data = {
-		name = door.name,
-		passcode = door.passcode,
-		autolock = door.autolock,
-		maxDistance = door.maxDistance,
-		doorRate = (door.doorRate and door.doorRate + 0.0),
-		lockSound = door.lockSound,
-		unlockSound = door.unlockSound,
-		groups = door.groups,
-		items = door.items or {},
-		auto = door.auto,
-		state = door.state == 1,
-		lockpick = door.lockpick,
-		hideUi = door.hideUi,
-		doors = door.doors and true
-	}
-
-	-- local groupSize = 0
-
-	-- if door.groups then
-	-- 	for name, grade in pairs(door.groups) do
-	-- 		groupSize += 1
-	-- 		data.groupFields[groupSize] = {
-	-- 			name = name,
-	-- 			grade = grade
-	-- 		}
-	-- 	end
-	-- end
-
-	return data
-end
-
-local function editDoorlock(entity)
-	local door = doors[Entity(entity).state?.doorId]
-
-	print(1)
-	if door then
-		SetNuiFocus(true, true)
-
-		print(json.encode(door, {indent=true}))
-		SendNUIMessage({
-			action = 'setVisible',
-			data = parseDoorData(door),
-		})
-
-		repeat Wait(50) until next(tempData)
-
-		local data = parseTempData()
-		data.id = door.id
-		data.coords = door.coords
-		data.doors = door.doors
-
-		if not data.doors then
-			data.heading = door.heading
-			data.model = door.model
-			data.hash = door.hash
-		end
-
-		SetNuiFocus(false, false)
-		table.wipe(tempData)
-		TriggerServerEvent('ox_doorlock:editDoorlock', data.id, data)
-	end
-end
+RegisterNetEvent('ox_doorlock:triggeredCommand', openUi)
 
 local function removeTarget(res)
 	if not res or res == 'ox_doorlock' then
@@ -312,43 +264,5 @@ local function removeTarget(res)
 		end
 	end
 end
-
-local displayTarget
-
-RegisterNetEvent('ox_doorlock:triggeredCommand', function(edit)
-	if edit then
-		displayTarget = not displayTarget
-
-		if displayTarget then
-			local options = {
-				options = {
-					{
-						label = locale('edit_lock'),
-						icon = 'fas fa-file-pen',
-						action = editDoorlock,
-						canInteract = getDoorFromEntity
-					},
-					{
-						label = locale('remove_lock'),
-						icon = 'fas fa-file-circle-minus',
-						action = removeDoorlock,
-						canInteract = getDoorFromEntity
-					},
-				},
-				distance = 10
-			}
-
-			if target.name == 'qtarget' then
-				return target:Object(options)
-			else
-				return target:AddGlobalObject(options)
-			end
-		end
-
-		removeTarget()
-	else
-		newDoorlock()
-	end
-end)
 
 AddEventHandler('onResourceStop', removeTarget)
