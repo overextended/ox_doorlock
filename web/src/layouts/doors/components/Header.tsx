@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useVisibility } from '../../../store/visibility';
 import { fetchNui } from '../../../utils/fetchNui';
 import Searchbar from './Search';
+import { useStore, defaultState } from '../../../store';
 
 const useStyles = createStyles({
   main: {
@@ -23,7 +24,15 @@ const Header: React.FC = () => {
   return (
     <Group className={classes.main}>
       <Tooltip label="Create a new door" transition="pop">
-        <ActionIcon variant="light" color="blue" size="lg" onClick={() => navigate('/settings/general')}>
+        <ActionIcon
+          variant="light"
+          color="blue"
+          size="lg"
+          onClick={() => {
+            useStore.setState(defaultState, true);
+            navigate('/settings/general');
+          }}
+        >
           <TbPlus size={20} />
         </ActionIcon>
       </Tooltip>
