@@ -63,8 +63,24 @@ const App: React.FC = () => {
     }
   });
 
-  useNuiEvent('updateDoorData', (data: DoorColumn[]) => {
-    setDoors(Object.values(data));
+  useNuiEvent('updateDoorData', (data: DoorColumn | number) => {
+    // Door id sent so delete the filter out the door
+    if (typeof data === 'number') return setDoors(doors.filter((door) => door.id !== data));
+    else {
+      // More than 1 door sent - replace the object
+      if (Object.values(data).length > 1) return setDoors(Object.values(data));
+      else {
+        // Single door sent so update the object
+        const searchDoor = Object.values(data)[0];
+        for (let i = 0; i < doors.length; i++) {
+          const door = Object.values(doors)[i];
+          if (door.id == searchDoor.id) {
+            setDoors(Object.values({ ...doors, [i]: searchDoor }));
+            break;
+          }
+        }
+      }
+    }
   });
 
   useExitListener(setVisible);

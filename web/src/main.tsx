@@ -43,6 +43,38 @@ debugData<DoorColumn[]>([
 debugData(
   [
     {
+      action: 'updateDoorData',
+      data: {
+        [0]: {
+          name: 'New door',
+          passcode: 'Supersecret123',
+          autolock: 300,
+          id: 2,
+          zone: 'Mission Row',
+          groups: {
+            ['police']: 0,
+            ['ambulance']: 1,
+          },
+          items: [{ name: 'mrpd_key', metadata: 'lspd_key', remove: true }],
+          lockSound: null,
+          unlockSound: null,
+          maxDistance: 15.2,
+          state: true,
+          doors: true,
+          auto: true,
+          lockpick: true,
+          hideUi: true,
+          doorRate: null,
+        },
+      },
+    },
+  ],
+  3000
+);
+
+debugData(
+  [
+    {
       action: 'setVisible',
       data: undefined,
     },
