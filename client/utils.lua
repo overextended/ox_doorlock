@@ -199,16 +199,28 @@ RegisterNUICallback('exit', function(_, cb)
 	SetNuiFocus(false, false)
 end)
 
-local function openUi()
+local function openUi(id)
 	if source == '' or isAddingDoorlock then return end
+
+	if not NuiHasLoaded then
+		NuiHasLoaded = true
+		SendNuiMessage(json.encode({
+			action = 'updateDoorData',
+			data = doors
+		}, { with_hole = false }))
+		Wait(100)
+	end
+
 	SetNuiFocus(true, true)
 	SendNuiMessage(json.encode({
 		action = 'setVisible',
-		data = doors
-	}, { with_hole = false }))
+		data = id
+	}))
 end
 
-RegisterNetEvent('ox_doorlock:triggeredCommand', openUi)
+RegisterNetEvent('ox_doorlock:triggeredCommand', function(closest)
+	openUi(closest and ClosestDoor?.id or nil)
+end)
 
 local function removeTarget(res)
 	if not res or res == 'ox_doorlock' then

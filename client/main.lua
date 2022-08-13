@@ -240,13 +240,21 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 	end
 
 	doors[id] = data
+
+	if NuiHasLoaded then
+		SendNuiMessage(json.encode({
+			action = 'updateDoorData',
+			data = data or id
+		}))
+	end
 end)
+
+ClosestDoor = nil
 
 CreateThread(function()
 	local lastTriggered = 0
 	local lockDoor = locale('lock_door')
 	local unlockDoor = locale('unlock_door')
-	local closestDoor
 	local showUI
 	local drawSprite = Config.DrawSprite
 
@@ -276,8 +284,8 @@ CreateThread(function()
 				local door = nearbyDoors[i]
 
 				if door.distance < door.maxDistance then
-					if door.distance < (closestDoor?.distance or 10) then
-						closestDoor = door
+					if door.distance < (ClosestDoor?.distance or 10) then
+						ClosestDoor = door
 					end
 
 					if drawSprite and not door.hideUi then
@@ -291,34 +299,34 @@ CreateThread(function()
 					end
 				end
 			end
-		else closestDoor = nil end
+		else ClosestDoor = nil end
 
-		if closestDoor and closestDoor.distance < closestDoor.maxDistance then
+		if ClosestDoor and ClosestDoor.distance < ClosestDoor.maxDistance then
 			if Config.DrawTextUI then
-				if closestDoor.state == 0 and showUI ~= 0 and not closestDoor.hideUi then
+				if ClosestDoor.state == 0 and showUI ~= 0 and not ClosestDoor.hideUi then
 					lib.showTextUI(lockDoor)
 					showUI = 0
-				elseif closestDoor.state == 1 and showUI ~= 1 and not closestDoor.hideUi then
+				elseif ClosestDoor.state == 1 and showUI ~= 1 and not ClosestDoor.hideUi then
 					lib.showTextUI(unlockDoor)
 					showUI = 1
 				end
 			end
 
 			if IsDisabledControlJustReleased(0, 38) then
-				if closestDoor.passcode then
+				if ClosestDoor.passcode then
 					local input = lib.inputDialog(locale('door_lock'), {
 						{ type = "input", label = locale("passcode"), password = true, icon = 'lock' },
 					})
 
 					if input then
-						TriggerServerEvent('ox_doorlock:setState', closestDoor.id, closestDoor.state == 1 and 0 or 1, false, input[1])
+						TriggerServerEvent('ox_doorlock:setState', ClosestDoor.id, ClosestDoor.state == 1 and 0 or 1, false, input[1])
 					end
 				else
 					local gameTimer = GetGameTimer()
 
 					if gameTimer - lastTriggered > 500 then
 						lastTriggered = gameTimer
-						TriggerServerEvent('ox_doorlock:setState', closestDoor.id, closestDoor.state == 1 and 0 or 1)
+						TriggerServerEvent('ox_doorlock:setState', ClosestDoor.id, ClosestDoor.state == 1 and 0 or 1)
 					end
 				end
 			end
