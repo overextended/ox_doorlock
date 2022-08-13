@@ -200,8 +200,12 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 	local doorState = data and data.state or 0
 	local doorRate = data and data.doorRate or (door.doorRate and 0.0)
 
-	-- hacky method to resolve a bug with "closest door" by forcing a distance recalculation
-	if data and door.distance < 20 then door.distance = 80 end
+	if data then
+		data.zone = door.zone or GetLabelText(GetNameOfZone(door.coords.x, door.coords.y, door.coords.z))
+
+		-- hacky method to resolve a bug with "closest door" by forcing a distance recalculation
+		if door.distance < 20 then door.distance = 80 end
+	end
 
 	if double then
 		for i = 1, 2 do

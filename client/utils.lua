@@ -172,6 +172,8 @@ RegisterNUICallback('createDoor', function(data, cb)
 		end
 
 		data.coords = vector3(data.coords.x, data.coords.y, data.coords.z)
+		data.distance = nil
+		data.zone = nil
 	end
 
 	if isAddingDoorlock then
