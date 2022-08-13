@@ -1,10 +1,11 @@
-import { Box, Tabs } from '@mantine/core';
+import { Box, Stack, Tabs } from '@mantine/core';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { TbSettings, TbBriefcase, TbBottle, TbBell, TbArrowBackUp } from 'react-icons/tb';
 import General from './views/general';
 import Groups from './views/groups';
 import Items from './views/items';
 import Sound from './views/sound';
+import Submit from './Submit';
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
@@ -38,14 +39,15 @@ const Settings: React.FC = () => {
             </Tabs.Tab>
           </Tabs.List>
         </Tabs>
-        <Box p={16} sx={{ width: '100%', height: '100%' }}>
+        <Stack p={16} sx={{ width: '100%' }} justify="space-between">
           <Routes>
             <Route path="/general" element={<General />} />
             <Route path="/groups" element={<Groups />} />
             <Route path="/items" element={<Items />} />
             <Route path="/sound" element={<Sound />} />
           </Routes>
-        </Box>
+          <Submit />
+        </Stack>
       </Box>
     </>
   );
