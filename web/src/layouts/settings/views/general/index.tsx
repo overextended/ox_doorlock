@@ -51,7 +51,8 @@ const General: React.FC = () => {
 
       // @ts-ignore
       data.groups = groupsObj;
-    } else data.groups = null;
+    } // @ts-ignore
+    else data.groups = null;
 
     setVisible(false);
     fetchNui('createDoor', data);

@@ -7,8 +7,8 @@ export interface StoreState {
   name: StringField;
   passcode: StringField;
   autolock: NumberField;
-  items: { name: StringField; metadata?: StringField; remove?: boolean | null }[] | null;
-  groups: { name: StringField; grade: NumberField }[] | null;
+  items: { name: StringField; metadata?: StringField; remove: boolean | null }[];
+  groups: { name: StringField; grade: NumberField }[];
   maxDistance: NumberField;
   doorRate: NumberField;
   lockSound: StringField;
