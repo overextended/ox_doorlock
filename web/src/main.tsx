@@ -13,7 +13,7 @@ import { DoorColumn } from './store/doors';
 
 debugData<DoorColumn[]>([
   {
-    action: 'setVisible',
+    action: 'updateDoorData',
     data: [
       {
         name: 'Door name',
@@ -39,6 +39,16 @@ debugData<DoorColumn[]>([
     ],
   },
 ]);
+
+debugData(
+  [
+    {
+      action: 'setVisible',
+      data: undefined,
+    },
+  ],
+  2000
+);
 
 debugData<string[]>([
   {
@@ -67,5 +77,5 @@ ReactDOM.render(
       </ModalsProvider>
     </MantineProvider>
   </React.StrictMode>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );

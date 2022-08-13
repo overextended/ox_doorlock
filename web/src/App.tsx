@@ -39,6 +39,7 @@ const App: React.FC = () => {
   const { classes } = useStyles();
   const setSounds = useSetters((setter) => setter.setSounds);
   const [visible, setVisible] = useVisibility((state) => [state.visible, state.setVisible]);
+  const doors = useDoors((state) => state.doors);
   const setDoors = useDoors((state) => state.setDoors);
   const navigate = useNavigate();
 
@@ -50,14 +51,20 @@ const App: React.FC = () => {
 
   useNuiEvent('setSoundFiles', (data: string[]) => setSounds(data));
 
-  useNuiEvent('setVisible', (data: DoorColumn | { [key: string]: DoorColumn }) => {
+  useNuiEvent('setVisible', (data: number) => {
     setVisible(true);
-    // Doors data for the table is passed
-    if (!isNaN(parseInt(Object.keys(data)[0]))) return setDoors(Object.values(data));
-    // Single door object data so move to settings
-    navigate('/settings/general');
-    // @ts-ignore
-    return useStore.setState(convertData(data), true);
+    if (data === undefined) return navigate('/');
+    for (let i = 0; i < doors.length; i++) {
+      if (doors[i].id === data) {
+        useStore.setState(convertData(doors[i]), true);
+        navigate('/settings/general');
+        break;
+      }
+    }
+  });
+
+  useNuiEvent('updateDoorData', (data: DoorColumn[]) => {
+    setDoors(Object.values(data));
   });
 
   useExitListener(setVisible);
