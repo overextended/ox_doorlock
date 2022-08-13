@@ -1,6 +1,10 @@
 local Core = lib.getCore()
 local ox_inventory = exports.ox_inventory
 
+if Ox then
+	lib.getPlayer = Ox.GetPlayer
+end
+
 local function removeItem(player, item, slot)
 	ox_inventory:RemoveItem(player.source, item, 1, nil, slot)
 end
