@@ -52,10 +52,6 @@ function isAuthorised(source, door, lockpick, passcode)
 end
 
 if Core.resource == 'qb-core' then
-	function getPlayer(source)
-		return Core.Functions.GetPlayer(source)
-	end
-
 	function hasItem(player, items)
 		for i = 1, #items do
 			local item = items[i]
@@ -92,10 +88,6 @@ if Core.resource == 'qb-core' then
 		player.Functions.RemoveItem(item, 1, slot)
 	end
 elseif Core.resource == 'es_extended' then
-	function getPlayer(source)
-		return Core.GetPlayerFromId(source)
-	end
-
 	if not Core.GetConfig().OxInventory then
 		function hasItem(player, items)
 			for i = 1, #items do
@@ -121,7 +113,7 @@ elseif Core.resource == 'es_extended' then
 end
 
 RegisterNetEvent('ox_doorlock:breakLockpick', function()
-	local player = getPlayer(source)
+	local player = lib.getPlayer(source)
 	if not player then return end
 
 	removeItem(player, 'lockpick')
