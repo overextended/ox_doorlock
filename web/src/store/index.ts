@@ -7,17 +7,17 @@ export interface StoreState {
   name: StringField;
   passcode: StringField;
   autolock: NumberField;
-  items: { name: StringField; metadata?: StringField; remove?: boolean }[];
-  groups: { name: StringField; grade: NumberField }[];
+  items: { name: StringField; metadata?: StringField; remove?: boolean | null }[] | null;
+  groups: { name: StringField; grade: NumberField }[] | null;
   maxDistance: NumberField;
   doorRate: NumberField;
   lockSound: StringField;
   unlockSound: StringField;
-  auto: boolean;
-  state: boolean;
-  lockpick: boolean;
-  hideUi: boolean;
-  doors: boolean;
+  auto: boolean | null;
+  state: boolean | null;
+  lockpick: boolean | null;
+  hideUi: boolean | null;
+  doors: boolean | null;
 }
 
 interface StateSetters {
