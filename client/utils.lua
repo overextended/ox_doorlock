@@ -94,56 +94,6 @@ do
 	end
 end
 
-local function parseNuiData(data)
-	local door = {
-		name = data.name,
-		passcode = data.passcode,
-		autolock = data.autolock,
-		maxDistance = data.maxDistance or 2,
-		doorRate = (data.doorRate and data.doorRate + 0.0) or nil,
-		lockSound = data.lockSound,
-		unlockSound = data.unlockSound,
-		auto = data.auto or nil,
-		state = data.state and 1 or 0,
-		lockpick = data.lockpick or nil,
-		hideUi = data.hideUi or nil,
-		doors = data.doors and true or nil,
-		groups = {},
-		items = {},
-		id = data.id,
-	}
-
-	if data.groups then
-		for _, group in pairs(data.groups) do
-			if group?.name then
-				door.groups[group.name] = group.grade or 0
-			end
-		end
-	end
-
-	if not next(door.groups) then
-		door.groups = nil
-	end
-
-	local itemSize = 0
-
-	for i = 1, (#data.items or 0) do
-		local item = data.items[i]
-
-		if item?.name then
-			itemSize += 1
-			item.remove = item.remove == true or nil
-			door.items[itemSize] = item
-		end
-	end
-
-	if not next(door.items) then
-		door.items = nil
-	end
-
-	return door
-end
-
 local tempData = {}
 
 local function addDoorlock(entity)
@@ -174,9 +124,15 @@ RegisterNUICallback('createDoor', function(data, cb)
 	cb(1)
 	SetNuiFocus(false, false)
 
-	local door = parseNuiData(data)
+	if data.items and not next(data.items) then
+		data.items = nil
+	end
 
-	if not door.id then
+	if data.groups and not next(data.groups) then
+		data.groups = nil
+	end
+
+	if not data.id then
 		isAddingDoorlock = true
 
 		local options = {
@@ -195,33 +151,27 @@ RegisterNUICallback('createDoor', function(data, cb)
 			target:AddGlobalObject({ options = options })
 		end
 
-		if door.doors then
+		if data.doors then
 			repeat Wait(50) until tempData[2]
-			door.doors = tempData
+			data.doors = tempData
 		else
 			repeat Wait(50) until tempData[1]
-			door.model = tempData[1].model
-			door.coords = tempData[1].coords
-			door.heading = tempData[1].heading
+			data.model = tempData[1].model
+			data.coords = tempData[1].coords
+			data.heading = tempData[1].heading
 		end
 	else
 		if data.doors then
 			for i = 1, 2 do
 				local coords = data.doors[i].coords
 				data.doors[i].coords = vector3(coords.x, coords.y, coords.z)
-				data.doors[i].heading = data.heading
-				data.doors[i].model = data.model
-				entity = nil
+				data.doors[i].entity = nil
 			end
-
-			door.doors = data.doors
 		else
-			door.heading = data.heading
-			door.model = data.model
-			door.hash = data.hash
+			data.entity = nil
 		end
 
-		door.coords = vector3(data.coords.x, data.coords.y, data.coords.z)
+		data.coords = vector3(data.coords.x, data.coords.y, data.coords.z)
 	end
 
 	if isAddingDoorlock then
@@ -234,7 +184,7 @@ RegisterNUICallback('createDoor', function(data, cb)
 		isAddingDoorlock = false
 	end
 
-	TriggerServerEvent('ox_doorlock:editDoorlock', door.id or false, door)
+	TriggerServerEvent('ox_doorlock:editDoorlock', data.id or false, data)
 end)
 
 RegisterNUICallback('deleteDoor', function(id, cb)
