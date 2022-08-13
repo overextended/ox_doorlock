@@ -1,4 +1,4 @@
-import { Box, Input, Stack, Button, Group, NumberInput, Tooltip } from '@mantine/core';
+import { Box, Text, Stack, Button, Group, Tooltip } from '@mantine/core';
 import { useEffect } from 'react';
 import { TbPlus } from 'react-icons/tb';
 import { useSetters } from '../../../../store';
@@ -18,19 +18,19 @@ const Groups: React.FC = () => {
 
   return (
     <Stack justify="space-between" align="center" sx={{ height: '100%' }}>
-      <Box sx={{ width: '100%', overflowY: 'auto', maxHeight: 410 }}>
+      <Box sx={{ width: '100%', overflowY: 'auto', height: 410 }}>
         <GroupFields />
+        <Tooltip label="Create a new row" withArrow arrowSize={10}>
+          <Button
+            mt={16}
+            fullWidth
+            variant="light"
+            onClick={() => setGroups((prevState) => [...prevState, { name: '', grade: null }])}
+          >
+            <TbPlus size={24} />
+          </Button>
+        </Tooltip>
       </Box>
-
-      <Tooltip label="Create a new row" withArrow arrowSize={10}>
-        <Button
-          fullWidth
-          variant="light"
-          onClick={() => setGroups((prevState) => [...prevState, { name: '', grade: null }])}
-        >
-          <TbPlus size={24} />
-        </Button>
-      </Tooltip>
     </Stack>
   );
 };

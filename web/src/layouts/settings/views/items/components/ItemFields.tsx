@@ -1,6 +1,6 @@
-import { Box, Group, TextInput, Tooltip, ActionIcon, Stack, Switch, Button, Modal } from '@mantine/core';
+import { Box, Group, TextInput, Tooltip, ActionIcon, Stack, Switch, Button, Modal, Text } from '@mantine/core';
 import { useState } from 'react';
-import { TbSettings } from 'react-icons/tb';
+import { TbSettings, TbTrash } from 'react-icons/tb';
 import { useSetters, useStore } from '../../../../../store';
 
 const ItemFields: React.FC = () => {
@@ -27,25 +27,48 @@ const ItemFields: React.FC = () => {
     setItemFields(() => items);
   };
 
+  const handleRowDelete = (index: number) => {
+    setItemFields((prevState) => prevState.filter((obj, indx) => indx !== index));
+  };
+
   return (
-    <Box sx={{ width: '100%', overflowY: 'auto', maxHeight: 410 }}>
-      {itemFields.length > 0 &&
-        itemFields.map((field, index) => (
-          <Group p={8} sx={{ width: '100%' }} position="center" key={`item-field-${index}`}>
-            <TextInput
-              placeholder="Item"
-              sx={{ width: '90%' }}
-              value={(field.name as string) || ''}
-              id="name"
-              onChange={(e) => handleChange(e, index)}
-            />
-            <Tooltip label="Item options" withArrow>
-              <ActionIcon color="blue.4" variant="transparent" onClick={() => setModal({ opened: true, index })}>
-                <TbSettings size={24} />
-              </ActionIcon>
-            </Tooltip>
-          </Group>
-        ))}
+    <Box>
+      {itemFields.length > 0 && (
+        <>
+          {itemFields.map((field, index) => (
+            <Group sx={{ width: '100%' }} position="apart" key={`item-field-${index}`} spacing={16}>
+              <TextInput
+                sx={{ width: '80%' }}
+                value={(field.name as string) || ''}
+                id="name"
+                placeholder="Item"
+                onChange={(e) => handleChange(e, index)}
+                pt={index === 0 ? undefined : 16}
+              />
+              <Tooltip label="Item options">
+                <ActionIcon
+                  color="blue.4"
+                  variant="transparent"
+                  onClick={() => setModal({ opened: true, index })}
+                  pt={index === 0 ? undefined : 16}
+                >
+                  <TbSettings size={24} />
+                </ActionIcon>
+              </Tooltip>
+              <Tooltip label="Delete row">
+                <ActionIcon
+                  color="red.4"
+                  variant="transparent"
+                  pt={index === 0 ? undefined : 16}
+                  onClick={() => handleRowDelete(index)}
+                >
+                  <TbTrash size={24} />
+                </ActionIcon>
+              </Tooltip>
+            </Group>
+          ))}
+        </>
+      )}
       <Modal
         opened={modal.opened}
         onClose={() => setModal({ ...modal, opened: false })}
