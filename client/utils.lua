@@ -124,6 +124,8 @@ RegisterNUICallback('createDoor', function(data, cb)
 	cb(1)
 	SetNuiFocus(false, false)
 
+	data.state = data.state and 1 or 0
+
 	if data.items and not next(data.items) then
 		data.items = nil
 	end
