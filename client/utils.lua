@@ -1,7 +1,8 @@
 lib.locale()
 local Entity = Entity
 
-local function getDoorFromEntity(entity)
+local function getDoorFromEntity(data)
+	local entity = type(data) == 'number' and data or data.entity
 	local state = Entity(entity).state
 	local door = doors[state.doorId]
 
@@ -12,7 +13,8 @@ local function getDoorFromEntity(entity)
 	return door
 end
 
-local function entityIsNotDoor(entity)
+local function entityIsNotDoor(data)
+	local entity = type(data) == 'number' and data or data.entity
 	return not getDoorFromEntity(entity)
 end
 
@@ -68,35 +70,59 @@ end
 local target
 
 do
-	if GetResourceState('qb-target'):find('start') then
-		target = exports['qb-target']
-		rawset(target, 'name', 'qb-target')
-	else
-		target = exports.qtarget
-		rawset(target, 'name', 'qtarget')
+	if GetResourceState('ox_target'):find('start') then
+		target = {
+			ox = true,
+			exp = exports.ox_target
+		}
+	elseif GetResourceState('qb-target'):find('start') then
+		target = {
+			qb = true,
+			exp = exports['qb-target']
+		}
+	elseif GetResourceState('qtarget'):find('start') then
+		target = {
+			qt = true,
+			exp = exports.qtarget
+		}
 	end
 
-	local options = {
-		{
-			label = locale('pick_lock'),
-			icon = 'fas fa-user-lock',
-			action = pickLock,
-			canInteract = canPickLock,
-			item = 'lockpick',
-			distance = 1
-		}
-	}
-
-	if target.name == 'qtarget' then
-		target:Object({ options = options })
+	if target.ox then
+		target.exp:addGlobalObject({
+			{
+				name = 'pickDoorlock',
+				label = locale('pick_lock'),
+				icon = 'fas fa-user-lock',
+				onSelect = pickLock,
+				canInteract = canPickLock,
+				item = 'lockpick',
+				distance = 1
+			}
+		})
 	else
-		target:AddGlobalObject({ options = options })
+		local options = {
+			{
+				label = locale('pick_lock'),
+				icon = 'fas fa-user-lock',
+				action = pickLock,
+				canInteract = canPickLock,
+				item = 'lockpick',
+				distance = 1
+			}
+		}
+
+		if target.qt then
+			target.exp:Object({ options = options })
+		elseif target.qb then
+			target.exp:AddGlobalObject({ options = options })
+		end
 	end
 end
 
 local tempData = {}
 
-local function addDoorlock(entity)
+local function addDoorlock(data)
+	local entity = type(data) == 'number' and data or data.entity
 	local model = GetEntityModel(entity)
 	local coords = GetEntityCoords(entity)
 
@@ -137,20 +163,33 @@ RegisterNUICallback('createDoor', function(data, cb)
 	if not data.id then
 		isAddingDoorlock = true
 
-		local options = {
-			{
-				label = locale('add_lock'),
-				icon = 'fas fa-file-circle-plus',
-				action = addDoorlock,
-				canInteract = entityIsNotDoor,
-				distance = 10
-			},
-		}
-
-		if target.name == 'qtarget' then
-			target:Object({ options = options })
+		if target.ox then
+			target.exp:addGlobalObject({
+				{
+					name = 'addDoorlock',
+					label = locale('add_lock'),
+					icon = 'fas fa-file-circle-plus',
+					onSelect = addDoorlock,
+					canInteract = entityIsNotDoor,
+					distance = 10
+				},
+			})
 		else
-			target:AddGlobalObject({ options = options })
+			local options = {
+				{
+					label = locale('add_lock'),
+					icon = 'fas fa-file-circle-plus',
+					action = addDoorlock,
+					canInteract = entityIsNotDoor,
+					distance = 10
+				},
+			}
+
+			if target.qt then
+				target.exp:Object({ options = options })
+			elseif target.qb then
+				target.exp:AddGlobalObject({ options = options })
+			end
 		end
 
 		if data.doors then
@@ -179,10 +218,14 @@ RegisterNUICallback('createDoor', function(data, cb)
 	end
 
 	if isAddingDoorlock then
-		if target.name == 'qtarget' then
-			target:RemoveObject(locale('add_lock'))
+		if target.ox then
+			target.exp:removeGlobalObject('addDoorlock')
 		else
-			target:RemoveGlobalObject(locale('add_lock'))
+			if target.qt then
+				target.exp:RemoveObject(locale('add_lock'))
+			elseif target.qb then
+				target.exp:RemoveGlobalObject(locale('add_lock'))
+			end
 		end
 
 		isAddingDoorlock = false
@@ -224,16 +267,16 @@ RegisterNetEvent('ox_doorlock:triggeredCommand', function(closest)
 	openUi(closest and ClosestDoor?.id or nil)
 end)
 
-local function removeTarget(res)
-	if not res or res == 'ox_doorlock' then
-		local options = { locale('remove_lock'), locale('edit_lock'), locale('add_lock'), locale('pick_lock') }
+if not target.ox then
+	AddEventHandler('onResourceStop', function(resource)
+		if resource == 'ox_doorlock' then
+			local options = { locale('add_lock'), locale('pick_lock') }
 
-		if target.name == 'qtarget' then
-			target:RemoveObject(options)
-		else
-			target:RemoveGlobalObject(options)
+			if target.qt then
+				target.exp:RemoveObject(options)
+			elseif target.qb then
+				target.exp:RemoveGlobalObject(options)
+			end
 		end
-	end
+	end)
 end
-
-AddEventHandler('onResourceStop', removeTarget)

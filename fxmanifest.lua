@@ -40,5 +40,4 @@ files {
 dependencies {
 	'oxmysql',
 	'ox_lib',
-	'qtarget',
 }
