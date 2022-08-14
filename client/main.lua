@@ -315,14 +315,9 @@ CreateThread(function()
 
 
 		if ClosestDoor and ClosestDoor.distance < ClosestDoor.maxDistance then
-			if Config.DrawTextUI then
-				if ClosestDoor.state == 0 and showUI ~= 0 and not ClosestDoor.hideUi then
-					lib.showTextUI(lockDoor)
-					showUI = 0
-				elseif ClosestDoor.state == 1 and showUI ~= 1 and not ClosestDoor.hideUi then
-					lib.showTextUI(unlockDoor)
-					showUI = 1
-				end
+			if Config.DrawTextUI and not ClosestDoor.hideUi and ClosestDoor.state ~= showUI then
+				lib.showTextUI(ClosestDoor.state == 0 and lockDoor or unlockDoor)
+				showUI = ClosestDoor.state
 			end
 
 			if IsDisabledControlJustReleased(0, 38) then
