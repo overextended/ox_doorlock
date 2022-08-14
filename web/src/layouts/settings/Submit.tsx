@@ -61,15 +61,15 @@ const Submit: React.FC = () => {
       <Button color="blue" uppercase onClick={() => handleSubmit()} fullWidth>
         Confirm door
       </Button>
-      <Tooltip label="Apply copied settings" withArrow arrowSize={10}>
+      <Tooltip label={!clipboard ? 'No door settings copied' : 'Apply copied settings'} withArrow arrowSize={10}>
         <ActionIcon
           variant="outline"
+          disabled={!clipboard}
           size="lg"
           ml={16}
           sx={{ width: 36, height: 36 }}
           color="blue"
           onClick={() => {
-            if (!clipboard) return;
             useStore.setState(clipboard, true);
             fetchNui('notify', 'Settings applied');
           }}
