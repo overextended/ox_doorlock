@@ -68,18 +68,16 @@ const App: React.FC = () => {
     if (typeof data === 'number') return setDoors(doors.filter((door) => door.id !== data));
     else {
       // More than 1 door sent - replace the object
-      if (Object.values(data).length > 1) return setDoors(Object.values(data));
-      else {
+      if (data.hasOwnProperty('id')) {
         // Single door sent so update the object
-        const searchDoor = Object.values(data)[0];
         for (let i = 0; i < doors.length; i++) {
           const door = Object.values(doors)[i];
-          if (door.id == searchDoor.id) {
-            setDoors(Object.values({ ...doors, [i]: searchDoor }));
-            break;
+          if (door.id == data.id) {
+            return setDoors(Object.values({ ...doors, [i]: data } as DoorColumn[]));
           }
         }
       }
+      return setDoors(Object.values(data));
     }
   });
 
