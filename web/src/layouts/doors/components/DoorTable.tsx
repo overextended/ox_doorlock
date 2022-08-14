@@ -60,7 +60,7 @@ const DoorTable: React.FC = () => {
               variant="transparent"
               color="blue.4"
               onClick={() => {
-                setClipboard(convertData(data.row.original));
+                setClipboard({ ...convertData(data.row.original), name: '' });
                 fetchNui('notify', 'Settings copied');
               }}
             >
