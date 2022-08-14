@@ -118,6 +118,13 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 	if data then
 		doors[id] = data
 		createDoor(data)
+
+		if NuiHasLoaded then
+			SendNuiMessage(json.encode({
+				action = 'updateDoorData',
+				data = data
+			}))
+		end
 	end
 
 	if Config.Notify and source == cache.serverId then
