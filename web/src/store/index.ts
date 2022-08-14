@@ -1,25 +1,23 @@
 import create, { GetState, SetState } from 'zustand';
 
-type StringField = string | null;
-type NumberField = number | string | null;
+type StringField = string | null | undefined;
+type NumberField = number | null | undefined;
 
 export interface StoreState {
-  doorName: StringField;
+  name: StringField;
   passcode: StringField;
-  autolockInterval: NumberField;
-  itemFields: { name: StringField; metadata?: StringField; remove?: boolean }[];
-  groupFields: { name: StringField; grade: NumberField }[];
-  interactDistance: NumberField;
+  autolock: NumberField;
+  items: { name: StringField; metadata?: StringField; remove: boolean | null }[];
+  groups: { name: StringField; grade: NumberField }[];
+  maxDistance: NumberField;
   doorRate: NumberField;
   lockSound: StringField;
   unlockSound: StringField;
-  checkboxes: {
-    locked: boolean;
-    double: boolean;
-    automatic: boolean;
-    lockpick: boolean;
-    hideUi: boolean;
-  };
+  auto: boolean | null;
+  state: boolean | null;
+  lockpick: boolean | null;
+  hideUi: boolean | null;
+  doors: boolean | null;
 }
 
 interface StateSetters {
@@ -27,78 +25,52 @@ interface StateSetters {
   setSounds: (value: string[]) => void;
   setLockSound: (value: StoreState['lockSound']) => void;
   setUnlockSound: (value: StoreState['unlockSound']) => void;
-  setDoorName: (value: StoreState['doorName']) => void;
+  setName: (value: StoreState['name']) => void;
   setPasscode: (value: StoreState['passcode']) => void;
-  setAutolockInterval: (value: StoreState['autolockInterval']) => void;
-  setItemFields: (fn: (state: StoreState['itemFields']) => StoreState['itemFields']) => void;
-  setGroupFields: (fn: (state: StoreState['groupFields']) => StoreState['groupFields']) => void;
-  toggleCheckbox: (type: 'locked' | 'double' | 'automatic' | 'lockpick' | 'hideUi') => void;
-  setInteractDistance: (value: StoreState['interactDistance']) => void;
+  setAutolock: (value: StoreState['autolock']) => void;
+  setItems: (fn: (state: StoreState['items']) => StoreState['items']) => void;
+  setGroups: (fn: (state: StoreState['groups']) => StoreState['groups']) => void;
+  toggleCheckbox: (type: 'state' | 'doors' | 'auto' | 'lockpick' | 'hideUi') => void;
+  setMaxDistance: (value: StoreState['maxDistance']) => void;
   setDoorRate: (value: StoreState['doorRate']) => void;
 }
 
-interface VisibilityState {
-  settingsVisible: boolean;
-  authVisible: boolean;
-  soundVisible: boolean;
-  setSettingsVisible: (state: boolean) => void;
-  setAuthVisible: (state: boolean) => void;
-  setSoundVisible: (state: boolean) => void;
-}
-
-export const useStore = create<StoreState>((set: SetState<StoreState>) => ({
-  doorName: '',
+export const useStore = create<StoreState>(() => ({
+  name: '',
   passcode: '',
-  autolockInterval: '',
-  itemFields: [{ name: '', metadata: '', remove: false }],
-  groupFields: [{ name: '', grade: '' }],
-  interactDistance: '',
-  doorRate: '',
-  lockSound: null,
-  unlockSound: null,
-  checkboxes: {
-    locked: false,
-    double: false,
-    automatic: false,
-    lockpick: false,
-    hideUi: false,
-  },
+  autolock: 0,
+  items: [{ name: '', metadata: '', remove: false }],
+  groups: [{ name: '', grade: undefined }],
+  maxDistance: 0,
+  doorRate: 0,
+  lockSound: '',
+  unlockSound: '',
+  auto: false,
+  state: false,
+  lockpick: false,
+  hideUi: false,
+  doors: false,
 }));
 
 export const defaultState = useStore.getState();
 
-export const useSetters = create<StateSetters>(
-  (set: SetState<StateSetters>, get: GetState<StateSetters>) => ({
-    sounds: [''],
-    setSounds: (value) => set({ sounds: value }),
-    setLockSound: (value) => useStore.setState({ lockSound: value }),
-    setUnlockSound: (value) => useStore.setState({ unlockSound: value }),
-    setDoorName: (value) => useStore.setState({ doorName: value }),
-    setPasscode: (value: StoreState['passcode']) => useStore.setState({ passcode: value }),
-    setAutolockInterval: (value: StoreState['autolockInterval']) =>
-      useStore.setState({ autolockInterval: value }),
-    toggleCheckbox: (type) =>
-      useStore.setState(({ checkboxes }) => ({
-        checkboxes: { ...checkboxes, [type]: !checkboxes[type] },
-      })),
-    setInteractDistance: (value: StoreState['interactDistance']) =>
-      useStore.setState(() => ({ interactDistance: value })),
-    // Returns previous state, works like usual state setter except if you
-    // want to set state straight away, you still have to call the function
-    setItemFields: (fn) => useStore.setState(({ itemFields }) => ({ itemFields: fn(itemFields) })),
-    setGroupFields: (fn) =>
-      useStore.setState(({ groupFields }) => ({
-        groupFields: fn(groupFields),
-      })),
-    setDoorRate: (value: StoreState['doorRate']) => useStore.setState({ doorRate: value }),
-  }),
-);
-
-export const useVisibilityStore = create((set: SetState<VisibilityState>) => ({
-  settingsVisible: false,
-  authVisible: false,
-  soundVisible: false,
-  setSettingsVisible: (state: boolean) => set({ settingsVisible: state }),
-  setAuthVisible: (state: boolean) => set({ authVisible: state }),
-  setSoundVisible: (state: boolean) => set({ soundVisible: state }),
+export const useSetters = create<StateSetters>((set: SetState<StateSetters>, get: GetState<StateSetters>) => ({
+  sounds: [''],
+  setSounds: (value) => set({ sounds: value }),
+  setLockSound: (value) => useStore.setState({ lockSound: value }),
+  setUnlockSound: (value) => useStore.setState({ unlockSound: value }),
+  setName: (value) => useStore.setState({ name: value }),
+  setPasscode: (value: StoreState['passcode']) => useStore.setState({ passcode: value }),
+  setAutolock: (value: StoreState['autolock']) => useStore.setState({ autolock: value }),
+  // @ts-ignore
+  toggleCheckbox: (type) => useStore.setState((state) => ({ [type]: !state[type] })),
+  setMaxDistance: (value: StoreState['maxDistance']) => useStore.setState(() => ({ maxDistance: value })),
+  // Returns previous state, works like usual state setter except if you
+  // want to set state straight away, you still have to call the function
+  setItems: (fn) => useStore.setState(({ items: itemFields }) => ({ items: fn(itemFields) })),
+  setGroups: (fn) =>
+    useStore.setState(({ groups: groupFields }) => ({
+      groups: fn(groupFields),
+    })),
+  setDoorRate: (value: StoreState['doorRate']) => useStore.setState({ doorRate: value }),
 }));

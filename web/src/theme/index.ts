@@ -1,7 +1,13 @@
-import { createTheme } from "@mui/material";
+import { MantineThemeOverride } from '@mantine/core';
 
-export const customTheme = createTheme({
-    palette: {
-        mode: 'dark'
-    }
-})
+export const customTheme: MantineThemeOverride = {
+  colorScheme: 'dark',
+  fontFamily: 'Roboto',
+  components: {
+    Tooltip: {
+      defaultProps: {
+        transition: 'pop',
+      },
+    },
+  },
+};

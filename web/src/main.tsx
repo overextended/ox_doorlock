@@ -1,42 +1,86 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/App';
+import App from './App';
 import { debugData } from './utils/debugData';
-import { ThemeProvider } from '@mui/material';
+import { MantineProvider } from '@mantine/core';
 import { customTheme } from './theme';
 import { isEnvBrowser } from './utils/misc';
 import { StoreState } from './store';
+import { HashRouter } from 'react-router-dom';
+import { ModalsProvider } from '@mantine/modals';
+import { DoorColumn } from './store/doors';
 
-debugData<boolean | StoreState>([
+debugData<DoorColumn[]>([
   {
-    action: 'setVisible',
-    data: {
-      doorName: 'Door name',
-      passcode: 'Supersecret123',
-      autolockInterval: '300',
-      itemFields: [
-        { name: 'mrpd_key', metadata: 'office_key', remove: true },
-        { name: 'lockpick' },
-      ],
-      groupFields: [
-        { name: 'police', grade: '0' },
-        { name: 'ambulance', grade: '3' },
-      ],
-      lockSound: null,
-      unlockSound: null,
-      interactDistance: '15.2',
-      checkboxes: {
-        locked: true,
-        double: true,
-        automatic: true,
+    action: 'updateDoorData',
+    data: [
+      {
+        name: 'Door name',
+        passcode: 'Supersecret123',
+        autolock: 300,
+        id: 0,
+        zone: 'Mission Row',
+        groups: {
+          ['police']: 0,
+          ['ambulance']: 1,
+        },
+        items: [{ name: 'mrpd_key', metadata: 'lspd_key', remove: true }],
+        lockSound: null,
+        unlockSound: null,
+        maxDistance: 15.2,
+        state: true,
+        doors: true,
+        auto: true,
         lockpick: true,
         hideUi: true,
+        doorRate: null,
       },
-      doorRate: null
-    },
+    ],
   },
 ]);
+
+debugData(
+  [
+    {
+      action: 'updateDoorData',
+      data: {
+        [0]: {
+          name: 'New door',
+          passcode: 'Supersecret123',
+          autolock: 300,
+          id: 2,
+          zone: 'Mission Row',
+          groups: {
+            ['police']: 0,
+            ['ambulance']: 1,
+          },
+          items: [{ name: 'mrpd_key', metadata: 'lspd_key', remove: true }],
+          lockSound: null,
+          unlockSound: null,
+          maxDistance: 15.2,
+          state: true,
+          doors: true,
+          auto: true,
+          lockpick: true,
+          hideUi: true,
+          doorRate: null,
+        },
+      },
+    },
+  ],
+  3000
+);
+
+debugData(
+  [
+    {
+      action: 'setVisible',
+      data: undefined,
+    },
+  ],
+  2000
+);
 
 debugData<string[]>([
   {
@@ -57,9 +101,13 @@ if (isEnvBrowser()) {
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={customTheme}>
-      <App />
-    </ThemeProvider>
+    <MantineProvider withNormalizeCSS withGlobalStyles theme={customTheme}>
+      <ModalsProvider modalProps={{ transition: 'slide-up' }}>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </ModalsProvider>
+    </MantineProvider>
   </React.StrictMode>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
