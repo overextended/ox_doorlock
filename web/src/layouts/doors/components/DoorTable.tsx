@@ -9,7 +9,7 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TbSettings, TbTrash, TbSelector, TbChevronDown, TbChevronUp, TbSearch } from 'react-icons/tb';
 import { useSearch } from '../../../store/search';
@@ -23,6 +23,7 @@ import { convertData } from '../../../utils/convertData';
 
 const DoorTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const globalFilter = useSearch((state) => state.debouncedValue);
   const navigate = useNavigate();
   const setClipboard = useClipboard((state) => state.setClipboard);
@@ -143,6 +144,10 @@ const DoorTable: React.FC = () => {
     getPaginationRowModel: getPaginationRowModel(),
   });
 
+  useEffect(() => {
+    table.setPageIndex(currentPage - 1);
+  }, [currentPage, data]);
+
   return (
     <Stack justify="space-between" align="center" sx={{ height: '100%', paddingBottom: 16 }} spacing={0}>
       {table.getFilteredRowModel().rows.length > 0 ? (
@@ -190,7 +195,7 @@ const DoorTable: React.FC = () => {
         </Center>
       )}
       {table.getPageCount() > 1 && (
-        <Pagination total={table.getPageCount()} onChange={(e) => table.setPageIndex(e - 1)} />
+        <Pagination page={currentPage} total={table.getPageCount()} onChange={(e) => setCurrentPage(e)} />
       )}
     </Stack>
   );
