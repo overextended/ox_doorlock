@@ -22,7 +22,7 @@ const GroupFields: React.FC = () => {
         <Group
           position="center"
           key={`group-${index}`}
-          pt={index === 0 ? 0 : 16}
+          mt={index === 0 ? 0 : 16}
           noWrap
           spacing={16}
           sx={{ fontSize: 16 }}
