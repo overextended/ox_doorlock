@@ -95,7 +95,7 @@ do
 				icon = 'fas fa-user-lock',
 				onSelect = pickLock,
 				canInteract = canPickLock,
-				item = 'lockpick',
+				items = 'lockpick',
 				distance = 1
 			}
 		})
