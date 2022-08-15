@@ -201,6 +201,8 @@ RegisterNUICallback('createDoor', function(data, cb)
 			data.coords = tempData[1].coords
 			data.heading = tempData[1].heading
 		end
+
+		tempData = {}
 	else
 		if data.doors then
 			for i = 1, 2 do
