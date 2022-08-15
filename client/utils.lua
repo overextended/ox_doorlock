@@ -202,7 +202,6 @@ RegisterNUICallback('createDoor', function(data, cb)
 			data.heading = tempData[1].heading
 		end
 
-		tempData = table.wipe(tempData)
 	else
 		if data.doors then
 			for i = 1, 2 do
@@ -234,6 +233,7 @@ RegisterNUICallback('createDoor', function(data, cb)
 	end
 
 	TriggerServerEvent('ox_doorlock:editDoorlock', data.id or false, data)
+	table.wipe(tempData)
 end)
 
 RegisterNUICallback('deleteDoor', function(id, cb)
