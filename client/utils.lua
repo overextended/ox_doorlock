@@ -202,7 +202,7 @@ RegisterNUICallback('createDoor', function(data, cb)
 			data.heading = tempData[1].heading
 		end
 
-		tempData = {}
+		tempData = table.wipe(tempData)
 	else
 		if data.doors then
 			for i = 1, 2 do
