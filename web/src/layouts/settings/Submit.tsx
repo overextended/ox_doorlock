@@ -70,7 +70,25 @@ const Submit: React.FC = () => {
           sx={{ width: 36, height: 36 }}
           color="blue"
           onClick={() => {
-            useStore.setState(clipboard, true);
+            useStore.setState(
+              {
+                name: '',
+                passcode: clipboard.passcode,
+                autolock: clipboard.autolock,
+                items: clipboard.items,
+                groups: clipboard.groups,
+                maxDistance: clipboard.maxDistance,
+                doorRate: clipboard.doorRate,
+                lockSound: clipboard.lockSound,
+                unlockSound: clipboard.unlockSound,
+                auto: clipboard.auto,
+                state: clipboard.state,
+                lockpick: clipboard.lockpick,
+                hideUi: clipboard.hideUi,
+                doors: clipboard.doors,
+              },
+              true
+            );
             fetchNui('notify', 'Settings applied');
           }}
         >
