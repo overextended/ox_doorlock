@@ -1,4 +1,4 @@
-import { ActionIcon, Table, Tooltip, UnstyledButton, Text, Group, Center, Stack, Pagination } from '@mantine/core';
+import { Table, UnstyledButton, Text, Group, Center, Stack, Pagination } from '@mantine/core';
 import {
   ColumnDef,
   flexRender,
@@ -10,23 +10,15 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { TbSettings, TbTrash, TbSelector, TbChevronDown, TbChevronUp, TbSearch } from 'react-icons/tb';
+import { TbSelector, TbChevronDown, TbChevronUp, TbSearch } from 'react-icons/tb';
 import { useSearch } from '../../../store/search';
-import { openConfirmModal } from '@mantine/modals';
 import { useDoors, type DoorColumn } from '../../../store/doors';
-import { fetchNui } from '../../../utils/fetchNui';
-import { useStore } from '../../../store';
-import { HiOutlineClipboardCopy } from 'react-icons/all';
-import { useClipboard } from '../../../store/clipboard';
-import { convertData } from '../../../utils/convertData';
+import ActionsMenu from './ActionsMenu';
 
 const DoorTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const globalFilter = useSearch((state) => state.debouncedValue);
-  const navigate = useNavigate();
-  const setClipboard = useClipboard((state) => state.setClipboard);
   const data = useDoors((state) => state.doors);
 
   const columns = useMemo<ColumnDef<DoorColumn>[]>(
@@ -54,70 +46,8 @@ const DoorTable: React.FC = () => {
         enableHiding: false,
       },
       {
-        id: 'copy',
-        cell: (data) => (
-          <Tooltip label="Copy settings">
-            <ActionIcon
-              variant="transparent"
-              color="blue.4"
-              onClick={() => {
-                setClipboard(convertData(data.row.original));
-                fetchNui('notify', 'Settings copied');
-              }}
-            >
-              <HiOutlineClipboardCopy size={20} />
-            </ActionIcon>
-          </Tooltip>
-        ),
-      },
-      {
-        id: 'edit',
-        cell: (data) => (
-          <Tooltip label="Edit">
-            <ActionIcon
-              color="blue.4"
-              variant="transparent"
-              onClick={() => {
-                useStore.setState(convertData(data.row.original), false);
-                navigate('/settings/general');
-              }}
-            >
-              <TbSettings size={20} />
-            </ActionIcon>
-          </Tooltip>
-        ),
-      },
-      {
-        id: 'delete',
-        cell: (data) => (
-          <Tooltip label="Delete">
-            <ActionIcon
-              color="red.4"
-              variant="transparent"
-              onClick={() =>
-                openConfirmModal({
-                  title: 'Confirm deletion',
-                  centered: true,
-                  withCloseButton: false,
-                  children: (
-                    <Text>
-                      Are you sure you want to delete
-                      <Text component="span" weight={700}>{` ${data.row.getValue('name')}`}</Text>?
-                    </Text>
-                  ),
-                  labels: { confirm: 'Confirm', cancel: 'Cancel' },
-                  confirmProps: { color: 'red' },
-                  onConfirm: () => {
-                    fetchNui('deleteDoor', data.row.getValue('id'));
-                    // Remove row from data
-                  },
-                })
-              }
-            >
-              <TbTrash size={20} />
-            </ActionIcon>
-          </Tooltip>
-        ),
+        id: 'options-menu',
+        cell: (data) => <ActionsMenu data={data} />,
       },
     ],
     []
