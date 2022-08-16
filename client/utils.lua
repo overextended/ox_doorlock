@@ -241,6 +241,14 @@ RegisterNUICallback('deleteDoor', function(id, cb)
 	TriggerServerEvent('ox_doorlock:editDoorlock', id)
 end)
 
+RegisterNUICallback('teleportToDoor', function(id, cb)
+    cb(1)
+    SetNuiFocus(false, false)
+    local doorCoords = doors[id].coords
+    if not doorCoords then return end
+    SetEntityCoords(cache.ped, doorCoords.x, doorCoords.y, doorCoords.z)
+end)
+
 RegisterNUICallback('exit', function(_, cb)
 	cb(1)
 	SetNuiFocus(false, false)
