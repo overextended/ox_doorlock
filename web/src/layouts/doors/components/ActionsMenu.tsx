@@ -1,4 +1,4 @@
-import { ActionIcon, Menu, Text } from '@mantine/core';
+import { ActionIcon, Menu, Text, Tooltip } from '@mantine/core';
 import { TbDots, TbSettings, TbTrash } from 'react-icons/tb';
 import { HiOutlineClipboardCopy } from 'react-icons/all';
 import { GiTeleport } from 'react-icons/gi';
@@ -19,13 +19,14 @@ const ActionsMenu: React.FC<{ data: CellContext<DoorColumn, unknown> }> = ({ dat
   return (
     <Menu position="right-start" width={200}>
       <Menu.Target>
-        <ActionIcon color="blue.4" variant="transparent">
-          <TbDots size={24} />
-        </ActionIcon>
+        <Tooltip label="Door actions">
+          <ActionIcon color="blue.4" variant="transparent">
+            <TbDots size={24} />
+          </ActionIcon>
+        </Tooltip>
       </Menu.Target>
 
       <Menu.Dropdown>
-        {/*<Menu.Label>Door actions</Menu.Label>*/}
         <Menu.Item
           icon={<TbSettings size={18} />}
           onClick={() => {
