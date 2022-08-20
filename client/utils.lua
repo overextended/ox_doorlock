@@ -112,10 +112,10 @@ do
 			1,
 			false,
 			{
-			{
-				label = locale('pick_lock'),
-				onSelect = function(_, _, entity) pickLock(entity) end
-			}
+				{
+					label = locale('pick_lock'),
+					onSelect = function(_, _, entity) pickLock(entity) end
+				}
 			},
 			{}
 		)
