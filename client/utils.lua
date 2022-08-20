@@ -75,6 +75,11 @@ do
 			ox = true,
 			exp = exports.ox_target
 		}
+	elseif GetResourceState('meta_target'):find('start') then
+		target = {
+			mt = true,
+			exp = exports.meta_target
+		}
 	elseif GetResourceState('qb-target'):find('start') then
 		target = {
 			qb = true,
@@ -99,6 +104,21 @@ do
 				distance = 1
 			}
 		})
+	elseif target.mt then
+		target.exp:addObject(
+			"ox_doorlock",
+			locale('door_lock'),
+			"fas fa-user-lock",
+			1,
+			false,
+			{
+			{
+				label = locale('pick_lock'),
+				onSelect = function(_, _, entity) pickLock(entity) end
+			}
+			},
+			{}
+		)
 	else
 		local options = {
 			{
@@ -174,6 +194,21 @@ RegisterNUICallback('createDoor', function(data, cb)
 					distance = 10
 				},
 			})
+		elseif target.mt then
+			target.exp:addObject(
+				"ox_doorlock_create",
+				locale('door_lock'),
+				"fas fa-plus-circle",
+				10,
+				false,
+				{
+					{
+						label = locale('add_lock'),
+						onSelect = function(_, _, entity) addDoorlock(entity) end
+					}
+				},
+				{}
+			)
 		else
 			local options = {
 				{
@@ -224,6 +259,8 @@ RegisterNUICallback('createDoor', function(data, cb)
 		else
 			if target.qt then
 				target.exp:RemoveObject(locale('add_lock'))
+			elseif target.mt then
+				target.exp:removeTarget("ox_doorlock_create")
 			elseif target.qb then
 				target.exp:RemoveGlobalObject(locale('add_lock'))
 			end
@@ -284,6 +321,8 @@ if not target.ox then
 
 			if target.qt then
 				target.exp:RemoveObject(options)
+			elseif target.mt then
+				target.exp:removeTarget("ox_doorlock_create", "ox_doorlock")
 			elseif target.qb then
 				target.exp:RemoveGlobalObject(options)
 			end
