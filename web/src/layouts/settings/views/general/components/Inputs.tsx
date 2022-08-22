@@ -40,7 +40,7 @@ const Inputs: React.FC = () => {
           type="number"
           value={autolockInterval || 0}
           setValue={(value: number) => setAutolockInterval(value)}
-          infoCircle="Time in milliseconds after which the door will be locked"
+          infoCircle="Time in seconds after which the door will be locked"
         />
         <Input
           label="Interact Distance"
