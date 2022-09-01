@@ -30,7 +30,7 @@ const Submit: React.FC = () => {
         const itemField = data.items[i];
         if (itemField.name && itemField.name !== '') {
           if (itemField.metadata === '') itemField.metadata = null;
-          if (itemField.remove) itemField.remove = null;
+          if (!itemField.remove) itemField.remove = null;
           items.push(itemField);
         }
       }
