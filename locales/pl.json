@@ -1,0 +1,16 @@
+{
+  "unlocked_door": "Drzwi otwarte",
+  "locked_door": "Drzwi zamknięte",
+  "lock_door": "[E] Zamknij drzwi",
+  "unlock_door": "[E] Otwórz drzwi",
+  "door_lock": "Zamek drzwi",
+  "passcode": "Kod",
+  "lockpick_broke": "Twój wytrych się zepsuł",
+  "pick_lock": "Wyłam zamek",
+  "add_lock": "Dodaj doorlock",
+  "edit_lock": "Edytuj doorlock",
+  "remove_lock": "Usuń doorlock",
+  "cannot_unlock": "Nie możesz otworzyć drzwi",
+  "cannot_lock": "Nie możesz zamknąć drzwi",
+  "create_modify_lock": "Utwórz zamek lub zmodyfikuj istniejący"
+}
