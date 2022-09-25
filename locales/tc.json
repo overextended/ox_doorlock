@@ -1,0 +1,16 @@
+{
+  "unlocked_door": "已將門解鎖",
+  "locked_door": "已將門鎖上",
+  "lock_door": "[E] 鎖門",
+  "unlock_door": "[E] 解鎖門",
+  "door_lock": "門鎖",
+  "passcode": "密碼",
+  "lockpick_broke": "你的開鎖工具壞了",
+  "pick_lock": "翹鎖",
+  "add_lock": "加入門鎖",
+  "edit_lock": "編輯門鎖",
+  "remove_lock": "刪除門鎖",
+  "cannot_unlock": "無法解鎖門",
+  "cannot_lock": "無法鎖門",
+  "create_modify_lock": "建立或修改已存在的門鎖"
+}
