@@ -5,12 +5,12 @@
   "unlock_door": "[E] Déverrouiller la porte",
   "door_lock": "Verrou de porte",
   "passcode": "Mot de passe",
-  "lockpick_broke": "Votre crochet à céder",
+  "lockpick_broke": "Votre crochet a cédé",
   "pick_lock": "Crocheter la serrure",
   "add_lock": "Ajouter serrure",
   "edit_lock": "Modifier serrure",
   "remove_lock": "Retirer serrure",
   "cannot_unlock": "Impossible de verrouiller la porte",
   "cannot_lock": "Impossible de déverrouiller la porte",
-  "create_modify_lock": "Ajouter use serrure ou en modifier une"
+  "create_modify_lock": "Ajouter une serrure ou en modifier une"
 }
