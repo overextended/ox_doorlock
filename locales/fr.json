@@ -5,12 +5,12 @@
   "unlock_door": "[E] Déverrouiller la porte",
   "door_lock": "Verrou de porte",
   "passcode": "Mot de passe",
-  "lockpick_broke": "Votre crochet a cédé",
+  "lockpick_broke": "Votre crochet s'est cassé",
   "pick_lock": "Crocheter la serrure",
-  "add_lock": "Ajouter serrure",
-  "edit_lock": "Modifier serrure",
-  "remove_lock": "Retirer serrure",
-  "cannot_unlock": "Impossible de verrouiller la porte",
-  "cannot_lock": "Impossible de déverrouiller la porte",
-  "create_modify_lock": "Ajouter une serrure ou en modifier une"
+  "add_lock": "Ajouter une serrure",
+  "edit_lock": "Modifier la serrure",
+  "remove_lock": "Retirer la serrure",
+  "cannot_unlock": "Impossible de déverrouiller la porte",
+  "cannot_lock": "Impossible de verrouiller la porte",
+  "create_modify_lock": "Ajouter / Modifier une serrure"
 }
