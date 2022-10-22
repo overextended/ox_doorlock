@@ -67,7 +67,7 @@ MySQL.ready(function()
 							auto = door.slides or door.garage or door.sliding or door.doublesliding,
 							autolock = (door.autolock and door.autolock / 1000) or (door.autoLock and door.autoLock / 1000),
 							coords = door.objCoords,
-							heading = (door.objHeading and math.floor(door.objHeading + 0.5)),
+							heading = door.objHeading and math.floor(door.objHeading + 0.5),
 							model = door.objHash,
 							groups = door.authorizedJobs,
 							items = door.items,
