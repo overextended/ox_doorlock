@@ -76,6 +76,7 @@ const Submit: React.FC = () => {
                 passcode: clipboard.passcode,
                 autolock: clipboard.autolock,
                 items: clipboard.items,
+                characters: clipboard.characters,
                 groups: clipboard.groups,
                 maxDistance: clipboard.maxDistance,
                 doorRate: clipboard.doorRate,

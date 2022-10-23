@@ -11,5 +11,5 @@ export const convertData = (data: DoorColumn) => {
       newGroupsData[i] = { name: groupObj[0], grade: groupObj[1] };
     }
   }
-  return { ...data, groups: [...newGroupsData], items: data.items || [] } as StoreState;
+  return { ...data, characters: data.characters || [], groups: [...newGroupsData], items: data.items || [] } as StoreState;
 };

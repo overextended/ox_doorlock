@@ -21,6 +21,7 @@ debugData<DoorColumn[]>([
         autolock: 300,
         id: 0,
         zone: 'Mission Row',
+        characters: ['charid1', 'charid2'],
         groups: {
           ['police']: 0,
           ['ambulance']: 1,
@@ -51,6 +52,7 @@ debugData(
           autolock: 300,
           id: 2,
           zone: 'Mission Row',
+          characters: ['charid1', 'charid2'],
           groups: {
             ['police']: 0,
             ['ambulance']: 1,

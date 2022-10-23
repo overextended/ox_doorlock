@@ -24,6 +24,10 @@ local function hasItem(player, items)
 	end
 end
 
+local function getCharacterId(player)
+	return tostring(player.charid)
+end
+
 function isAuthorised(source, door, lockpick, passcode)
 	local player, authorised = lib.getPlayer(source)
 	if not player then return end
@@ -40,6 +44,10 @@ function isAuthorised(source, door, lockpick, passcode)
 		authorised = player.hasGroup(door.groups)
 	end
 
+	if not authorised and door.characters then
+		authorised = lib.table.contains(door.characters, getCharacterId(player))
+	end
+
 	if not authorised and door.items then
 		authorised = hasItem(player, door.items)
 	end
@@ -52,6 +60,10 @@ function isAuthorised(source, door, lockpick, passcode)
 end
 
 if Core.resource == 'qb-core' then
+	function getCharacterId(player)
+		return player.PlayerData.citizenid
+	end
+
 	function hasItem(player, items)
 		for i = 1, #items do
 			local item = items[i]
@@ -88,6 +100,10 @@ if Core.resource == 'qb-core' then
 		player.Functions.RemoveItem(item, 1, slot)
 	end
 elseif Core.resource == 'es_extended' then
+	function getCharacterId(player)
+		return player.identifier
+	end
+
 	if not Core.GetConfig().OxInventory then
 		function hasItem(player, items)
 			for i = 1, #items do
