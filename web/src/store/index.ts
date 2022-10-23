@@ -42,7 +42,7 @@ export const useStore = create<StoreState>(() => ({
   passcode: '',
   autolock: 0,
   items: [{ name: '', metadata: '', remove: false }],
-  characters: [],
+  characters: [''],
   groups: [{ name: '', grade: undefined }],
   maxDistance: 0,
   doorRate: 0,

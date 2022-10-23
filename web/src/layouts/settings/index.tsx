@@ -29,10 +29,10 @@ const Settings: React.FC = () => {
             <Tabs.Tab value="general" icon={<TbSettings size={20} />}>
               General
             </Tabs.Tab>
-            <Tabs.Tab value="characters" icon={<TbBriefcase size={20} />}>
+            <Tabs.Tab value="characters" icon={<TbUser size={20} />}>
               Characters
             </Tabs.Tab>
-            <Tabs.Tab value="groups" icon={<TbUser size={20} />}>
+            <Tabs.Tab value="groups" icon={<TbBriefcase size={20} />}>
               Groups
             </Tabs.Tab>
             <Tabs.Tab value="items" icon={<TbBottle size={20} />}>
