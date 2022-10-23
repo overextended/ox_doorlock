@@ -1,6 +1,6 @@
 import { Box, Stack, Tabs } from '@mantine/core';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { TbSettings, TbBriefcase, TbBottle, TbBell, TbArrowBackUp } from 'react-icons/tb';
+import { TbSettings, TbBriefcase, TbBottle, TbBell, TbArrowBackUp, TbUser } from 'react-icons/tb';
 import General from './views/general';
 import Characters from './views/characters';
 import Groups from './views/groups';
@@ -32,7 +32,7 @@ const Settings: React.FC = () => {
             <Tabs.Tab value="characters" icon={<TbBriefcase size={20} />}>
               Characters
             </Tabs.Tab>
-            <Tabs.Tab value="groups" icon={<TbBriefcase size={20} />}>
+            <Tabs.Tab value="groups" icon={<TbUser size={20} />}>
               Groups
             </Tabs.Tab>
             <Tabs.Tab value="items" icon={<TbBottle size={20} />}>
