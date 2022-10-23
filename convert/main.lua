@@ -64,8 +64,8 @@ MySQL.ready(function()
 						end
 
 						local data = {
-							auto = door.slides or door.garage,
-							autolock = door.autolock and door.autolock / 1000,
+							auto = door.slides or door.garage or door.sliding or door.doublesliding,
+							autolock = (door.autolock and door.autolock / 1000) or (door.autoLock and door.autoLock / 1000),
 							coords = door.objCoords,
 							heading = door.objHeading and math.floor(door.objHeading + 0.5),
 							model = door.objHash,
@@ -75,7 +75,7 @@ MySQL.ready(function()
 							hideUi = door.showNUI ~= nil and not door.showNUI or false,
 							lockSound = door.audioLock?.file and door.audioLock.file:gsub('%.ogg', ''),
 							unlockSound = door.audioUnlock?.file and door.audioUnlock.file:gsub('%.ogg', ''),
-							maxDistance = door.maxDistance,
+							maxDistance = door.maxDistance or door.distance,
 							doorRate = door.doorRate,
 							state = door.locked and 1 or 0,
 							passcode = door.passcode,
