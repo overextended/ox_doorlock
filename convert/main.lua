@@ -1,13 +1,18 @@
 ---@type table?
 Config.DoorList = {}
 
-local function flattenTableToArray(table)
-	local array = {}
-	for k in pairs(table) do
-		array[#array + 1] = k
-	end
+local function flattenTableToArray(tbl)
+	if type(tbl) == 'table' then
+		if table.type(tbl) == 'array' then return tbl end
 
-	return array
+		local array = {}
+
+		for k in pairs(tbl) do
+			array[#array + 1] = k
+		end
+
+		return array
+	end
 end
 
 MySQL.ready(function()
