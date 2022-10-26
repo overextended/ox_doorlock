@@ -39,6 +39,20 @@ const Submit: React.FC = () => {
       data.items = items;
     }
 
+    if (data.characters && data.characters.length > 0) {
+      const charactersArr: Array<string | number> = [];
+
+      for (let i = 0; i < data.characters.length; i++) {
+        const characterField = data.characters[i];
+        if (characterField && characterField !== '') {
+          charactersArr.push(parseInt(characterField) || characterField);
+        }
+      }
+
+      // @ts-ignore
+      data.characters = charactersArr;
+    }
+
     if (data.groups && data.groups.length > 0) {
       const groupsObj: { [key: string]: number } = {};
 

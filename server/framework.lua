@@ -25,7 +25,7 @@ local function hasItem(player, items)
 end
 
 local function getCharacterId(player)
-	return tostring(player.charid)
+	return player.charid
 end
 
 function isAuthorised(source, door, lockpick, passcode)
