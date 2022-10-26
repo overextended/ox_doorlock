@@ -8,6 +8,7 @@ export interface StoreState {
   passcode: StringField;
   autolock: NumberField;
   items: { name: StringField; metadata?: StringField; remove: boolean | null }[];
+  characters: StringField[];
   groups: { name: StringField; grade: NumberField }[];
   maxDistance: NumberField;
   doorRate: NumberField;
@@ -29,6 +30,7 @@ interface StateSetters {
   setPasscode: (value: StoreState['passcode']) => void;
   setAutolock: (value: StoreState['autolock']) => void;
   setItems: (fn: (state: StoreState['items']) => StoreState['items']) => void;
+  setCharacters: (fn: (state: StoreState['characters']) => StoreState['characters']) => void;
   setGroups: (fn: (state: StoreState['groups']) => StoreState['groups']) => void;
   toggleCheckbox: (type: 'state' | 'doors' | 'auto' | 'lockpick' | 'hideUi') => void;
   setMaxDistance: (value: StoreState['maxDistance']) => void;
@@ -40,6 +42,7 @@ export const useStore = create<StoreState>(() => ({
   passcode: '',
   autolock: 0,
   items: [{ name: '', metadata: '', remove: false }],
+  characters: [''],
   groups: [{ name: '', grade: undefined }],
   maxDistance: 0,
   doorRate: 0,
@@ -68,6 +71,9 @@ export const useSetters = create<StateSetters>((set: SetState<StateSetters>, get
   // Returns previous state, works like usual state setter except if you
   // want to set state straight away, you still have to call the function
   setItems: (fn) => useStore.setState(({ items: itemFields }) => ({ items: fn(itemFields) })),
+  setCharacters: (fn) => useStore.setState(({ characters: characterFields }) => ({
+    characters: fn(characterFields),
+  })),
   setGroups: (fn) =>
     useStore.setState(({ groups: groupFields }) => ({
       groups: fn(groupFields),

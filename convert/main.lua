@@ -1,6 +1,20 @@
 ---@type table?
 Config.DoorList = {}
 
+local function flattenTableToArray(tbl)
+	if type(tbl) == 'table' then
+		if table.type(tbl) == 'array' then return tbl end
+
+		local array = {}
+
+		for k in pairs(tbl) do
+			array[#array + 1] = k
+		end
+
+		return array
+	end
+end
+
 MySQL.ready(function()
 	local files = {}
 	local system = os.getenv('OS')
@@ -61,6 +75,7 @@ MySQL.ready(function()
 							door.authorizedJobs = next(groups) and groups
 							door.lockpick = door.pickable
 							door.showNUI = not door.hideLabel
+							door.characters = flattenTableToArray(door.authorizedCitizenIDs)
 						end
 
 						local data = {
@@ -69,6 +84,7 @@ MySQL.ready(function()
 							coords = door.objCoords,
 							heading = door.objHeading and math.floor(door.objHeading + 0.5),
 							model = door.objHash,
+							characters = door.characters,
 							groups = door.authorizedJobs,
 							items = door.items,
 							lockpick = door.lockpick,

@@ -156,6 +156,10 @@ RegisterNUICallback('createDoor', function(data, cb)
 		data.items = nil
 	end
 
+	if data.characters and not next(data.characters) then
+		data.characters = nil
+	end
+
 	if data.groups and not next(data.groups) then
 		data.groups = nil
 	end
