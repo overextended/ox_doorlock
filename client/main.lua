@@ -183,6 +183,8 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 
 		-- hacky method to resolve a bug with "closest door" by forcing a distance recalculation
 		if door.distance < 20 then door.distance = 80 end
+	elseif ClosestDoor?.id == id then
+		ClosestDoor = nil
 	end
 
 	if double then
