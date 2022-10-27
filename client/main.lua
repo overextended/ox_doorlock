@@ -1,3 +1,7 @@
+if not LoadResourceFile(lib.name, 'web/build/index.html') then
+	error('Unable to load UI. Build ox_doorlock or download the latest release.\n	^3https://github.com/overextended/ox_doorlock/releases/latest/download/ox_doorlock.zip^0')
+end
+
 lib.locale()
 TriggerServerEvent('ox_doorlock:getDoors')
 
