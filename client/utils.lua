@@ -27,35 +27,16 @@ end
 local function pickLock(entity)
 	pickingLock = true
 	local door = getDoorFromEntity(entity)
-	local success
+
 	TaskTurnPedToFaceCoord(cache.ped, door.coords.x, door.coords.y, door.coords.z, 4000)
 	Wait(500)
+	lib.requestAnimDict('mp_common_heist')
+	TaskPlayAnim(cache.ped, 'mp_common_heist', 'pick_door', 3.0, 1.0, -1, 49, 0, true, true, true)
 
-	CreateThread(function()
-		success = not cache.vehicle and lib.progressCircle({
-			duration = 4000,
-			canCancel = true,
-			disable = {
-				move = true,
-				combat = true,
-			},
-			anim = {
-				dict = 'mp_common_heist',
-				clip = 'pick_door',
-			}
-		})
-	end)
+	local success = lib.skillCheck({ 'easy', 'easy', 'medium' })
+	local rand = math.random(1, success and 100 or 5)
 
-	while success == nil do
-		Wait(50)
-		if math.random(1, 500) == 1 then
-			TriggerServerEvent('ox_doorlock:breakLockpick')
-			lib.cancelProgress()
-			lib.notify({ type = 'error', description = locale('lockpick_broke') })
-		end
-	end
-
-	if math.random(1, 100) == 1 then
+	if rand == 1 then
 		TriggerServerEvent('ox_doorlock:breakLockpick')
 		lib.notify({ type = 'error', description = locale('lockpick_broke') })
 	end
@@ -65,6 +46,7 @@ local function pickLock(entity)
 	end
 
 	pickingLock = false
+	StopEntityAnim(cache.ped, 'pick_door', 'mp_common_heist', 0)
 end
 
 local target
