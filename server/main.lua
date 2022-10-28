@@ -3,7 +3,10 @@ if not LoadResourceFile(lib.name, 'web/build/index.html') then
 end
 
 do
-	local success, msg = lib.checkDependency('ox_lib', '2.4.0')
+	local success, msg = lib.checkDependency('oxmysql', '2.4.0')
+	if not success then error(msg) end
+
+	success, msg = lib.checkDependency('ox_lib', '2.14.2')
 	if not success then error(msg) end
 end
 
