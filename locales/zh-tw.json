@@ -6,7 +6,7 @@
   "door_lock": "門鎖",
   "passcode": "密碼",
   "lockpick_broke": "你的開鎖工具壞了",
-  "pick_lock": "翹鎖",
+  "pick_lock": "撬鎖",
   "add_lock": "加入門鎖",
   "edit_lock": "編輯門鎖",
   "remove_lock": "刪除門鎖",
