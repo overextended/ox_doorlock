@@ -33,7 +33,7 @@ local function pickLock(entity)
 	lib.requestAnimDict('mp_common_heist')
 	TaskPlayAnim(cache.ped, 'mp_common_heist', 'pick_door', 3.0, 1.0, -1, 49, 0, true, true, true)
 
-	local success = lib.skillCheck({ 'easy', 'easy', 'medium' })
+	local success = lib.skillCheck(Config.LockDifficulty)
 	local rand = math.random(1, success and 100 or 5)
 
 	if rand == 1 then

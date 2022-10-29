@@ -14,8 +14,11 @@ Config.DrawSprite = {
     [1] = {'mpsafecracking', 'lock_closed', 0, 0, 0.018, 0.018, 0, 255, 255, 255, 100},
 }
 
--- Allow the following ACL principal to use 'command.doorlock'
+-- Allow the following ACL principal to use 'command.doorlock'.
 Config.CommandPrincipal = 'group.admin'
 
--- Allow players with 'command.doorlock' permission to open any doors
+-- Allow players with 'command.doorlock' permission to open any doors.
 Config.PlayerAceAuthorised = false
+
+-- Set the difficulty of the skillcheck when picking a lock.
+Config.LockDifficulty = { 'easy', 'easy', 'medium' }
