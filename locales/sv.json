@@ -1,0 +1,16 @@
+{
+  "unlocked_door": "Olåst",
+  "locked_door": "Låst",
+  "lock_door": "[E] Lås",
+  "unlock_door": "[E] Lås upp",
+  "door_lock": "Dörrlås",
+  "passcode": "Lösenord",
+  "lockpick_broke": "Ditt dyrkset gick sönder",
+  "pick_lock": "Dyrka upp dörr",
+  "add_lock": "Lägg till lås",
+  "edit_lock": "Redigera lås",
+  "remove_lock": "Ta bort dörrlås",
+  "cannot_unlock": "Kan inte låsa upp",
+  "cannot_lock": "Kan inte låsa",
+  "create_modify_lock": "Lägg till dörrlås eller redigera befintligt"
+}
