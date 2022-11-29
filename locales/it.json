@@ -1,0 +1,16 @@
+{
+  "unlocked_door": "Porta sbloccata",
+  "locked_door": "Porta chiusa",
+  "lock_door": "[E] Chiudi porta",
+  "unlock_door": "[E] Apri porta",
+  "door_lock": "Serratura della porta",
+  "passcode": "codice di accesso",
+  "lockpick_broke": "il tuo grimaldello si è rotto",
+  "pick_lock": "Scassina serratura",
+  "add_lock": "Aggiungi serratura",
+  "edit_lock": "Modifica serratura",
+  "remove_lock": "Rimuovi serratura",
+  "cannot_unlock": "Impossibile aprire la porta",
+  "cannot_lock": "Impossibile chiudere la porta",
+  "create_modify_lock": "Crea una serratura o modificane una esistente"
+}
