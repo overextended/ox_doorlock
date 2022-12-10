@@ -1,16 +1,18 @@
 import { Box, Stack, Tabs } from '@mantine/core';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { TbSettings, TbBriefcase, TbBottle, TbBell, TbArrowBackUp, TbUser } from 'react-icons/tb';
+import { TbSettings, TbBriefcase, TbBottle, TbBell, TbArrowBackUp, TbUser, TbLock } from 'react-icons/tb';
 import General from './views/general';
 import Characters from './views/characters';
 import Groups from './views/groups';
 import Items from './views/items';
 import Sound from './views/sound';
 import Submit from './Submit';
+import { useStore } from '../../store';
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const lockpick = useStore((state) => state.lockpick);
 
   return (
     <>
@@ -37,6 +39,9 @@ const Settings: React.FC = () => {
             </Tabs.Tab>
             <Tabs.Tab value="items" icon={<TbBottle size={20} />}>
               Items
+            </Tabs.Tab>
+            <Tabs.Tab value="lockpick" disabled={!lockpick} icon={<TbLock size={20} />}>
+              Lockpick
             </Tabs.Tab>
             <Tabs.Tab value="sound" icon={<TbBell size={20} />}>
               Sound
