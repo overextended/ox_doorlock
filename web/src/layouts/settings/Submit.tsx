@@ -111,6 +111,7 @@ const Submit: React.FC = () => {
                 lockpick: clipboard.lockpick,
                 hideUi: clipboard.hideUi,
                 doors: clipboard.doors,
+                lockpickDifficulty: clipboard.lockpickDifficulty,
               },
               true
             );
