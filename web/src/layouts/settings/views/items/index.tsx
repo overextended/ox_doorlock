@@ -1,6 +1,4 @@
-import { Box, Stack, Button, Tooltip } from '@mantine/core';
 import { useEffect } from 'react';
-import { TbPlus } from 'react-icons/tb';
 import { useSetters } from '../../../../store';
 import ItemFields from './components/ItemFields';
 import Layout from '../../Layout';

@@ -1,6 +1,6 @@
 import { Button, NumberInput, Select, Stack } from '@mantine/core';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useForm, UseFormReturnType } from '@mantine/form';
+import { useEffect, useMemo, useState } from 'react';
+import { useForm } from '@mantine/form';
 import { useSetters, useStore } from '../../../../../store';
 
 interface Props {

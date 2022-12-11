@@ -1,19 +1,6 @@
 import { useSetters, useStore } from '../../../../../store';
-import {
-  ActionIcon,
-  Box,
-  Button,
-  Group,
-  Input,
-  Modal,
-  NumberInput,
-  Select,
-  Stack,
-  Switch,
-  TextInput,
-  Tooltip,
-} from '@mantine/core';
-import { useEffect, useState } from 'react';
+import { ActionIcon, Group, Modal, Select, Tooltip } from '@mantine/core';
+import { useState } from 'react';
 import { TbSettings, TbTrash } from 'react-icons/tb';
 import DifficultyModal from '../../characters/components/DifficultyModal';
 
