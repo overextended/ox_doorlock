@@ -46,7 +46,7 @@ export const useStore = create<StoreState>(() => ({
   items: [{ name: '', metadata: '', remove: false }],
   characters: [''],
   groups: [{ name: '', grade: undefined }],
-  lockpickDifficulty: [],
+  lockpickDifficulty: [''],
   maxDistance: 0,
   doorRate: 0,
   lockSound: '',
