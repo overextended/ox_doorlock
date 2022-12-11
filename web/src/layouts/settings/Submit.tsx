@@ -66,6 +66,16 @@ const Submit: React.FC = () => {
     } // @ts-ignore
     else data.groups = null;
 
+    if (data.lockpickDifficulty && data.lockpickDifficulty.length > 0) {
+      const lockpickArr = [];
+      for (let i = 0; i < data.lockpickDifficulty.length; i++) {
+        const field = data.lockpickDifficulty[i];
+        if (field !== '') lockpickArr.push(field);
+      }
+
+      data.lockpickDifficulty = lockpickArr;
+    }
+
     setVisible(false);
     fetchNui('createDoor', data);
   };
