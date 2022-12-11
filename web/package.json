@@ -13,6 +13,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.8.1",
     "@mantine/core": "^5.1.6",
+    "@mantine/form": "^5.9.3",
     "@mantine/hooks": "^5.1.6",
     "@mantine/modals": "^5.1.6",
     "@tanstack/react-table": "^8.5.11",

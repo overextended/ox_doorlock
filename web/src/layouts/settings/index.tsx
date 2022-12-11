@@ -8,6 +8,7 @@ import Items from './views/items';
 import Sound from './views/sound';
 import Submit from './Submit';
 import { useStore } from '../../store';
+import Lockpick from './views/lockpick';
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
@@ -55,6 +56,7 @@ const Settings: React.FC = () => {
             <Route path="/groups" element={<Groups />} />
             <Route path="/items" element={<Items />} />
             <Route path="/sound" element={<Sound />} />
+            <Route path="/lockpick" element={<Lockpick />} />
           </Routes>
           <Submit />
         </Stack>
