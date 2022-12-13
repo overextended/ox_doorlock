@@ -35,7 +35,7 @@ const Switches: React.FC = () => {
         />
         <TooltipSwitch
           label="Lockpick"
-          infoCircle="Enables the targeting door to be lockpicked"
+          infoCircle="Enables the targeting door to be lockpicked. Can define skill check difficulties in Lockpick tab, otherwise uses config defaults"
           value={lockpick || false}
           toggle={() => toggleCheckbox('lockpick')}
         />

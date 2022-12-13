@@ -1,7 +1,7 @@
 import create, { GetState, SetState } from 'zustand';
 
-type StringField = string | null | undefined;
-type NumberField = number | null | undefined;
+export type StringField = string | null | undefined;
+export type NumberField = number | null | undefined;
 
 export interface StoreState {
   name: StringField;
@@ -14,6 +14,7 @@ export interface StoreState {
   doorRate: NumberField;
   lockSound: StringField;
   unlockSound: StringField;
+  lockpickDifficulty: Array<string | { areaSize: number; speedMultiplier: number }>;
   auto: boolean | null;
   state: boolean | null;
   lockpick: boolean | null;
@@ -32,6 +33,7 @@ interface StateSetters {
   setItems: (fn: (state: StoreState['items']) => StoreState['items']) => void;
   setCharacters: (fn: (state: StoreState['characters']) => StoreState['characters']) => void;
   setGroups: (fn: (state: StoreState['groups']) => StoreState['groups']) => void;
+  setLockpickDifficulty: (fn: (state: StoreState['lockpickDifficulty']) => StoreState['lockpickDifficulty']) => void;
   toggleCheckbox: (type: 'state' | 'doors' | 'auto' | 'lockpick' | 'hideUi') => void;
   setMaxDistance: (value: StoreState['maxDistance']) => void;
   setDoorRate: (value: StoreState['doorRate']) => void;
@@ -44,6 +46,7 @@ export const useStore = create<StoreState>(() => ({
   items: [{ name: '', metadata: '', remove: false }],
   characters: [''],
   groups: [{ name: '', grade: undefined }],
+  lockpickDifficulty: [''],
   maxDistance: 0,
   doorRate: 0,
   lockSound: '',
@@ -71,12 +74,17 @@ export const useSetters = create<StateSetters>((set: SetState<StateSetters>, get
   // Returns previous state, works like usual state setter except if you
   // want to set state straight away, you still have to call the function
   setItems: (fn) => useStore.setState(({ items: itemFields }) => ({ items: fn(itemFields) })),
-  setCharacters: (fn) => useStore.setState(({ characters: characterFields }) => ({
-    characters: fn(characterFields),
-  })),
+  setCharacters: (fn) =>
+    useStore.setState(({ characters: characterFields }) => ({
+      characters: fn(characterFields),
+    })),
   setGroups: (fn) =>
     useStore.setState(({ groups: groupFields }) => ({
       groups: fn(groupFields),
+    })),
+  setLockpickDifficulty: (fn) =>
+    useStore.setState(({ lockpickDifficulty: difficultyFields }) => ({
+      lockpickDifficulty: fn(difficultyFields),
     })),
   setDoorRate: (value: StoreState['doorRate']) => useStore.setState({ doorRate: value }),
 }));

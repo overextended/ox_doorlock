@@ -1,7 +1,8 @@
-import { Box, Group, TextInput, Tooltip, ActionIcon, Stack, Switch, Button, Modal, Text } from '@mantine/core';
+import { Box, Group, TextInput, Tooltip, ActionIcon, Modal } from '@mantine/core';
 import { useState } from 'react';
 import { TbSettings, TbTrash } from 'react-icons/tb';
 import { useSetters, useStore } from '../../../../../store';
+import ItemsModal from './ItemsModal';
 
 const ItemFields: React.FC = () => {
   const itemFields = useStore((state) => state.items);
@@ -14,16 +15,7 @@ const ItemFields: React.FC = () => {
       case 'name':
         items[index].name = e.target.value;
         break;
-      case 'metadata':
-        items[index].metadata = e.target.value;
-        break;
     }
-    setItemFields(() => items);
-  };
-
-  const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const items = [...itemFields];
-    items[index].remove = e.target.checked;
     setItemFields(() => items);
   };
 
@@ -67,30 +59,13 @@ const ItemFields: React.FC = () => {
       <Modal
         opened={modal.opened}
         onClose={() => setModal({ ...modal, opened: false })}
-        transition="slide-up"
+        transition="fade"
         title="Item options"
         centered
         size="xs"
         withCloseButton={false}
       >
-        {itemFields[modal.index] && (
-          <Stack>
-            <TextInput
-              label="Metadata type"
-              id="metadata"
-              value={itemFields[modal.index].metadata || ''}
-              onChange={(e) => handleChange(e, modal.index)}
-            />
-            <Switch
-              label="Remove on use"
-              checked={itemFields[modal.index].remove || false}
-              onChange={(e) => handleSwitchChange(e, modal.index)}
-            />
-            <Button uppercase variant="light" onClick={() => setModal({ ...modal, opened: false })}>
-              Confirm
-            </Button>
-          </Stack>
-        )}
+        <ItemsModal modal={modal} setModal={setModal} />
       </Modal>
     </Box>
   );

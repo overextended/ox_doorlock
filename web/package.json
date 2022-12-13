@@ -13,6 +13,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.8.1",
     "@mantine/core": "^5.1.6",
+    "@mantine/form": "^5.9.3",
     "@mantine/hooks": "^5.1.6",
     "@mantine/modals": "^5.1.6",
     "@tanstack/react-table": "^8.5.11",
@@ -36,6 +37,7 @@
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "cross-env": "^7.0.3",
+    "prettier": "^2.8.1",
     "rimraf": "^3.0.2"
   },
   "eslintConfig": {

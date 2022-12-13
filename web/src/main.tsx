@@ -27,6 +27,7 @@ debugData<DoorColumn[]>([
           ['ambulance']: 1,
         },
         items: [{ name: 'mrpd_key', metadata: 'lspd_key', remove: true }],
+        lockpickDifficulty: [],
         lockSound: null,
         unlockSound: null,
         maxDistance: 15.2,

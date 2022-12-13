@@ -33,7 +33,7 @@ local function pickLock(entity)
 	lib.requestAnimDict('mp_common_heist')
 	TaskPlayAnim(cache.ped, 'mp_common_heist', 'pick_door', 3.0, 1.0, -1, 49, 0, true, true, true)
 
-	local success = lib.skillCheck(Config.LockDifficulty)
+	local success = lib.skillCheck(door.lockpickDifficulty or Config.LockDifficulty)
 	local rand = math.random(1, success and 100 or 5)
 
 	if rand == 1 then
@@ -140,6 +140,10 @@ RegisterNUICallback('createDoor', function(data, cb)
 
 	if data.characters and not next(data.characters) then
 		data.characters = nil
+	end
+
+	if data.lockpickDifficulty and not next(data.lockpickDifficulty) then
+		data.lockpickDifficulty = nil
 	end
 
 	if data.groups and not next(data.groups) then

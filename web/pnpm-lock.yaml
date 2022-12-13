@@ -7,6 +7,7 @@ specifiers:
   '@emotion/react': ^11.10.0
   '@emotion/styled': ^11.8.1
   '@mantine/core': ^5.1.6
+  '@mantine/form': ^5.9.3
   '@mantine/hooks': ^5.1.6
   '@mantine/modals': ^5.1.6
   '@tanstack/react-table': ^8.5.11
@@ -15,6 +16,7 @@ specifiers:
   '@types/react-dom': ^17.0.2
   '@vitejs/plugin-react': ^1.3.2
   cross-env: ^7.0.3
+  prettier: ^2.8.1
   react: ^17.0.2
   react-dom: ^17.0.2
   react-icons: ^4.4.0
@@ -28,6 +30,7 @@ dependencies:
   '@emotion/react': 11.10.0_yhhwp62ayfwdsajg6mapyglucm
   '@emotion/styled': 11.8.1_2yyxvdh6xxwpikwje2j6z7jzuu
   '@mantine/core': 5.1.6_myatc64vovllkm5tp25jvkc6gy
+  '@mantine/form': 5.9.3_react@17.0.2
   '@mantine/hooks': 5.1.6_react@17.0.2
   '@mantine/modals': 5.1.6_jqavpa5gqjm2om4suum2g6t2vq
   '@tanstack/react-table': 8.5.11_sfoxds7t5ydpegc3knd667wn6m
@@ -48,6 +51,7 @@ devDependencies:
   '@babel/plugin-syntax-flow': 7.16.7_@babel+core@7.17.8
   '@babel/plugin-transform-react-jsx': 7.17.3_@babel+core@7.17.8
   cross-env: 7.0.3
+  prettier: 2.8.1
   rimraf: 3.0.2
 
 packages:
@@ -835,6 +839,16 @@ packages:
       - '@types/react'
     dev: false
 
+  /@mantine/form/5.9.3_react@17.0.2:
+    resolution: {integrity: sha512-fPTpAhm1SpdbR//xFAUYW+6JaQM4t1ElzRZpSpKgrAffH8mCTk3GJ+LSagKmv1caIXsDlHEeGVgQKTHFpdIAHQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      fast-deep-equal: 3.1.3
+      klona: 2.0.5
+      react: 17.0.2
+    dev: false
+
   /@mantine/hooks/5.1.6_react@17.0.2:
     resolution: {integrity: sha512-wD+Cx9W00YQchudIvkiEy52e/UCB0EhTkJs2fr2JbTlfKCWfWSilE/CPbLz6NWmK58bbyB/qjdKUDwXV6qyasw==}
     peerDependencies:
@@ -1449,6 +1463,10 @@ packages:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
     dev: false
 
+  /fast-deep-equal/3.1.3:
+    resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
+    dev: false
+
   /find-root/1.1.0:
     resolution: {integrity: sha512-NKfW6bec6GfKc0SGx1e07QZY9PE99u0Bft/0rzSD5k3sO/vwkVUpDUKVm5Gpp5Ue3YfShPFTX2070tDs5kB9Ng==}
     dev: false
@@ -1567,6 +1585,11 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
+  /klona/2.0.5:
+    resolution: {integrity: sha512-pJiBpiXMbt7dkzXe8Ghj/u4FfXOOa98fPW+bihOJ4SjnoijweJrNThJfd3ifXpXhREjpoF2mZVH1GfS9LV3kHQ==}
+    engines: {node: '>= 8'}
+    dev: false
+
   /lines-and-columns/1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
     dev: false
@@ -1659,6 +1682,12 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
     dev: false
+
+  /prettier/2.8.1:
+    resolution: {integrity: sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    dev: true
 
   /react-dom/17.0.2_react@17.0.2:
     resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
