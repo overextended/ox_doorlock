@@ -21,7 +21,18 @@ end
 local pickingLock
 
 local function canPickLock(entity)
-	return not pickingLock and getDoorFromEntity(entity)?.lockpick
+	-- Linden please don't kill me thx
+	local door = getDoorFromEntity(entity)
+	local hash = not door.doors and door.hash or {door.doors[1].hash, door.doors[2].hash}
+	if type(hash) == 'table' then
+		for i = 0, #hash do
+			if DoorSystemGetDoorState(hash[i]) == 0 then
+				return false
+			end
+		end
+	else return DoorSystemGetDoorState(hash) ~= 0 end
+
+	return not pickingLock and door?.lockpick
 end
 
 local function pickLock(entity)
