@@ -22,3 +22,6 @@ Config.PlayerAceAuthorised = false
 
 -- Default skill check difficulty when no fields are defined in the Lockpick tab.
 Config.LockDifficulty = { 'easy', 'easy', 'medium' }
+
+-- Allow lockpicks to be used to lock an already unlocked door.
+Config.CanPickUnlockedDoors = false
