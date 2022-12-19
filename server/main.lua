@@ -164,11 +164,68 @@ local function createDoor(id, door, name)
 end
 
 local isLoaded = false
+local table = lib.table
+local ox_inventory = exports.ox_inventory
+
+function RemoveItem(playerId, item, slot)
+	local player = GetPlayer(playerId)
+
+	if player then ox_inventory:RemoveItem(playerId, item, 1, nil, slot) end
+end
+
+function DoesPlayerHaveItem(player, items)
+	local playerId = player.source or player.PlayerData.source
+
+	for i = 1, #items do
+		local item = items[i]
+		local data = ox_inventory:Search(playerId, 1, item.name, item.metadata)[1]
+
+		if data and data.count > 0 then
+			if item.remove then
+				ox_inventory:RemoveItem(playerId, item.name, 1, nil, data.slot)
+			end
+
+			return true
+		end
+	end
+end
+
+local function isAuthorised(playerId, door, lockpick, passcode)
+	local player, authorised = GetPlayer(playerId)
+
+	if not player then return end
+
+	if lockpick and door.lockpick then
+		return 'lockpick'
+	end
+
+	if passcode and passcode == door.passcode then
+		return true
+	end
+
+	if door.groups then
+		authorised = IsPlayerInGroup(player, door.groups)
+	end
+
+	if not authorised and door.characters then
+		authorised = table.contains(door.characters, GetCharacterId(player))
+	end
+
+	if not authorised and door.items then
+		authorised = DoesPlayerHaveItem(player, door.items)
+	end
+
+	if not authorised and Config.PlayerAceAuthorised then
+		authorised = IsPlayerAceAllowed(playerId, 'command.doorlock')
+	end
+
+	return authorised
+end
 
 MySQL.ready(function()
 	while Config.DoorList do Wait(100) end
 
-	local success, result = pcall(MySQL.query.await, 'SELECT id, name, data FROM ox_doorlock')
+	local success, result = pcall(MySQL.query.await, 'SELECT id, name, data FROM ox_doorlock') --[[@as any]]
 
 	if not success then
 		-- because some people can't run sql files
@@ -262,6 +319,11 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 		end
 	end
 end)
+
+RegisterNetEvent('ox_doorlock:breakLockpick', function()
+	RemoveItem(source, 'lockpick')
+end)
+
 
 lib.addCommand(Config.CommandPrincipal, 'doorlock', function(source, args)
 	TriggerClientEvent('ox_doorlock:triggeredCommand', source, args.closest)
