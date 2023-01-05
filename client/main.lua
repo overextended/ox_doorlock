@@ -270,6 +270,7 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 end)
 
 ClosestDoor = nil
+local config = Config.TextUI
 
 CreateThread(function()
 	local lastTriggered = 0
@@ -324,27 +325,29 @@ CreateThread(function()
 
 		if ClosestDoor and ClosestDoor.distance < ClosestDoor.maxDistance then
 			if Config.DrawTextUI and not ClosestDoor.hideUi and ClosestDoor.state ~= showUI then
-				if ClosestDoor.state == 0 then
-					lib.showTextUI("[E] - Lock Door", {
-						position = "right-center",
-						icon = 'hand',
-						style = {
-							borderRadius = 0,
-							backgroundColor = '#48BB78',
-							color = 'white'
-						}
-					})
-				else
-					lib.showTextUI("[E] - Unlock door", {
-						position = "right-center",
-						icon = 'hand',
-						style = {
-							borderRadius = 0,
-							backgroundColor = 'red',
-							color = 'white'
-						}
-					})
-				end	
+			if ClosestDoor.state == 0 then
+			    local text = config.unlockText
+			    local style = {}
+			    if config.useColors then
+				style.backgroundColor = config.unlockColor
+			    end
+			    lib.showTextUI(text, {
+				position = "top-center",
+				icon = 'hand',
+				style = style
+			    })
+			else
+			    local text = config.lockText
+			    local style = {}
+			    if config.useColors then
+				style.backgroundColor = config.lockColor
+			    end
+			    lib.showTextUI(text, {
+				position = "top-center",
+				icon = 'hand',
+				style = style
+			    })
+			end	
 				showUI = ClosestDoor.state
 			end
 
