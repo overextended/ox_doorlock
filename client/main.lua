@@ -343,7 +343,6 @@ CreateThread(function()
 							color = 'white'
 						}
 					})
-				end
 				showUI = ClosestDoor.state
 			end
 
