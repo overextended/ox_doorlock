@@ -25,3 +25,11 @@ Config.LockDifficulty = { 'easy', 'easy', 'medium' }
 
 -- Allow lockpicks to be used to lock an already unlocked door.
 Config.CanPickUnlockedDoors = false
+
+Config.TextUI = {
+    useColors = true,
+    unlockColor = '#48BB78',
+    lockColor = 'red',
+    unlockText = "[E] - Unlock door",
+    lockText = "[E] - Lock door"
+}
