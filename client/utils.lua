@@ -1,4 +1,3 @@
-lib.locale()
 local Entity = Entity
 
 local function getDoorFromEntity(data)

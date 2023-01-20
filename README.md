@@ -29,12 +29,12 @@ Once you confirm, you can use qtarget to select the entity (or entities) to use.
 
 You can use edit as an argument for doorlock to add qtarget options to modify or delete an existing door.
 
-### Conversion
+## Conversion
 
 Placing nui_doorlock config files into the `convert` folder will convert the data and insert it into the database.  
 Success is _not_ guaranteed if using a fork on nui_doorlock, like the qb version.
 
-### API
+## Server API
 
 - Get data for door
 
@@ -43,10 +43,10 @@ local mrpd_locker_rooms = exports.ox_doorlock:getDoor(1)
 local mrpd_locker_rooms = exports.ox_doorlock:getDoorFromName('mrpd locker rooms')
 ```
 
-- Lock a door from the server
+- Set door state (0: unlocked, 1: locked)
 
 ```lua
-TriggerEvent('ox_doorlock:setState', mrpd_locker_rooms.id, 1)
+TriggerEvent('ox_doorlock:setState', mrpd_locker_rooms.id, state)
 ```
 
 - Listen for event when door is toggled
