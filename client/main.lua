@@ -15,8 +15,8 @@ local function createDoor(door)
 			DoorSystemSetDoorState(double[i].hash, 4, false, false)
 			DoorSystemSetDoorState(double[i].hash, door.state, false, false)
 
-			if door.doorRate then
-				DoorSystemSetAutomaticRate(double[i].hash, door.doorRate, false, false)
+			if door.doorRate or not door.auto then
+				DoorSystemSetAutomaticRate(double[i].hash, door.doorRate or 10.0, false, false)
 			end
 		end
 	else
@@ -24,8 +24,8 @@ local function createDoor(door)
 		DoorSystemSetDoorState(door.hash, 4, false, false)
 		DoorSystemSetDoorState(door.hash, door.state, false, false)
 
-		if door.doorRate then
-			DoorSystemSetAutomaticRate(door.hash, door.doorRate, false, false)
+		if door.doorRate or not door.auto then
+			DoorSystemSetAutomaticRate(door.hash, door.doorRate or 10.0, false, false)
 		end
 	end
 end
@@ -152,45 +152,14 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 	door.state = state
 
 	if double then
-		if not door.auto and door.state == 1 then
-			while double[1].entity and double[2].entity do
-				if door.state ~= 1 then return end
+		DoorSystemSetDoorState(double[1].hash, door.state, false, false)
+		DoorSystemSetDoorState(double[2].hash, door.state, false, false)
 
-				local doorOneHeading = double[1].heading
-				local doorOneCurrentHeading = math.floor(GetEntityHeading(double[1].entity) + 0.5)
-
-				if doorOneHeading == doorOneCurrentHeading then
-					DoorSystemSetDoorState(double[1].hash, door.state, false, false)
-				end
-
-				local doorTwoHeading = double[2].heading
-				local doorTwoCurrentHeading = math.floor(GetEntityHeading(double[2].entity) + 0.5)
-
-				if doorTwoHeading == doorTwoCurrentHeading then
-					DoorSystemSetDoorState(double[2].hash, door.state, false, false)
-				end
-
-				if doorOneHeading == doorOneCurrentHeading and doorTwoHeading == doorTwoCurrentHeading then break end
-				Wait(0)
-			end
-		end
-
-		for i = 1, 2 do
-			DoorSystemSetDoorState(double[i].hash, door.state, false, false)
-		end
+		while door.state == 1 and (not IsDoorClosed(double[1].hash) or not IsDoorClosed(double[2].hash)) do Wait(0) end
 	else
-		if not door.auto and door.state == 1 then
-			while door.entity do
-				if door.state ~= 1 then return end
-
-				local heading = math.floor(GetEntityHeading(door.entity) + 0.5)
-
-				if heading == door.heading then break end
-				Wait(0)
-			end
-		end
-
 		DoorSystemSetDoorState(door.hash, door.state, false, false)
+
+		while door.state == 1 and not IsDoorClosed(door.hash) do Wait(0) end
 	end
 
 	if door.state == state and door.distance and door.distance < 20 then
@@ -214,7 +183,6 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 	local door = doors[id]
 	local double = door.doors
 	local doorState = data and data.state or 0
-	local doorRate = data and data.doorRate or (door.doorRate and 0.0)
 
 	if data then
 		data.zone = door.zone or GetLabelText(GetNameOfZone(door.coords.x, door.coords.y, door.coords.z))
@@ -228,8 +196,8 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 	if double then
 		for i = 1, 2 do
 			if data then
-				if doorRate then
-					DoorSystemSetAutomaticRate(double[i].hash, doorRate, false, false)
+				if data.doorRate or not data.auto then
+					DoorSystemSetAutomaticRate(double[i].hash, door.doorRate or 1.0, false, false)
 				end
 
 				DoorSystemSetDoorState(double[i].hash, doorState, false, false)
@@ -244,8 +212,8 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 		end
 	else
 		if data then
-			if doorRate then
-				DoorSystemSetAutomaticRate(door.hash, doorRate, false, false)
+			if data.doorRate or not data.auto then
+				DoorSystemSetAutomaticRate(door.hash, door.doorRate or 1.0, false, false)
 			end
 
 			DoorSystemSetDoorState(door.hash, doorState, false, false)
