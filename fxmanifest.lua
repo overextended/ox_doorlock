@@ -6,7 +6,7 @@ game         'gta5'
 
 --[[ Resource Information ]]--
 name         'ox_doorlock'
-version      '1.8.2'
+version      '1.8.3'
 license      'GPL-3.0-or-later'
 author       'Overextended'
 repository   'https://github.com/overextended/ox_doorlock'
