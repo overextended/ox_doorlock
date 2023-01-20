@@ -167,6 +167,13 @@ local isLoaded = false
 local table = lib.table
 local ox_inventory = exports.ox_inventory
 
+if not GetPlayer then
+	-- because some people want to use this on their vmenu servers or some shit lmao
+	-- only supports passcodes
+	warn('no compatible framework was loaded, most features will not work')
+	function GetPlayer(_) end
+end
+
 function RemoveItem(playerId, item, slot)
 	local player = GetPlayer(playerId)
 
@@ -193,8 +200,6 @@ end
 local function isAuthorised(playerId, door, lockpick, passcode)
 	local player, authorised = GetPlayer(playerId)
 
-	if not player then return end
-
 	if lockpick and door.lockpick then
 		return 'lockpick'
 	end
@@ -203,16 +208,18 @@ local function isAuthorised(playerId, door, lockpick, passcode)
 		return true
 	end
 
-	if door.groups then
-		authorised = IsPlayerInGroup(player, door.groups)
-	end
+	if player then
+		if door.groups then
+			authorised = IsPlayerInGroup(player, door.groups)
+		end
 
-	if not authorised and door.characters then
-		authorised = table.contains(door.characters, GetCharacterId(player))
-	end
+		if not authorised and door.characters then
+			authorised = table.contains(door.characters, GetCharacterId(player))
+		end
 
-	if not authorised and door.items then
-		authorised = DoesPlayerHaveItem(player, door.items)
+		if not authorised and door.items then
+			authorised = DoesPlayerHaveItem(player, door.items)
+		end
 	end
 
 	if not authorised and Config.PlayerAceAuthorised then
