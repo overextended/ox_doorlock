@@ -197,7 +197,7 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 		for i = 1, 2 do
 			if data then
 				if data.doorRate or not data.auto then
-					DoorSystemSetAutomaticRate(double[i].hash, door.doorRate or 1.0, false, false)
+					DoorSystemSetAutomaticRate(double[i].hash, door.doorRate or 10.0, false, false)
 				end
 
 				DoorSystemSetDoorState(double[i].hash, doorState, false, false)
@@ -213,7 +213,7 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 	else
 		if data then
 			if data.doorRate or not data.auto then
-				DoorSystemSetAutomaticRate(door.hash, door.doorRate or 1.0, false, false)
+				DoorSystemSetAutomaticRate(door.hash, door.doorRate or 10.0, false, false)
 			end
 
 			DoorSystemSetDoorState(door.hash, doorState, false, false)
