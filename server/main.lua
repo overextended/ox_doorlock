@@ -167,12 +167,14 @@ local isLoaded = false
 local table = lib.table
 local ox_inventory = exports.ox_inventory
 
-if not GetPlayer then
-	-- because some people want to use this on their vmenu servers or some shit lmao
-	-- only supports passcodes
-	warn('no compatible framework was loaded, most features will not work')
-	function GetPlayer(_) end
-end
+SetTimeout(500, function()
+	if not GetPlayer then
+		-- because some people want to use this on their vmenu servers or some shit lmao
+		-- only supports passcodes
+		warn('no compatible framework was loaded, most features will not work')
+		function GetPlayer(_) end
+	end
+end)
 
 function RemoveItem(playerId, item, slot)
 	local player = GetPlayer(playerId)
