@@ -167,7 +167,7 @@ local isLoaded = false
 local table = lib.table
 local ox_inventory = exports.ox_inventory
 
-SetTimeout(500, function()
+SetTimeout(1000, function()
 	if not GetPlayer then
 		-- because some people want to use this on their vmenu servers or some shit lmao
 		-- only supports passcodes
