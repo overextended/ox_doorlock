@@ -91,13 +91,13 @@ RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 							GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, min.z).xy
 						}
 
-						local centroid = vec(0, 0)
+						local centroid = vec2(0, 0)
 
 						for i = 1, 8 do
 							centroid += points[i]
 						end
 
-						centroid /= 8
+						centroid = centroid / 8
 						door.coords = vec3(centroid.x, centroid.y, door.coords.z)
 						door.entity = entity
 						Entity(entity).state.doorId = door.id
