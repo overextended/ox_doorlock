@@ -1,9 +1,16 @@
 local Entity = Entity
 
 local function getDoorFromEntity(data)
-	local entity = type(data) == 'number' and data or data.entity
-	local state = Entity(entity).state
-	local door = doors[state.doorId]
+	local entity = type(data) == 'table' and data.entity or data
+
+	if not entity then return end
+
+	local state = Entity(entity)?.state
+	local doorId = state?.doorId
+
+	if not doorId then return end
+
+	local door = doors[doorId]
 
 	if not door then
 		state.doorId = nil
@@ -28,8 +35,11 @@ local function canPickLock(entity)
 end
 
 local function pickLock(entity)
-	pickingLock = true
 	local door = getDoorFromEntity(entity)
+
+	if not door then return end
+
+	pickingLock = true
 
 	TaskTurnPedToFaceCoord(cache.ped, door.coords.x, door.coords.y, door.coords.z, 4000)
 	Wait(500)
@@ -48,8 +58,9 @@ local function pickLock(entity)
 		TriggerServerEvent('ox_doorlock:setState', door.id, door.state == 1 and 0 or 1, true)
 	end
 
-	pickingLock = false
 	StopEntityAnim(cache.ped, 'pick_door', 'mp_common_heist', 0)
+
+	pickingLock = false
 end
 
 local target
