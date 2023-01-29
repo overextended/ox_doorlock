@@ -22,7 +22,7 @@ Used for some UI elements (i.e. notifications, progress circle, input), and cach
 
 ### [ox_target](https://github.com/overextended/ox_target) (preferred) or [qtarget](https://github.com/overextended/qtarget) (deprecated) or [qb-target](https://github.com/qbcore-framework/qb-target)
 
-Used with lockpicks and the doorlock command.
+(Optional) Used for lockpicking.
 
 ## Usage
 
@@ -35,6 +35,20 @@ Adding any arguments after the command will open the closest door to you, to eas
 
 Placing nui_doorlock config files into the `convert` folder will convert the data and insert it into the database.  
 Success is _not_ guaranteed if using a fork on nui_doorlock, like the qb version.
+
+## Client API
+
+- Use the closest door. Still performs server-side checks, so may fail.
+
+```lua
+exports.ox_doorlock:useClosestDoor()
+```
+
+- Pick the lock of the closest door. Still performs server-side checks, so may fail.
+
+```lua
+exports.ox_doorlock:pickClosestDoor()
+```
 
 ## Server API
 
