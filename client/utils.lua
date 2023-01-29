@@ -34,10 +34,11 @@ local function canPickLock(entity)
 	return door and door.lockpick and (Config.CanPickUnlockedDoors or door.state == 1)
 end
 
+---@param entity number
 local function pickLock(entity)
 	local door = getDoorFromEntity(entity)
 
-	if not door then return end
+	if not door or pickingLock or not door.lockpick or (not Config.CanPickUnlockedDoors and door.state == 0) then return end
 
 	pickingLock = true
 
@@ -62,6 +63,12 @@ local function pickLock(entity)
 
 	pickingLock = false
 end
+
+exports('pickClosestDoor', function()
+	if not ClosestDoor then return end
+
+	pickLock(ClosestDoor.entity)
+end)
 
 local target
 

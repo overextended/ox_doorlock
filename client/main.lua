@@ -238,9 +238,32 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 end)
 
 ClosestDoor = nil
+local lastTriggered = 0
+
+local function useClosestDoor()
+	if not ClosestDoor then return false end
+
+	if ClosestDoor.passcode then
+		local input = lib.inputDialog(locale('door_lock'), {
+			{ type = "input", label = locale("passcode"), password = true, icon = 'lock' },
+		})
+
+		if input then
+			TriggerServerEvent('ox_doorlock:setState', ClosestDoor.id, ClosestDoor.state == 1 and 0 or 1, false, input[1])
+		end
+	else
+		local gameTimer = GetGameTimer()
+
+		if gameTimer - lastTriggered > 500 then
+			lastTriggered = gameTimer
+			TriggerServerEvent('ox_doorlock:setState', ClosestDoor.id, ClosestDoor.state == 1 and 0 or 1)
+		end
+	end
+end
+
+exports('useClosestDoor', useClosestDoor)
 
 CreateThread(function()
-	local lastTriggered = 0
 	local lockDoor = locale('lock_door')
 	local unlockDoor = locale('unlock_door')
 	local showUI
@@ -289,7 +312,6 @@ CreateThread(function()
 			end
 		else ClosestDoor = nil end
 
-
 		if ClosestDoor and ClosestDoor.distance < ClosestDoor.maxDistance then
 			if Config.DrawTextUI and not ClosestDoor.hideUi and ClosestDoor.state ~= showUI then
 				lib.showTextUI(ClosestDoor.state == 0 and lockDoor or unlockDoor)
@@ -297,22 +319,7 @@ CreateThread(function()
 			end
 
 			if IsDisabledControlJustReleased(0, 38) then
-				if ClosestDoor.passcode then
-					local input = lib.inputDialog(locale('door_lock'), {
-						{ type = "input", label = locale("passcode"), password = true, icon = 'lock' },
-					})
-
-					if input then
-						TriggerServerEvent('ox_doorlock:setState', ClosestDoor.id, ClosestDoor.state == 1 and 0 or 1, false, input[1])
-					end
-				else
-					local gameTimer = GetGameTimer()
-
-					if gameTimer - lastTriggered > 500 then
-						lastTriggered = gameTimer
-						TriggerServerEvent('ox_doorlock:setState', ClosestDoor.id, ClosestDoor.state == 1 and 0 or 1)
-					end
-				end
+				useClosestDoor()
 			end
 		elseif showUI then
 			lib.hideTextUI()
