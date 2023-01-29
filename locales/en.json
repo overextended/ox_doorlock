@@ -13,6 +13,5 @@
   "cannot_unlock": "Unable to unlock door",
   "cannot_lock": "Unable to lock door",
   "create_modify_lock": "Create a doorlock, or modify an existing one",
-  "create_new_door": "Create new door",
-  "interact_prompt": "Interact with [LMB]"
+  "add_door_textui": "**Create new door**  \nInteract with [LMB]  \nCancel with [RMB]"
 }

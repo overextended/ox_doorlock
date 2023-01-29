@@ -179,7 +179,7 @@ RegisterNUICallback('createDoor', function(data, cb)
 		local doorCount = data.doors and 2 or 1
 		local lastEntity = 0
 
-		lib.showTextUI(('**%s**  \n%s'):format(locale('create_new_door'), locale('interact_prompt')))
+		lib.showTextUI(locale('add_door_textui'))
 
 		repeat
 			DisablePlayerFiring(cache.playerId)
@@ -208,6 +208,18 @@ RegisterNUICallback('createDoor', function(data, cb)
 				if IsDisabledControlJustPressed(0, 24) then
 					addDoorlock(entity)
 				end
+			end
+
+			if IsDisabledControlJustPressed(0, 25) then
+				SetEntityDrawOutline(entity, false)
+
+				if not doorA then
+					isAddingDoorlock = false
+					return lib.hideTextUI()
+				end
+
+				SetEntityDrawOutline(doorA, false)
+				table.wipe(tempData)
 			end
 		until tempData[doorCount]
 
