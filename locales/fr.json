@@ -12,5 +12,6 @@
   "remove_lock": "Retirer la serrure",
   "cannot_unlock": "Impossible de déverrouiller la porte",
   "cannot_lock": "Impossible de verrouiller la porte",
-  "create_modify_lock": "Ajouter / Modifier une serrure"
+  "create_modify_lock": "Ajouter / Modifier une serrure",
+  "add_door_textui": "**Créer une porte**  \nIntéragir avec [LMB]  \nAnnuler avec [RMB]"
 }
