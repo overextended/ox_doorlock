@@ -2,15 +2,16 @@
   "unlocked_door": "Avatud",
   "locked_door": "Lukustatud",
   "lock_door": "[E] Lukusta uks",
-  "unlock_door": "[E] Ava uksr",
+  "unlock_door": "[E] Ava uks",
   "door_lock": "Ukselukk",
   "passcode": "Parool",
   "lockpick_broke": "Sinu muukraud murdus",
-  "pick_lock": "Murra lukku",
+  "pick_lock": "Murra ukselukk lahti",
   "add_lock": "Lisa ukselukk",
   "edit_lock": "Muuda ukselukku",
   "remove_lock": "Eemalda ukselukk",
-  "cannot_unlock": "Avatud ust ei saa avada",
-  "cannot_lock": "Lukus ust ei saa avada",
-  "create_modify_lock": "Lisa uus ukselukk või muuda eelmiseid"
+  "cannot_unlock": "Sa ei saa seda avada..",
+  "cannot_lock": "Sa ei saa seda lukustada..",
+  "create_modify_lock": "Lisa uus ukselukk või muuda eelmiseid",
+  "add_door_textui": "**Lisa uus ukselukk**  \nKasuta [LMB]  \nKatkesta [RMB]"
 }
