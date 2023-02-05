@@ -70,60 +70,6 @@ exports('pickClosestDoor', function()
 	pickLock(ClosestDoor.entity)
 end)
 
-local target
-
-do
-	if GetResourceState('ox_target'):find('start') then
-		target = {
-			ox = true,
-			exp = exports.ox_target
-		}
-	elseif GetResourceState('qb-target'):find('start') then
-		target = {
-			qb = true,
-			exp = exports['qb-target']
-		}
-	elseif GetResourceState('qtarget'):find('start') then
-		target = {
-			qt = true,
-			exp = exports.qtarget
-		}
-	end
-
-	if target then
-		if target.ox then
-			target.exp:addGlobalObject({
-				{
-					name = 'pickDoorlock',
-					label = locale('pick_lock'),
-					icon = 'fas fa-user-lock',
-					onSelect = pickLock,
-					canInteract = canPickLock,
-					items = 'lockpick',
-					distance = 1
-				}
-			})
-		else
-			local options = {
-				{
-					label = locale('pick_lock'),
-					icon = 'fas fa-user-lock',
-					action = pickLock,
-					canInteract = canPickLock,
-					item = 'lockpick',
-					distance = 1
-				}
-			}
-
-			if target.qt then
-				target.exp:Object({ options = options })
-			elseif target.qb then
-				target.exp:AddGlobalObject({ options = options })
-			end
-		end
-	end
-end
-
 local tempData = {}
 
 local function addDoorlock(data)
@@ -300,16 +246,70 @@ RegisterNetEvent('ox_doorlock:triggeredCommand', function(closest)
 	openUi(closest and ClosestDoor?.id or nil)
 end)
 
-if not target.ox then
-	AddEventHandler('onResourceStop', function(resource)
-		if resource == cache.resource then
-			local options = { locale('pick_lock') }
+CreateThread(function()
+	local target
 
-			if target.qt then
-				target.exp:RemoveObject(options)
-			elseif target.qb then
-				target.exp:RemoveGlobalObject(options)
-			end
+	if GetResourceState('ox_target'):find('start') then
+		target = {
+			ox = true,
+			exp = exports.ox_target
+		}
+	elseif GetResourceState('qb-target'):find('start') then
+		target = {
+			qb = true,
+			exp = exports['qb-target']
+		}
+	elseif GetResourceState('qtarget'):find('start') then
+		target = {
+			qt = true,
+			exp = exports.qtarget
+		}
+	end
+
+	if not target then return end
+
+	if target.ox then
+		target.exp:addGlobalObject({
+			{
+				name = 'pickDoorlock',
+				label = locale('pick_lock'),
+				icon = 'fas fa-user-lock',
+				onSelect = pickLock,
+				canInteract = canPickLock,
+				items = 'lockpick',
+				distance = 1
+			}
+		})
+	else
+		local options = {
+			{
+				label = locale('pick_lock'),
+				icon = 'fas fa-user-lock',
+				action = pickLock,
+				canInteract = canPickLock,
+				item = 'lockpick',
+				distance = 1
+			}
+		}
+
+		if target.qt then
+			target.exp:Object({ options = options })
+		elseif target.qb then
+			target.exp:AddGlobalObject({ options = options })
 		end
-	end)
-end
+
+		options = { locale('pick_lock') }
+
+		AddEventHandler('onResourceStop', function(resource)
+			if resource == cache.resource then
+				if target.qt then
+					return target.exp:RemoveObject(options)
+				end
+
+				if target.qb then
+					return target.exp:RemoveGlobalObject(options)
+				end
+			end
+		end)
+	end
+end)
