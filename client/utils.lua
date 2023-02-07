@@ -98,10 +98,7 @@ RegisterNUICallback('notify', function(data, cb)
     lib.notify({title = data})
 end)
 
-RegisterNUICallback('createDoor', function(data, cb)
-	cb(1)
-	SetNuiFocus(false, false)
-
+local function createDoor(data)
 	data.state = data.state and 1 or 0
 
 	if data.items and not next(data.items) then
@@ -203,6 +200,14 @@ RegisterNUICallback('createDoor', function(data, cb)
 
 	TriggerServerEvent('ox_doorlock:editDoorlock', data.id or false, data)
 	table.wipe(tempData)
+end
+
+exports('createDoor', createDoor)
+
+RegisterNUICallback('createDoor', function(data, cb)
+	cb(1)
+	SetNuiFocus(false, false)
+	createDoor(data)
 end)
 
 RegisterNUICallback('deleteDoor', function(id, cb)
