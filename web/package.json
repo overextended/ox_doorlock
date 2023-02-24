@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "ox_doorlock",
   "private": true,
   "version": "0.1.0",
   "homepage": "web/build",
