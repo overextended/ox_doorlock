@@ -344,7 +344,16 @@ RegisterNetEvent('ox_doorlock:breakLockpick', function()
 	RemoveItem(source, 'lockpick')
 end)
 
-
-lib.addCommand(Config.CommandPrincipal, 'doorlock', function(source, args)
+lib.addCommand('doorlock', {
+    help = locale('create_modify_lock'),
+    params = {
+        {
+            name = 'closest',
+            help = 'Use for closest doors.',
+            optional = true,
+        },
+    },
+    restricted = Config.CommandPrincipal
+}, function(source, args, raw)
 	TriggerClientEvent('ox_doorlock:triggeredCommand', source, args.closest)
-end, {'closest'}, locale('create_modify_lock'))
+end)
