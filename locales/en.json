@@ -13,5 +13,6 @@
   "cannot_unlock": "Unable to unlock door",
   "cannot_lock": "Unable to lock door",
   "create_modify_lock": "Create a doorlock, or modify an existing one",
-  "add_door_textui": "**Create new door**  \nInteract with [LMB]  \nCancel with [RMB]"
+  "add_door_textui": "**Create new door**  \nInteract with [LMB]  \nCancel with [RMB]",
+  "command_closest": "Open UI directly to closest doorlock"
 }

@@ -6,7 +6,7 @@ do
 	local success, msg = lib.checkDependency('oxmysql', '2.4.0')
 	if not success then error(msg) end
 
-	success, msg = lib.checkDependency('ox_lib', '2.14.2')
+	success, msg = lib.checkDependency('ox_lib', '3.0.0')
 	if not success then error(msg) end
 end
 
@@ -344,7 +344,16 @@ RegisterNetEvent('ox_doorlock:breakLockpick', function()
 	RemoveItem(source, 'lockpick')
 end)
 
-
-lib.addCommand(Config.CommandPrincipal, 'doorlock', function(source, args)
+lib.addCommand('doorlock', {
+    help = locale('create_modify_lock'),
+    params = {
+        {
+            name = 'closest',
+            help = locale('command_closest'),
+			optional = true,
+        },
+    },
+    restricted = Config.CommandPrincipal
+}, function(source, args)
 	TriggerClientEvent('ox_doorlock:triggeredCommand', source, args.closest)
-end, {'closest'}, locale('create_modify_lock'))
+end)
