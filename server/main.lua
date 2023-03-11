@@ -194,23 +194,27 @@ function DoesPlayerHaveItem(player, items)
 				ox_inventory:RemoveItem(playerId, item.name, 1, nil, data.slot)
 			end
 
-			return true
+			return item.name
 		end
 	end
 end
 
+local lockpickItems = {
+	{ name = 'lockpick' }
+}
+
 local function isAuthorised(playerId, door, lockpick, passcode)
 	local player, authorised = GetPlayer(playerId)
-
-	if lockpick and door.lockpick then
-		return 'lockpick'
-	end
 
 	if passcode and passcode ~= door.passcode then
 		return false
 	end
 
 	if player then
+		if lockpick then
+			return DoesPlayerHaveItem(player, lockpickItems)
+		end
+
 		if door.groups then
 			authorised = IsPlayerInGroup(player, door.groups)
 		end
