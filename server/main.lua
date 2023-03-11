@@ -206,8 +206,8 @@ local function isAuthorised(playerId, door, lockpick, passcode)
 		return 'lockpick'
 	end
 
-	if passcode and passcode == door.passcode then
-		return true
+	if passcode and passcode ~= door.passcode then
+		return false
 	end
 
 	if player then
