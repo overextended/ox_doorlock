@@ -6,11 +6,12 @@
   "door_lock": "Ajtózár",
   "passcode": "Jelszó",
   "lockpick_broke": "A zárfeltörőd eltört",
-  "pick_lock": "Válassz zárat",
+  "pick_lock": "Zárfeltörés",
   "add_lock": "Ajtózár hozzáadása",
   "edit_lock": "Ajtózár szerkesztése",
-  "remove_lock": "Ajtóár törlése",
+  "remove_lock": "Ajtózár törlése",
   "cannot_unlock": "Nem tudtad kinyitni az ajtót",
   "cannot_lock": "Nem tudtad bezárni az ajtót",
-  "create_modify_lock": "Készíts vagy szerkessz egy ajtózárat."
+  "create_modify_lock": "Készíts vagy szerkessz egy ajtózárat.",
+  "add_door_textui": "**Ajtó létrehozása**  \nKiválaszt [LMB]  \nMégse [RMB]"
 }
