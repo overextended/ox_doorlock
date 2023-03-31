@@ -204,27 +204,27 @@ local lockpickItems = {
 }
 
 local function isAuthorised(playerId, door, lockpick, passcode)
-	local player, authorised = GetPlayer(playerId)
+	if door.passcode and passcode ~= door.passcode then return false end
 
-	if passcode and passcode ~= door.passcode then
-		return false
-	end
+	local player, authorised = GetPlayer(playerId), door.passcode or false
 
 	if player then
 		if lockpick then
 			return DoesPlayerHaveItem(player, lockpickItems)
 		end
 
+		if door.characters then
+			return table.contains(door.characters, GetCharacterId(player))
+		end
+
 		if door.groups then
 			authorised = IsPlayerInGroup(player, door.groups)
-		end
-
-		if not authorised and door.characters then
-			authorised = table.contains(door.characters, GetCharacterId(player))
-		end
-
-		if not authorised and door.items then
+		elseif door.items then
 			authorised = DoesPlayerHaveItem(player, door.items)
+		end
+
+		if authorised ~= nil and door.passcode then
+			authorised = true
 		end
 	end
 
