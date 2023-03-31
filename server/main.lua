@@ -203,9 +203,7 @@ local lockpickItems = {
 	{ name = 'lockpick' }
 }
 
-local function isAuthorised(playerId, door, lockpick, passcode)
-	if door.passcode and passcode ~= door.passcode then return false end
-
+local function isAuthorised(playerId, door, lockpick)
 	local player, authorised = GetPlayer(playerId), door.passcode or false
 
 	if player then
@@ -224,7 +222,7 @@ local function isAuthorised(playerId, door, lockpick, passcode)
 		end
 
 		if authorised ~= nil and door.passcode then
-			authorised = true
+			authorised = door.passcode == lib.callback.await('ox_doorlock:inputPassCode', playerId)
 		end
 	end
 
@@ -271,7 +269,7 @@ MySQL.ready(function()
 	isLoaded = true
 end)
 
-RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick, passcode)
+RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick)
 	local door = doors[id]
 
 	if source == '' then
@@ -281,7 +279,7 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick, passcode)
 	state = (state == 1 or state == 0) and state or (state and 1 or 0)
 
 	if door then
-		local authorised = source == nil or isAuthorised(source, door, lockpick, passcode)
+		local authorised = source == nil or isAuthorised(source, door, lockpick)
 
 		if authorised then
 			door.state = state
