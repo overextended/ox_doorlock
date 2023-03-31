@@ -200,15 +200,17 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 
 	if double then
 		for i = 1, 2 do
+			local doorHash = double[i].hash
+
 			if data then
-				if data.doorRate or not data.auto then
-					DoorSystemSetAutomaticRate(double[i].hash, door.doorRate or 10.0, false, false)
+				if data.doorRate or door.doorRate or not data.auto then
+					DoorSystemSetAutomaticRate(doorHash, data.doorRate or door.doorRate and 0.0 or 10.0, false, false)
 				end
 
-				DoorSystemSetDoorState(double[i].hash, doorState, false, false)
+				DoorSystemSetDoorState(doorHash, doorState, false, false)
 			else
-				DoorSystemSetDoorState(double[i].hash, 4, false, false)
-				DoorSystemSetDoorState(double[i].hash, 0, false, false)
+				DoorSystemSetDoorState(doorHash, 4, false, false)
+				DoorSystemSetDoorState(doorHash, 0, false, false)
 
 				if double[i].entity then
 					Entity(double[i].entity).state.doorId = nil
@@ -217,8 +219,8 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 		end
 	else
 		if data then
-			if data.doorRate or not data.auto then
-				DoorSystemSetAutomaticRate(door.hash, door.doorRate or 10.0, false, false)
+			if data.doorRate or door.doorRate or not data.auto then
+				DoorSystemSetAutomaticRate(door.hash, data.doorRate or door.doorRate and 0.0 or 10.0, false, false)
 			end
 
 			DoorSystemSetDoorState(door.hash, doorState, false, false)
