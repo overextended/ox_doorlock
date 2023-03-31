@@ -243,26 +243,28 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 end)
 
 ClosestDoor = nil
+
+lib.callback.register('ox_doorlock:inputPassCode', function()
+	return ClosestDoor?.passcode and lib.inputDialog(locale('door_lock'), {
+		{
+			type = 'input',
+			label = locale('passcode'),
+			password = true,
+			icon = 'lock'
+		},
+	})?[1]
+end)
+
 local lastTriggered = 0
 
 local function useClosestDoor()
 	if not ClosestDoor then return false end
 
-	if ClosestDoor.passcode then
-		local input = lib.inputDialog(locale('door_lock'), {
-			{ type = "input", label = locale("passcode"), password = true, icon = 'lock' },
-		})
+	local gameTimer = GetGameTimer()
 
-		if input then
-			TriggerServerEvent('ox_doorlock:setState', ClosestDoor.id, ClosestDoor.state == 1 and 0 or 1, false, input[1])
-		end
-	else
-		local gameTimer = GetGameTimer()
-
-		if gameTimer - lastTriggered > 500 then
-			lastTriggered = gameTimer
-			TriggerServerEvent('ox_doorlock:setState', ClosestDoor.id, ClosestDoor.state == 1 and 0 or 1)
-		end
+	if gameTimer - lastTriggered > 500 then
+		lastTriggered = gameTimer
+		TriggerServerEvent('ox_doorlock:setState', ClosestDoor.id, ClosestDoor.state == 1 and 0 or 1)
 	end
 end
 
