@@ -204,11 +204,9 @@ local lockpickItems = {
 }
 
 local function isAuthorised(playerId, door, lockpick, passcode)
-	local player, authorised = GetPlayer(playerId)
+	if door.passcode and passcode ~= door.passcode then return false end
 
-	if passcode and passcode ~= door.passcode then
-		return false
-	end
+	local player, authorised = GetPlayer(playerId), true
 
 	if player then
 		if lockpick then
