@@ -204,7 +204,8 @@ local lockpickItems = {
 }
 
 local function isAuthorised(playerId, door, lockpick)
-	local player, authorised = GetPlayer(playerId), door.passcode or false
+	local player = GetPlayer(playerId)
+	local authorised = door.passcode or false --[[@as boolean?]]
 
 	if player then
 		if lockpick then
@@ -216,9 +217,11 @@ local function isAuthorised(playerId, door, lockpick)
 		end
 
 		if door.groups then
-			authorised = IsPlayerInGroup(player, door.groups)
-		elseif door.items then
-			authorised = DoesPlayerHaveItem(player, door.items)
+			authorised = IsPlayerInGroup(player, door.groups) or nil
+		end
+
+		if not authorised and door.items then
+			authorised = DoesPlayerHaveItem(player, door.items) or nil
 		end
 
 		if authorised ~= nil and door.passcode then
