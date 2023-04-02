@@ -322,9 +322,8 @@ CreateThread(function()
 		else ClosestDoor = nil end
 
 		if ClosestDoor and ClosestDoor.distance < ClosestDoor.maxDistance then
-			local text = ClosestDoor.label or (ClosestDoor.state == 0 and lockDoor or unlockDoor)
 			if Config.DrawTextUI and not ClosestDoor.hideUi and ClosestDoor.state ~= showUI then
-				lib.showTextUI(text)
+				lib.showTextUI(ClosestDoor.label or (ClosestDoor.state == 0 and lockDoor or unlockDoor))
 				showUI = ClosestDoor.state
 			end
 
