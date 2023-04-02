@@ -12,6 +12,7 @@ const Submit: React.FC = () => {
   const handleSubmit = () => {
     const data = { ...useStore.getState() };
     if (data.name === '') data.name = null;
+    if (data.label === '') data.label = null;
     if (data.passcode === '') data.passcode = null;
     if (data.lockSound === '') data.lockSound = null;
     if (data.unlockSound === '') data.unlockSound = null;
@@ -97,6 +98,7 @@ const Submit: React.FC = () => {
             useStore.setState(
               {
                 name: '',
+                label: '',
                 passcode: clipboard.passcode,
                 autolock: clipboard.autolock,
                 items: clipboard.items,
