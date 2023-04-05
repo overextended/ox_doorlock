@@ -12,5 +12,7 @@
   "remove_lock": "Rimuovi serratura",
   "cannot_unlock": "Impossibile aprire la porta",
   "cannot_lock": "Impossibile chiudere la porta",
-  "create_modify_lock": "Crea una serratura o modificane una esistente"
+  "create_modify_lock": "Crea una serratura o modificane una esistente",
+  "add_door_textui": "**Crea una nuova porta**  \nInteragire con [LMB]  \nAnnulla con [RMB]",
+  "command_closest": "Apri l'interfaccia utente direttamente alla serratura più vicina"
 }
