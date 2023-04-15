@@ -9,6 +9,7 @@ import { useExitListener } from './hooks/useExitListener';
 import { useDoors } from './store/doors';
 import { DoorColumn } from './store/doors';
 import { convertData } from './utils/convertData';
+import { Locale } from './store/locale';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -43,6 +44,12 @@ const App: React.FC = () => {
   const setDoors = useDoors((state) => state.setDoors);
   const navigate = useNavigate();
 
+  useNuiEvent<{
+    locale: { [key: string]: string }
+  }>('getLocale', ({ locale }) => {
+    for (const name in locale) Locale[name] = locale[name];
+  });
+  
   useNuiEvent('playSound', async (data: { sound: string; volume: number }) => {
     const sound = new Audio(`./sounds/${data.sound}.ogg`);
     sound.volume = data.volume;

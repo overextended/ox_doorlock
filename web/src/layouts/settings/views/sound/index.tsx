@@ -1,5 +1,6 @@
 import { Stack, Select } from '@mantine/core';
 import { useSetters, useStore } from '../../../../store';
+import { Locale } from '../../../../store/locale';
 
 const Sound: React.FC = () => {
   const sounds = useSetters((state) => state.sounds);
@@ -12,20 +13,20 @@ const Sound: React.FC = () => {
     <Stack>
       <Select
         data={sounds}
-        label="Lock sound"
+        label={Locale.ui_lock_sound}
         value={lockSound || ''}
         searchable
         clearable
-        nothingFound="No such sound"
+        nothingFound={Locale.no_such_sound}
         onChange={(e) => setLockSound(e)}
       />
       <Select
         data={sounds}
-        label="Unlock sound"
+        label={Locale.ui_unlock_sound}
         value={unlockSound || ''}
         searchable
         clearable
-        nothingFound="No such sound"
+        nothingFound={Locale.no_such_sound}
         onChange={(e) => setUnlockSound(e)}
       />
     </Stack>

@@ -1,6 +1,7 @@
 import { Group, TextInput, NumberInput, ActionIcon, Tooltip } from '@mantine/core';
 import { TbTrash } from 'react-icons/tb';
 import { useStore, useSetters } from '../../../../../store';
+import { Locale } from '../../../../../store/locale';
 
 const CharacterFields: React.FC = () => {
   const characters = useStore((state) => state.characters);
@@ -29,11 +30,11 @@ const CharacterFields: React.FC = () => {
         >
           <TextInput
             sx={{ width: '100%' }}
-            placeholder="Character Id"
+            placeholder={Locale.ui_character_id}
             value={field as string}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.target.value, index)}
           />
-          <Tooltip label="Delete row">
+          <Tooltip label={Locale.ui_delete}>
             <ActionIcon color="red.4" variant="transparent" onClick={() => handleRowDelete(index)}>
               <TbTrash size={24} />
             </ActionIcon>

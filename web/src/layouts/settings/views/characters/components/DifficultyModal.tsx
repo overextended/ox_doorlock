@@ -2,6 +2,7 @@ import { Button, NumberInput, Select, Stack } from '@mantine/core';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from '@mantine/form';
 import { useSetters, useStore } from '../../../../../store';
+import { Locale } from '../../../../../store/locale';
 
 interface Props {
   selectData: { value: string; label: string }[];
@@ -65,16 +66,16 @@ const DifficultyModal: React.FC<Props> = ({ selectData, setModal, modal }) => {
       <Stack>
         <Select
           data={selectData}
-          placeholder="Difficulty"
+          placeholder={Locale.ui_difficulty}
           {...form.getInputProps('select')}
           value={select}
           onChange={setSelect}
           required
         />
         <NumberInput
-          label="Area size"
+          label={Locale.ui_area_size}
           defaultValue={typeof lockpickData === 'object' ? lockpickData.areaSize : null}
-          description="Skill check area size in degrees"
+          description={Locale.ui_area_size_description}
           disabled={select !== 'custom'}
           max={360}
           hideControls
@@ -82,8 +83,8 @@ const DifficultyModal: React.FC<Props> = ({ selectData, setModal, modal }) => {
           {...form.getInputProps('areaSize')}
         />
         <NumberInput
-          label="Speed multiplier"
-          description="Number the indicator speed will be multiplied by"
+          label={Locale.ui_speed_multiplier}
+          description={Locale.ui_speed_multiplier_description}
           disabled={select !== 'custom'}
           defaultValue={typeof lockpickData === 'object' ? lockpickData.speedMultiplier : null}
           hideControls
@@ -92,7 +93,7 @@ const DifficultyModal: React.FC<Props> = ({ selectData, setModal, modal }) => {
           {...form.getInputProps('speedMultiplier')}
         />
         <Button type="submit" uppercase variant="light">
-          Confirm
+          {Locale.ui_confirm}
         </Button>
       </Stack>
     </form>

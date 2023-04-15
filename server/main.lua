@@ -311,6 +311,7 @@ end)
 RegisterNetEvent('ox_doorlock:getDoors', function()
 	local source = source
 	while not isLoaded do Wait(100) end
+	TriggerClientEvent('ox_doorlock:getLocale', source)
 	TriggerClientEvent('ox_doorlock:setDoors', source, doors, sounds)
 end)
 

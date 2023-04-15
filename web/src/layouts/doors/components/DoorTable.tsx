@@ -14,6 +14,7 @@ import { TbSelector, TbChevronDown, TbChevronUp, TbSearch } from 'react-icons/tb
 import { useSearch } from '../../../store/search';
 import { useDoors, type DoorColumn } from '../../../store/doors';
 import ActionsMenu from './ActionsMenu';
+import { Locale } from '../../../store/locale';
 
 const DoorTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -25,7 +26,7 @@ const DoorTable: React.FC = () => {
     () => [
       {
         id: 'id',
-        header: 'ID',
+        header: Locale.ui_,
         accessorKey: 'id',
         cell: (info) => info.getValue(),
         enableHiding: false,
@@ -33,14 +34,14 @@ const DoorTable: React.FC = () => {
       },
       {
         id: 'name',
-        header: 'Name',
+        header: Locale.ui_name,
         accessorKey: 'name',
         cell: (info) => info.getValue(),
         enableHiding: false,
       },
       {
         id: 'zone',
-        header: 'Zone',
+        header: Locale.ui_zone,
         accessorKey: 'zone',
         cell: (info) => info.getValue(),
         enableHiding: false,
@@ -120,7 +121,7 @@ const DoorTable: React.FC = () => {
         <Center sx={{ height: '100%' }}>
           <Stack align="center">
             <TbSearch size={48} />
-            <Text size="lg">No results found</Text>
+            <Text size="lg">{Locale.ui_no_results_found}</Text>
           </Stack>
         </Center>
       )}

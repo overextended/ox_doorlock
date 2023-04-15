@@ -11,6 +11,7 @@ import { fetchNui } from '../../../utils/fetchNui';
 import { openConfirmModal } from '@mantine/modals';
 import { CellContext } from '@tanstack/react-table';
 import { useVisibility } from '../../../store/visibility';
+import { Locale } from '../../../store/locale';
 
 const ActionsMenu: React.FC<{ data: CellContext<DoorColumn, unknown> }> = ({ data }) => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const ActionsMenu: React.FC<{ data: CellContext<DoorColumn, unknown> }> = ({ dat
   return (
     <Menu position="right-start" width={200}>
       <Menu.Target>
-        <Tooltip label="Door actions">
+        <Tooltip label={Locale.ui_door_actions}>
           <ActionIcon color="blue.4" variant="transparent">
             <TbDots size={24} />
           </ActionIcon>
@@ -34,16 +35,16 @@ const ActionsMenu: React.FC<{ data: CellContext<DoorColumn, unknown> }> = ({ dat
             navigate('/settings/general');
           }}
         >
-          Settings
+          {Locale.ui_settings}
         </Menu.Item>
         <Menu.Item
           icon={<HiOutlineClipboardCopy size={18} />}
           onClick={() => {
             setClipboard(convertData(data.row.original));
-            fetchNui('notify', 'Settings copied');
+            fetchNui('notify', Locale.ui_settings_copied);
           }}
         >
-          Copy settings
+          {Locale.ui_copy_settings}
         </Menu.Item>
         <Menu.Item
           icon={<GiTeleport size={18} />}
@@ -52,23 +53,23 @@ const ActionsMenu: React.FC<{ data: CellContext<DoorColumn, unknown> }> = ({ dat
             fetchNui('teleportToDoor', data.row.getValue('id'));
           }}
         >
-          Teleport to door
+          {Locale.ui_teleport_to_door}
         </Menu.Item>
         <Menu.Item
           color="red"
           icon={<TbTrash size={18} />}
           onClick={() =>
             openConfirmModal({
-              title: 'Confirm deletion',
+              title: Locale.ui_confirm_delete,
               centered: true,
               withCloseButton: false,
               children: (
                 <Text>
-                  Are you sure you want to delete
+                  {Locale.ui_confirm_delete_prompt}
                   <Text component="span" weight={700}>{` ${data.row.getValue('name')}`}</Text>?
                 </Text>
               ),
-              labels: { confirm: 'Confirm', cancel: 'Cancel' },
+              labels: { confirm: Locale.ui_confirm, cancel: Locale.ui_cancel },
               confirmProps: { color: 'red' },
               onConfirm: () => {
                 fetchNui('deleteDoor', data.row.getValue('id'));
@@ -76,7 +77,7 @@ const ActionsMenu: React.FC<{ data: CellContext<DoorColumn, unknown> }> = ({ dat
             })
           }
         >
-          Delete door
+          {Locale.ui_delete_door}
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

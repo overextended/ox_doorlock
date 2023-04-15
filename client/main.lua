@@ -38,6 +38,23 @@ end
 local nearbyDoors = {}
 local Entity = Entity
 
+RegisterNetEvent('ox_doorlock:getLocale', function(data, sounds)
+	doors = data
+	local uiLocales = {}
+	local locales = lib.getLocales()
+	for k, v in pairs(locales) do
+		if k:find('^ui_')then
+			uiLocales[k] = v
+		end
+	end
+	SendNUIMessage({
+		action = 'getLocale',
+		data = {
+			locale = uiLocales
+		}
+	})
+end)
+
 RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
 	doors = data
 

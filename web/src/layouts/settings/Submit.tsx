@@ -4,6 +4,7 @@ import { fetchNui } from '../../utils/fetchNui';
 import { HiOutlineClipboardCheck } from 'react-icons/all';
 import { useClipboard } from '../../store/clipboard';
 import { useVisibility } from '../../store/visibility';
+import { Locale } from '../../store/locale';
 
 const Submit: React.FC = () => {
   const clipboard = useClipboard((state) => state.clipboard);
@@ -83,9 +84,9 @@ const Submit: React.FC = () => {
   return (
     <Center>
       <Button color="blue" uppercase onClick={() => handleSubmit()} fullWidth>
-        Confirm door
+        {Locale.ui_confirm_door}
       </Button>
-      <Tooltip label={!clipboard ? 'No door settings copied' : 'Apply copied settings'} withArrow arrowSize={10}>
+      <Tooltip label={!clipboard ? Locale.ui_no_door_settings_copied : Locale.ui_apply_copied_settings} withArrow arrowSize={10}>
         <ActionIcon
           variant="outline"
           disabled={!clipboard}
@@ -115,7 +116,7 @@ const Submit: React.FC = () => {
               },
               true
             );
-            fetchNui('notify', 'Settings applied');
+            fetchNui('notify', Locale.ui_settings_applied);
           }}
         >
           <HiOutlineClipboardCheck size={20} />

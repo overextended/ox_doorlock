@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { TbSearch } from 'react-icons/tb';
 import useDebounce from '../../../hooks/useDebounce';
 import { useSearch } from '../../../store/search';
+import { Locale } from '../../../store/locale';
 
 const Searchbar: React.FC = () => {
   const search = useSearch();
@@ -17,7 +18,7 @@ const Searchbar: React.FC = () => {
       <TextInput
         sx={{ flex: '1 1 auto', padding: 2 }}
         icon={<TbSearch size={20} />}
-        placeholder="Search"
+        placeholder={Locale.ui_search}
         value={search.value ?? ''}
         onChange={(e) => search.setValue(e.target.value)}
       />
