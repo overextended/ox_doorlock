@@ -24,10 +24,10 @@ local function entityIsNotDoor(data)
 	return not getDoorFromEntity(entity)
 end
 
-local pickingLock
+PickingLock = false
 
 local function canPickLock(entity)
-	if pickingLock then return false end
+	if PickingLock then return false end
 
 	local door = getDoorFromEntity(entity)
 
@@ -38,9 +38,9 @@ end
 local function pickLock(entity)
 	local door = getDoorFromEntity(entity)
 
-	if not door or pickingLock or not door.lockpick or (not Config.CanPickUnlockedDoors and door.state == 0) then return end
+	if not door or PickingLock or not door.lockpick or (not Config.CanPickUnlockedDoors and door.state == 0) then return end
 
-	pickingLock = true
+	PickingLock = true
 
 	TaskTurnPedToFaceCoord(cache.ped, door.coords.x, door.coords.y, door.coords.z, 4000)
 	Wait(500)
@@ -61,7 +61,7 @@ local function pickLock(entity)
 
 	StopEntityAnim(cache.ped, 'pick_door', 'mp_common_heist', 0)
 
-	pickingLock = false
+	PickingLock = false
 end
 
 exports('pickClosestDoor', function()

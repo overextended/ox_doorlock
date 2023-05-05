@@ -327,7 +327,7 @@ CreateThread(function()
 				showUI = ClosestDoor.state
 			end
 
-			if IsDisabledControlJustReleased(0, 38) then
+			if not PickingLock and IsDisabledControlJustReleased(0, 38) then
 				useClosestDoor()
 			end
 		elseif showUI then
