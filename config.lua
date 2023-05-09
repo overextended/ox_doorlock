@@ -6,6 +6,9 @@ Config.Notify = false
 -- Draw a persistent notification while in-range of a door, with a prompt to lock/unlock.
 Config.DrawTextUI = false
 
+-- Send a notification upon lock / unlock
+Config.useNotification = false
+
 Config.DrawSprite = {
     -- Unlocked
     [0] = {'mpsafecracking', 'lock_open', 0, 0, 0.018, 0.018, 0, 255, 255, 255, 100},

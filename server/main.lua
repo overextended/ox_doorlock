@@ -302,7 +302,8 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick)
 			return TriggerEvent('ox_doorlock:stateChanged', source, door.id, state == 1, type(authorised) == 'string' and authorised)
 		end
 
-		if source then
+		
+		if source and Config.useNotification then
 			lib.notify(source, { type = 'error', icon = 'lock', description = state == 0 and 'cannot_unlock' or 'cannot_lock' })
 		end
 	end
