@@ -275,14 +275,10 @@ end)
 RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick)
 	local door = doors[id]
 
-	if source == '' then
-		source = nil
-	end
-
 	state = (state == 1 or state == 0) and state or (state and 1 or 0)
 
 	if door then
-		local authorised = source == nil or isAuthorised(source, door, lockpick)
+		local authorised = source == '' or isAuthorised(source, door, lockpick)
 
 		if authorised then
 			door.state = state

@@ -128,7 +128,7 @@ RegisterNUICallback('createDoor', function(data, cb)
 		lib.showTextUI(locale('add_door_textui'))
 
 		repeat
-			DisablePlayerFiring(cache.playerId)
+			DisablePlayerFiring(cache.playerId, true)
 			DisableControlAction(0, 25, true)
 
 			local hit, entity, coords = lib.raycast.cam(1|16)
@@ -215,7 +215,7 @@ RegisterNUICallback('teleportToDoor', function(id, cb)
     SetNuiFocus(false, false)
     local doorCoords = doors[id].coords
     if not doorCoords then return end
-    SetEntityCoords(cache.ped, doorCoords.x, doorCoords.y, doorCoords.z)
+    SetEntityCoords(cache.ped, doorCoords.x, doorCoords.y, doorCoords.z, false, false, false, false)
 end)
 
 RegisterNUICallback('exit', function(_, cb)
