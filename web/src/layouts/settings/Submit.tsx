@@ -45,7 +45,7 @@ const Submit: React.FC = () => {
       for (let i = 0; i < data.characters.length; i++) {
         const characterField = data.characters[i];
         if (characterField && characterField !== '') {
-          charactersArr.push(parseInt(characterField) || characterField);
+          charactersArr.push(Number.isNaN(+characterField) ? characterField : +characterField);
         }
       }
 
