@@ -1,11 +1,14 @@
-import { ActionIcon, Button, Center, Stack, Tooltip } from '@mantine/core';
+import { ActionIcon, Button, Center, Text, Tooltip } from '@mantine/core';
 import { useStore } from '../../store';
 import { fetchNui } from '../../utils/fetchNui';
-import { HiOutlineClipboardCheck } from 'react-icons/all';
+import { HiOutlineClipboardCheck, HiOutlineTrash } from 'react-icons/all';
 import { useClipboard } from '../../store/clipboard';
 import { useVisibility } from '../../store/visibility';
+import { openConfirmModal } from '@mantine/modals';
+import { useNavigate } from 'react-router-dom';
 
 const Submit: React.FC = () => {
+  const navigate = useNavigate();
   const clipboard = useClipboard((state) => state.clipboard);
   const setVisible = useVisibility((state) => state.setVisible);
 
@@ -121,6 +124,35 @@ const Submit: React.FC = () => {
           <HiOutlineClipboardCheck size={20} />
         </ActionIcon>
       </Tooltip>
+      <ActionIcon
+        variant="outline"
+        size="lg"
+        ml={16}
+        sx={{ width: 36, height: 36 }}
+        color="red"
+        disabled={!useStore.getState().id}
+        onClick={() =>
+          openConfirmModal({
+            title: 'Confirm deletion',
+            centered: true,
+            withCloseButton: false,
+            children: (
+              <Text>
+                Are you sure you want to delete
+                <Text component="span" weight={700}>{` ${useStore.getState().name}`}</Text>?
+              </Text>
+            ),
+            labels: { confirm: 'Confirm', cancel: 'Cancel' },
+            confirmProps: { color: 'red' },
+            onConfirm: () => {
+              fetchNui('deleteDoor', useStore.getState().id);
+              navigate('/')
+            },
+          })
+        }
+      >
+        <HiOutlineTrash size={20} />
+      </ActionIcon>
     </Center>
   );
 };
