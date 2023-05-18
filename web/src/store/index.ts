@@ -4,6 +4,7 @@ export type StringField = string | null | undefined;
 export type NumberField = number | null | undefined;
 
 export interface StoreState {
+  id?: number;
   name: StringField;
   passcode: StringField;
   autolock: NumberField;
