@@ -212,8 +212,8 @@ local function isAuthorised(playerId, door, lockpick)
 			return DoesPlayerHaveItem(player, lockpickItems)
 		end
 
-		if door.characters then
-			return table.contains(door.characters, GetCharacterId(player))
+		if door.characters and table.contains(door.characters, GetCharacterId(player)) then
+			return true
 		end
 
 		if door.groups then
