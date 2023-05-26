@@ -48,7 +48,7 @@ const Switches: React.FC = () => {
         />
         <TooltipSwitch
           label="Hold Open"
-          infoCircle="Sets whether the targeting door should be held open"
+          infoCircle="Sets whether the targeting door(s) should stay open while unlocked"
           value={holdOpen || false}
           toggle={() => toggleCheckbox('holdOpen')}
         />
