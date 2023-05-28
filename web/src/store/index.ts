@@ -21,6 +21,7 @@ export interface StoreState {
   lockpick: boolean | null;
   hideUi: boolean | null;
   doors: boolean | null;
+  holdOpen: boolean | null;
 }
 
 interface StateSetters {
@@ -35,7 +36,7 @@ interface StateSetters {
   setCharacters: (fn: (state: StoreState['characters']) => StoreState['characters']) => void;
   setGroups: (fn: (state: StoreState['groups']) => StoreState['groups']) => void;
   setLockpickDifficulty: (fn: (state: StoreState['lockpickDifficulty']) => StoreState['lockpickDifficulty']) => void;
-  toggleCheckbox: (type: 'state' | 'doors' | 'auto' | 'lockpick' | 'hideUi') => void;
+  toggleCheckbox: (type: 'state' | 'doors' | 'auto' | 'lockpick' | 'hideUi' | 'holdOpen') => void;
   setMaxDistance: (value: StoreState['maxDistance']) => void;
   setDoorRate: (value: StoreState['doorRate']) => void;
 }
@@ -57,6 +58,7 @@ export const useStore = create<StoreState>(() => ({
   lockpick: false,
   hideUi: false,
   doors: false,
+  holdOpen: false,
 }));
 
 export const defaultState = useStore.getState();

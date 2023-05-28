@@ -9,6 +9,7 @@ const Switches: React.FC = () => {
   const automatic = useStore((state) => state.auto);
   const lockpick = useStore((state) => state.lockpick);
   const hideUi = useStore((state) => state.hideUi);
+  const holdOpen = useStore((state) => state.holdOpen);
 
   const toggleCheckbox = useSetters((setter) => setter.toggleCheckbox);
 
@@ -44,6 +45,12 @@ const Switches: React.FC = () => {
           infoCircle="Hides UI indicators for the targeting door"
           value={hideUi || false}
           toggle={() => toggleCheckbox('hideUi')}
+        />
+        <TooltipSwitch
+          label="Hold Open"
+          infoCircle="Sets whether the targeting door(s) should stay open while unlocked"
+          value={holdOpen || false}
+          toggle={() => toggleCheckbox('holdOpen')}
         />
       </SimpleGrid>
     </>

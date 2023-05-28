@@ -160,10 +160,16 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 		DoorSystemSetDoorState(double[1].hash, door.state, false, false)
 		DoorSystemSetDoorState(double[2].hash, door.state, false, false)
 
+		if door.holdOpen then
+			DoorSystemSetHoldOpen(double[1].hash, door.state == 0)
+			DoorSystemSetHoldOpen(double[2].hash, door.state == 0)
+		end
+
 		while door.state == 1 and (not IsDoorClosed(double[1].hash) or not IsDoorClosed(double[2].hash)) do Wait(0) end
 	else
 		DoorSystemSetDoorState(door.hash, door.state, false, false)
 
+		if door.holdOpen then DoorSystemSetHoldOpen(door.hash, door.state == 0) end
 		while door.state == 1 and not IsDoorClosed(door.hash) do Wait(0) end
 	end
 
@@ -208,6 +214,8 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 				end
 
 				DoorSystemSetDoorState(doorHash, doorState, false, false)
+
+				if data.holdOpen then DoorSystemSetHoldOpen(doorHash, doorState == 0) end
 			else
 				DoorSystemSetDoorState(doorHash, 4, false, false)
 				DoorSystemSetDoorState(doorHash, 0, false, false)
@@ -224,6 +232,8 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 			end
 
 			DoorSystemSetDoorState(door.hash, doorState, false, false)
+
+			if data.holdOpen then DoorSystemSetHoldOpen(door.hash, doorState == 0) end
 		else
 			DoorSystemSetDoorState(door.hash, 4, false, false)
 			DoorSystemSetDoorState(door.hash, 0, false, false)

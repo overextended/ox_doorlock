@@ -25,6 +25,7 @@ const Submit: React.FC = () => {
     data.auto = data.auto || null;
     data.lockpick = data.lockpick || null;
     data.hideUi = data.hideUi || null;
+    data.holdOpen = data.holdOpen || null;
 
     if (data.items && data.items.length > 0) {
       const items = [];
@@ -115,6 +116,7 @@ const Submit: React.FC = () => {
                 hideUi: clipboard.hideUi,
                 doors: clipboard.doors,
                 lockpickDifficulty: clipboard.lockpickDifficulty,
+                holdOpen: clipboard.holdOpen
               },
               true
             );

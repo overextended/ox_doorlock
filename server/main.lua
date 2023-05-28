@@ -40,6 +40,7 @@ local function encodeData(door)
 		items = door.items,
 		lockpick = door.lockpick,
 		hideUi = door.hideUi,
+		holdOpen = door.holdOpen,
 		lockSound = door.lockSound,
 		maxDistance = door.maxDistance,
 		doorRate = door.doorRate,
