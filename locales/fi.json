@@ -1,0 +1,18 @@
+{
+  "unlocked_door": "Ovi avattu",
+  "locked_door": "Ovi lukittu",
+  "lock_door": "[E] Lukitse ovi",
+  "unlock_door": "[E] Avaa ovi",
+  "door_lock": "Ovilukko",
+  "passcode": "Salasana",
+  "lockpick_broke": "Tiirikka hajosi",
+  "pick_lock": "Tiirikoi lukko",
+  "add_lock": "Lisää ovilukko",
+  "edit_lock": "Muokkaa ovilukkoa",
+  "remove_lock": "Poista ovilukko",
+  "cannot_unlock": "Et voi avata ovea",
+  "cannot_lock": "Et voi lukita ovea",
+  "create_modify_lock": "Luo ovilukko, tai muokkaa olemassaolevaa lukkoa",
+  "add_door_textui": "**Aseta Uusi Lukko**  \nAseta [LMB]  \nPeruuta [RMB]",
+  "command_closest": "Avaa ovilukko valikko lähimmästä ovesta"
+}
