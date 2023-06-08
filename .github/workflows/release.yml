@@ -23,7 +23,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
-          version: 8.5.0
+          version: 8.6.1
 
       - name: Get variables
         id: get_vars
