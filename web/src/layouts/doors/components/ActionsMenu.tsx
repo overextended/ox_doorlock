@@ -30,7 +30,7 @@ const ActionsMenu: React.FC<{ data: CellContext<DoorColumn, unknown> }> = ({ dat
         <Menu.Item
           icon={<TbSettings size={18} />}
           onClick={() => {
-            useStore.setState(convertData(data.row.original), false);
+            useStore.setState(convertData(data.row.original), true);
             navigate('/settings/general');
           }}
         >
