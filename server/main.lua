@@ -87,11 +87,11 @@ exports('editDoor', function(id, data)
 				local t1 = type(current)
 				local t2 = type(v)
 
-				if t1 ~= nil and t1 ~= t2 then
+				if t1 ~= 'nil' and v ~= '' and t1 ~= t2 then
 					error(("Expected '%s' for door.%s, received %s (%s)"):format(t1, k, t2, v))
 				end
 
-				door[k] = v
+				door[k] = v ~= '' and v or nil
 			end
 		end
 
