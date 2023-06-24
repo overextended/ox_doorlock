@@ -51,6 +51,10 @@
     "edit_info": "编辑行以选择值",
     "edit": "编辑",
     "lockpick_difficulty": "撬锁难度",
+    "easy": "简单",
+    "medium": "中等",
+    "hard": "困难",
+    "custom": "自定义",
     "lock_sound": "上锁声音",
     "unlock_sound": "解锁声音",
     "doors": "返回",
@@ -81,5 +85,7 @@
   "remove_lock": "删除门锁",
   "cannot_unlock": "无法解锁门",
   "cannot_lock": "无法锁门",
-  "create_modify_lock": "建立或修改已存在的门锁"
+  "create_modify_lock": "建立或修改已存在的门锁",
+  "add_door_textui": "**选择门**  \n按 [LMB] 选择 \n按 [RMB] 取消",
+  "command_closest": "直接打开附近门锁的设置页面"
 }

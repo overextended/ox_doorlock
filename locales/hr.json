@@ -85,5 +85,7 @@
   "remove_lock": "Obriši lokot",
   "cannot_unlock": "Nije moguće otključati vrata",
   "cannot_lock": "Nije moguće zaključati vrata",
-  "create_modify_lock": "Dodaj lokot na vrata ili uredi postojeći"
+  "create_modify_lock": "Dodaj lokot na vrata ili uredi postojeći",
+  "add_door_textui": "**Create new door**  \nInteract with [LMB]  \nCancel with [RMB]",
+  "command_closest": "Open UI directly to closest doorlock"
 }

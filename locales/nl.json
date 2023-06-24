@@ -85,5 +85,7 @@
   "remove_lock": "Deurslot verwijderen",
   "cannot_unlock": "Niet mogelijk om de deur te openen",
   "cannot_lock": "Niet mogelijk om de deur te sluiten",
-  "create_modify_lock": "Maak een slot of pas er een aan"
+  "create_modify_lock": "Maak een slot of pas er een aan",
+  "add_door_textui": "**Create new door**  \nInteract with [LMB]  \nCancel with [RMB]",
+  "command_closest": "Open UI directly to closest doorlock"
 }

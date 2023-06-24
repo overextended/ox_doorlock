@@ -85,5 +85,7 @@
   "remove_lock": "Ta bort dörrlås",
   "cannot_unlock": "Kan inte låsa upp",
   "cannot_lock": "Kan inte låsa",
-  "create_modify_lock": "Lägg till dörrlås eller redigera befintligt"
+  "create_modify_lock": "Lägg till dörrlås eller redigera befintligt",
+  "add_door_textui": "**Create new door**  \nInteract with [LMB]  \nCancel with [RMB]",
+  "command_closest": "Open UI directly to closest doorlock"
 }

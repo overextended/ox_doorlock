@@ -10,6 +10,7 @@ import { StoreState } from './store';
 import { HashRouter } from 'react-router-dom';
 import { ModalsProvider } from '@mantine/modals';
 import { DoorColumn } from './store/doors';
+import LocaleProvider from './providers/LocaleProvider';
 
 debugData<DoorColumn[]>([
   {
@@ -109,7 +110,9 @@ ReactDOM.render(
     <MantineProvider withNormalizeCSS withGlobalStyles theme={customTheme}>
       <ModalsProvider modalProps={{ transition: 'slide-up' }}>
         <HashRouter>
-          <App />
+          <LocaleProvider>
+            <App />
+          </LocaleProvider>
         </HashRouter>
       </ModalsProvider>
     </MantineProvider>
