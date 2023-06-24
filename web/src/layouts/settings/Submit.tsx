@@ -6,11 +6,13 @@ import { useClipboard } from '../../store/clipboard';
 import { useVisibility } from '../../store/visibility';
 import { openConfirmModal } from '@mantine/modals';
 import { useNavigate } from 'react-router-dom';
+import { useLocales } from '../../providers/LocaleProvider';
 
 const Submit: React.FC = () => {
   const navigate = useNavigate();
   const clipboard = useClipboard((state) => state.clipboard);
   const setVisible = useVisibility((state) => state.setVisible);
+  const { locale } = useLocales();
 
   const handleSubmit = () => {
     const data = { ...useStore.getState() };
@@ -87,9 +89,9 @@ const Submit: React.FC = () => {
   return (
     <Center>
       <Button color="blue" uppercase onClick={() => handleSubmit()} fullWidth>
-        Confirm door
+      {locale.ui.confirm_door}
       </Button>
-      <Tooltip label={!clipboard ? 'No door settings copied' : 'Apply copied settings'} withArrow arrowSize={10}>
+      <Tooltip label={!clipboard ? locale.ui.no_door_settings_copied : locale.ui.apply_copied_settings} withArrow arrowSize={10}>
         <ActionIcon
           variant="outline"
           disabled={!clipboard}
@@ -120,7 +122,7 @@ const Submit: React.FC = () => {
               },
               true
             );
-            fetchNui('notify', 'Settings applied');
+            fetchNui('notify', locale.ui.settings_applied);
           }}
         >
           <HiOutlineClipboardCheck size={20} />
@@ -135,16 +137,16 @@ const Submit: React.FC = () => {
         disabled={!useStore.getState().id}
         onClick={() =>
           openConfirmModal({
-            title: 'Confirm deletion',
+            title: locale.ui.confirm_delete,
             centered: true,
             withCloseButton: false,
             children: (
               <Text>
-                Are you sure you want to delete
+                {locale.ui.confirm_delete_prompt}
                 <Text component="span" weight={700}>{` ${useStore.getState().name}`}</Text>?
               </Text>
             ),
-            labels: { confirm: 'Confirm', cancel: 'Cancel' },
+            labels: { confirm: locale.ui.confirm, cancel: locale.ui.cancel },
             confirmProps: { color: 'red' },
             onConfirm: () => {
               fetchNui('deleteDoor', useStore.getState().id);

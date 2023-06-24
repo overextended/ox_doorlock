@@ -2,6 +2,7 @@ import { Button, NumberInput, Select, Stack } from '@mantine/core';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from '@mantine/form';
 import { useSetters, useStore } from '../../../../../store';
+import { useLocales } from '../../../../../providers/LocaleProvider';
 
 interface Props {
   selectData: { value: string; label: string }[];
@@ -19,6 +20,7 @@ const DifficultyModal: React.FC<Props> = ({ selectData, setModal, modal }) => {
   const [select, setSelect] = useState<string | null>(null);
   const lockpickDifficulty = useStore((store) => store.lockpickDifficulty);
   const setLockpickDifficulty = useSetters((setter) => setter.setLockpickDifficulty);
+  const { locale } = useLocales();
 
   const lockpickData = useMemo(() => {
     return lockpickDifficulty[modal.index];
@@ -34,10 +36,10 @@ const DifficultyModal: React.FC<Props> = ({ selectData, setModal, modal }) => {
     },
 
     validate: {
-      select: (value) => (value === null ? 'Difficulty is required' : null),
-      areaSize: (value, values) => (value === null && values.select === 'custom' ? 'Area size is required' : null),
+      select: (value) => (value === null ? locale.ui.difficulty_required : null),
+      areaSize: (value, values) => (value === null && values.select === 'custom' ? locale.ui.area_size_required : null),
       speedMultiplier: (value, values) =>
-        value === null && values.select === 'custom' ? 'Speed multiplier is required' : null,
+        value === null && values.select === 'custom' ? locale.ui.speed_multiplier_required : null,
     },
   });
 
@@ -65,16 +67,16 @@ const DifficultyModal: React.FC<Props> = ({ selectData, setModal, modal }) => {
       <Stack>
         <Select
           data={selectData}
-          placeholder="Difficulty"
+          placeholder={locale.ui.difficulty}
           {...form.getInputProps('select')}
           value={select}
           onChange={setSelect}
           required
         />
         <NumberInput
-          label="Area size"
+          label={locale.ui.area_size}
           defaultValue={typeof lockpickData === 'object' ? lockpickData.areaSize : null}
-          description="Skill check area size in degrees"
+          description={locale.ui.area_size_description}
           disabled={select !== 'custom'}
           max={360}
           hideControls
@@ -82,8 +84,8 @@ const DifficultyModal: React.FC<Props> = ({ selectData, setModal, modal }) => {
           {...form.getInputProps('areaSize')}
         />
         <NumberInput
-          label="Speed multiplier"
-          description="Number the indicator speed will be multiplied by"
+          label={locale.ui.speed_multiplier}
+          description={locale.ui.speed_multiplier_description}
           disabled={select !== 'custom'}
           defaultValue={typeof lockpickData === 'object' ? lockpickData.speedMultiplier : null}
           hideControls

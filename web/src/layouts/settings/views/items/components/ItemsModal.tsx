@@ -2,6 +2,7 @@ import { useForm } from '@mantine/form';
 import { Button, Stack, Switch, TextInput } from '@mantine/core';
 import { useMemo } from 'react';
 import { StringField, useSetters, useStore } from '../../../../../store';
+import { useLocales } from '../../../../../providers/LocaleProvider';
 
 interface Props {
   setModal: React.Dispatch<React.SetStateAction<{ opened: boolean; index: number }>>;
@@ -11,6 +12,7 @@ interface Props {
 const ItemsModal: React.FC<Props> = ({ modal, setModal }) => {
   const itemFields = useStore((state) => state.items);
   const setItemFields = useSetters((setter) => setter.setItems);
+  const { locale } = useLocales();
 
   const itemData = useMemo(() => {
     return itemFields[modal.index];
@@ -37,10 +39,10 @@ const ItemsModal: React.FC<Props> = ({ modal, setModal }) => {
   return (
     <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
       <Stack>
-        <TextInput label="Metadata type" defaultValue={itemData.metadata} {...form.getInputProps('metadata')} />
-        <Switch label="Remove on use" defaultChecked={itemData.remove} {...form.getInputProps('remove')} />
+        <TextInput label={locale.ui.remove_on_use} defaultValue={itemData.metadata} {...form.getInputProps('metadata')} />
+        <Switch label={locale.ui.metadata_type} defaultChecked={itemData.remove} {...form.getInputProps('remove')} />
         <Button uppercase variant="light" type="submit">
-          Confirm
+          {locale.ui.confirm}
         </Button>
       </Stack>
     </form>

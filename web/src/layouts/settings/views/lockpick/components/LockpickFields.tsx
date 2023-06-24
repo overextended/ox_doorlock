@@ -3,6 +3,9 @@ import { ActionIcon, Group, Modal, Select, Tooltip } from '@mantine/core';
 import { useState } from 'react';
 import { TbSettings, TbTrash } from 'react-icons/tb';
 import DifficultyModal from '../../characters/components/DifficultyModal';
+import { useLocales } from '../../../../../providers/LocaleProvider';
+
+const { locale } = useLocales();
 
 const selectData: { label: string; value: string }[] = [
   { label: 'Easy', value: 'easy' },
@@ -34,15 +37,15 @@ const LockpickFields: React.FC = () => {
             data={selectData}
             value={typeof field === 'string' ? field : 'custom'}
             readOnly
-            placeholder="Edit row to select value"
+            placeholder={locale.ui.edit_info}
             sx={{ width: '80%' }}
           />
-          <Tooltip label="Edit row">
+          <Tooltip label={locale.ui.edit}>
             <ActionIcon color="blue.4" variant="transparent" onClick={() => setModal({ opened: true, index })}>
               <TbSettings size={24} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Delete row">
+          <Tooltip label={locale.ui.delete}>
             <ActionIcon color="red.4" variant="transparent" onClick={() => handleRowDelete(index)}>
               <TbTrash size={24} />
             </ActionIcon>
@@ -53,7 +56,7 @@ const LockpickFields: React.FC = () => {
         opened={modal.opened}
         onClose={() => setModal({ ...modal, opened: false })}
         transition="fade"
-        title="Lockpick difficulty"
+        title={locale.ui.lockpick_difficulty}
         centered
         size="xs"
         withCloseButton={false}

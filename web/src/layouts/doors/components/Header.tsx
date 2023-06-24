@@ -5,7 +5,7 @@ import { useVisibility } from '../../../store/visibility';
 import { fetchNui } from '../../../utils/fetchNui';
 import Searchbar from './Search';
 import { useStore, defaultState } from '../../../store';
-
+import { useLocales } from '../../../providers/LocaleProvider';
 const useStyles = createStyles({
   main: {
     display: 'flex',
@@ -20,10 +20,11 @@ const Header: React.FC = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
   const setVisible = useVisibility((state) => state.setVisible);
-
+  const { locale } = useLocales();
+  
   return (
     <Group className={classes.main}>
-      <Tooltip label="Create a new door" transition="pop">
+      <Tooltip label={locale.ui.create_a_new_door} transition="pop">
         <ActionIcon
           variant="light"
           color="blue"

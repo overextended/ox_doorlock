@@ -14,18 +14,20 @@ import { TbSelector, TbChevronDown, TbChevronUp, TbSearch } from 'react-icons/tb
 import { useSearch } from '../../../store/search';
 import { useDoors, type DoorColumn } from '../../../store/doors';
 import ActionsMenu from './ActionsMenu';
+import { useLocales } from '../../../providers/LocaleProvider';
 
 const DoorTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const globalFilter = useSearch((state) => state.debouncedValue);
   const data = useDoors((state) => state.doors);
+  const { locale } = useLocales();
 
   const columns = useMemo<ColumnDef<DoorColumn>[]>(
     () => [
       {
         id: 'id',
-        header: 'ID',
+        header: locale.ui.id,
         accessorKey: 'id',
         cell: (info) => info.getValue(),
         enableHiding: false,
@@ -33,14 +35,14 @@ const DoorTable: React.FC = () => {
       },
       {
         id: 'name',
-        header: 'Name',
+        header: locale.ui.name,
         accessorKey: 'name',
         cell: (info) => info.getValue(),
         enableHiding: false,
       },
       {
         id: 'zone',
-        header: 'Zone',
+        header: locale.ui.zone,
         accessorKey: 'zone',
         cell: (info) => info.getValue(),
         enableHiding: false,
@@ -120,7 +122,7 @@ const DoorTable: React.FC = () => {
         <Center sx={{ height: '100%' }}>
           <Stack align="center">
             <TbSearch size={48} />
-            <Text size="lg">No results found</Text>
+            <Text size="lg">{locale.ui.no_results_found}</Text>
           </Stack>
         </Center>
       )}

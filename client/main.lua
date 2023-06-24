@@ -348,3 +348,13 @@ CreateThread(function()
 		Wait(num > 0 and 0 or 500)
 	end
 end)
+
+RegisterNUICallback('loadLocale', function(_, cb)
+    cb(1)
+	local JSON = LoadResourceFile(cache.resource, ('locales/%s.json'):format(GetConvar('ox:locale', 'en'))) or LoadResourceFile(cache.resource, 'locales/en.json')
+
+    SendNUIMessage({
+        action = 'setLocale',
+        data = json.decode(JSON)
+    })
+end)

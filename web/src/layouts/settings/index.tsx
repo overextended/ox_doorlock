@@ -9,11 +9,13 @@ import Sound from './views/sound';
 import Submit from './Submit';
 import { useStore } from '../../store';
 import Lockpick from './views/lockpick';
+import { useLocales } from '../../providers/LocaleProvider';
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const lockpick = useStore((state) => state.lockpick);
+  const { locale } = useLocales();
 
   return (
     <>
@@ -27,25 +29,25 @@ const Settings: React.FC = () => {
         >
           <Tabs.List>
             <Tabs.Tab value={'back'} onClick={() => navigate('/')} icon={<TbArrowBackUp size={20} />}>
-              Doors
+            {locale.ui.doors}
             </Tabs.Tab>
             <Tabs.Tab value="general" icon={<TbSettings size={20} />}>
-              General
+              {locale.ui.general}
             </Tabs.Tab>
             <Tabs.Tab value="characters" icon={<TbUser size={20} />}>
-              Characters
+              {locale.ui.characters}
             </Tabs.Tab>
             <Tabs.Tab value="groups" icon={<TbBriefcase size={20} />}>
-              Groups
+              {locale.ui.groups}
             </Tabs.Tab>
             <Tabs.Tab value="items" icon={<TbBottle size={20} />}>
-              Items
+              {locale.ui.items}
             </Tabs.Tab>
             <Tabs.Tab value="lockpick" disabled={!lockpick} icon={<TbLock size={20} />}>
-              Lockpick
+              {locale.ui.lockpick}
             </Tabs.Tab>
             <Tabs.Tab value="sound" icon={<TbBell size={20} />}>
-              Sound
+              {locale.ui.sound}
             </Tabs.Tab>
           </Tabs.List>
         </Tabs>
