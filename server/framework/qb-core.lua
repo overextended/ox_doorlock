@@ -29,7 +29,7 @@ SetTimeout(0, function()
 								player.Functions.RemoveItem(item.name, 1, data.slot)
 							end
 
-							return true
+							return item.name
 						end
 					end
 				else
@@ -40,7 +40,7 @@ SetTimeout(0, function()
 							player.Functions.RemoveItem(item.name, 1, data.slot)
 						end
 
-						return true
+						return item.name
 					end
 				end
 			end

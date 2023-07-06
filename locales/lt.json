@@ -1,0 +1,18 @@
+{
+  "unlocked_door": "Durys atrakintos",
+  "locked_door": "Durys užrakintos",
+  "lock_door": "[E] Užrakinti duris",
+  "unlock_door": "[E] Atrakinti duris",
+  "door_lock": "Durų užraktas",
+  "passcode": "Slaptažodis",
+  "lockpick_broke": "Tavo įsilaužimo įrankis sulūžo",
+  "pick_lock": "Įsilaužti",
+  "add_lock": "Pridėti užraktą",
+  "edit_lock": "Redaguoti užraktą",
+  "remove_lock": "Panaikinti užraktą",
+  "cannot_unlock": "Durų atidaryti nepavyko",
+  "cannot_lock": "Durų užrakinti nepavyko",
+  "create_modify_lock": "Sukurk naują durų užraktą, arba redaguok egzistuojantį",
+  "add_door_textui": "**Naujos durys**  \nSąveikauti [LMB]  \nAtšaukti [RMB]",
+  "command_closest": "Atidaryti artimiausių durų UI sąsają"
+}

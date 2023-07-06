@@ -10,7 +10,7 @@
   "add_lock": "Dodaj lokot",
   "edit_lock": "Uredi lokot",
   "remove_lock": "Obriši lokot",
-  "cannot_unlock": "Unable to otključaj door",
-  "cannot_lock": "Unable to zaključaj door",
+  "cannot_unlock": "Nije moguće otključati vrata",
+  "cannot_lock": "Nije moguće zaključati vrata",
   "create_modify_lock": "Dodaj lokot na vrata ili uredi postojeći"
 }

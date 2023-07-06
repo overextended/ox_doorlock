@@ -6,7 +6,7 @@ do
 	local success, msg = lib.checkDependency('oxmysql', '2.4.0')
 	if not success then error(msg) end
 
-	success, msg = lib.checkDependency('ox_lib', '2.14.2')
+	success, msg = lib.checkDependency('ox_lib', '3.0.0')
 	if not success then error(msg) end
 end
 
@@ -40,6 +40,7 @@ local function encodeData(door)
 		items = door.items,
 		lockpick = door.lockpick,
 		hideUi = door.hideUi,
+		holdOpen = door.holdOpen,
 		lockSound = door.lockSound,
 		maxDistance = door.maxDistance,
 		doorRate = door.doorRate,
@@ -86,11 +87,11 @@ exports('editDoor', function(id, data)
 				local t1 = type(current)
 				local t2 = type(v)
 
-				if t1 ~= nil and t1 ~= t2 then
+				if t1 ~= 'nil' and v ~= '' and t1 ~= t2 then
 					error(("Expected '%s' for door.%s, received %s (%s)"):format(t1, k, t2, v))
 				end
 
-				door[k] = v
+				door[k] = v ~= '' and v or nil
 			end
 		end
 
@@ -167,6 +168,15 @@ local isLoaded = false
 local table = lib.table
 local ox_inventory = exports.ox_inventory
 
+SetTimeout(1000, function()
+	if not GetPlayer then
+		-- because some people want to use this on their vmenu servers or some shit lmao
+		-- only supports passcodes
+		warn('no compatible framework was loaded, most features will not work')
+		function GetPlayer(_) end
+	end
+end)
+
 function RemoveItem(playerId, item, slot)
 	local player = GetPlayer(playerId)
 
@@ -185,38 +195,50 @@ function DoesPlayerHaveItem(player, items)
 				ox_inventory:RemoveItem(playerId, item.name, 1, nil, data.slot)
 			end
 
-			return true
+			return item.name
 		end
 	end
 end
 
-local function isAuthorised(playerId, door, lockpick, passcode)
-	local player, authorised = GetPlayer(playerId)
+local lockpickItems = {
+	{ name = 'lockpick' }
+}
 
-	if not player then return end
+local function isAuthorised(playerId, door, lockpick)
+	local player = GetPlayer(playerId)
+	local authorised = door.passcode or false --[[@as boolean?]]
 
-	if lockpick and door.lockpick then
-		return 'lockpick'
-	end
+	if player then
+		if lockpick then
+			return DoesPlayerHaveItem(player, lockpickItems)
+		end
 
-	if passcode and passcode == door.passcode then
-		return true
-	end
+		if door.characters and table.contains(door.characters, GetCharacterId(player)) then
+			return true
+		end
 
-	if door.groups then
-		authorised = IsPlayerInGroup(player, door.groups)
-	end
+		if door.groups then
+			authorised = IsPlayerInGroup(player, door.groups) or nil
+		end
 
-	if not authorised and door.characters then
-		authorised = table.contains(door.characters, GetCharacterId(player))
-	end
+		if not authorised and door.items then
+			authorised = DoesPlayerHaveItem(player, door.items) or nil
+		end
 
-	if not authorised and door.items then
-		authorised = DoesPlayerHaveItem(player, door.items)
+		if authorised ~= nil and door.passcode then
+			authorised = door.passcode == lib.callback.await('ox_doorlock:inputPassCode', playerId)
+		end
 	end
 
 	if not authorised and Config.PlayerAceAuthorised then
 		authorised = IsPlayerAceAllowed(playerId, 'command.doorlock')
+	end
+
+	-- e.g. add_ace group.police "doorlock.mrpd locker rooms" allow
+	-- add_principal fivem:123456 group.police
+	-- or add_ace identifier.fivem:123456 "doorlock.mrpd locker rooms" allow
+	if not authorised and IsPlayerAceAllowed(playerId, ('doorlock.%s'):format(door.name)) then
+		authorised = true
 	end
 
 	return authorised
@@ -251,15 +273,13 @@ MySQL.ready(function()
 	isLoaded = true
 end)
 
-RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick, passcode)
+RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick)
 	local door = doors[id]
 
-	if source == '' then
-		source = nil
-	end
+	state = (state == 1 or state == 0) and state or (state and 1 or 0)
 
 	if door then
-		local authorised = source == nil or isAuthorised(source, door, lockpick, passcode)
+		local authorised = source == '' or isAuthorised(source, door, lockpick)
 
 		if authorised then
 			door.state = state
@@ -278,9 +298,11 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick, passcode)
 
 			return TriggerEvent('ox_doorlock:stateChanged', source, door.id, state == 1, type(authorised) == 'string' and authorised)
 		end
-	end
 
-    lib.notify(source, { type = 'error', icon = 'lock', description = state == 0 and 'cannot_unlock' or 'cannot_lock' })
+		if source then
+			lib.notify(source, { type = 'error', icon = 'lock', description = state == 0 and 'cannot_unlock' or 'cannot_lock' })
+		end
+	end
 end)
 
 RegisterNetEvent('ox_doorlock:getDoors', function()
@@ -324,7 +346,16 @@ RegisterNetEvent('ox_doorlock:breakLockpick', function()
 	RemoveItem(source, 'lockpick')
 end)
 
-
-lib.addCommand(Config.CommandPrincipal, 'doorlock', function(source, args)
+lib.addCommand('doorlock', {
+    help = locale('create_modify_lock'),
+    params = {
+        {
+            name = 'closest',
+            help = locale('command_closest'),
+			optional = true,
+        },
+    },
+    restricted = Config.CommandPrincipal
+}, function(source, args)
 	TriggerClientEvent('ox_doorlock:triggeredCommand', source, args.closest)
-end, {'closest'}, locale('create_modify_lock'))
+end)

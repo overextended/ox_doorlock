@@ -12,5 +12,6 @@
   "remove_lock": "Odebrat dveře",
   "cannot_unlock": "Nelze odemknout dveře",
   "cannot_lock": "Nelze zamknout dveře",
-  "create_modify_lock": "Vytvořit dveře, nebo upravit existující"
+  "create_modify_lock": "Vytvořit dveře, nebo upravit existující",
+  "add_door_textui": "**Vytvořit nové zámky**  \nPokračovat s [LMB]  \nZrušit s [RMB]"
 }
