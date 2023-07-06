@@ -12,5 +12,6 @@
   "remove_lock": "删除门锁",
   "cannot_unlock": "无法解锁门",
   "cannot_lock": "无法锁门",
+  "add_door_textui": "**创建门锁**  \n互动 [LMB]  \n取消 [RMB]",
   "create_modify_lock": "建立或修改已存在的门锁"
 }
