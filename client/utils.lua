@@ -277,6 +277,7 @@ CreateThread(function()
 				onSelect = pickLock,
 				canInteract = canPickLock,
 				items = Config.LockpickItems,
+				anyItem = true,
 				distance = 1
 			}
 		})
@@ -287,7 +288,7 @@ CreateThread(function()
 				icon = 'fas fa-user-lock',
 				action = pickLock,
 				canInteract = canPickLock,
-				item = Config.LockpickItems,
+				item = Config.LockpickItems[1],
 				distance = 1
 			}
 		}
