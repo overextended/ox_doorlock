@@ -183,34 +183,35 @@ function RemoveItem(playerId, item, slot)
 	if player then ox_inventory:RemoveItem(playerId, item, 1, nil, slot) end
 end
 
-function DoesPlayerHaveItem(player, items)
+---@param player table
+---@param items string[] | { name: string, remove?: boolean, metadata?: string }[]
+---@param alwaysRemove? boolean
+---@return string?
+function DoesPlayerHaveItem(player, items, alwaysRemove)
 	local playerId = player.source or player.PlayerData.source
 
 	for i = 1, #items do
 		local item = items[i]
-		local data = ox_inventory:Search(playerId, 1, item.name, item.metadata)[1]
+		local itemName = item.name or item
+		local data = ox_inventory:Search(playerId, 1, itemName, item.metadata)[1]
 
 		if data and data.count > 0 then
-			if item.remove then
-				ox_inventory:RemoveItem(playerId, item.name, 1, nil, data.slot)
+			if alwaysRemove or item.remove then
+				ox_inventory:RemoveItem(playerId, itemName, 1, nil, data.slot)
 			end
 
-			return item.name
+			return itemName
 		end
 	end
 end
 
-local lockpickItems = {
-	{ name = 'lockpick' }
-}
-
 local function isAuthorised(playerId, door, lockpick)
 	local player = GetPlayer(playerId)
-	local authorised = door.passcode or false --[[@as boolean?]]
+	local authorised = door.passcode or false --[[@as boolean | string | nil]]
 
 	if player then
 		if lockpick then
-			return DoesPlayerHaveItem(player, lockpickItems)
+			return DoesPlayerHaveItem(player, Config.LockpickItems)
 		end
 
 		if door.characters and table.contains(door.characters, GetCharacterId(player)) then
@@ -343,7 +344,8 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 end)
 
 RegisterNetEvent('ox_doorlock:breakLockpick', function()
-	RemoveItem(source, 'lockpick')
+	local player = GetPlayer(source)
+	return player and DoesPlayerHaveItem(player, Config.LockpickItems, true)
 end)
 
 lib.addCommand('doorlock', {
