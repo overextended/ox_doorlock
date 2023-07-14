@@ -22,6 +22,9 @@ MySQL.ready(function()
 		print(('^3Found %d nui_doorlock config files.^0'):format(fileCount))
 	end
 
+	local query = 'INSERT INTO `ox_doorlock` (`name`, `data`) SELECT ?, ? WHERE NOT EXISTS (SELECT 1 FROM `ox_doorlock` WHERE `name` = ?)'
+	local queries = {}
+
 	for i = 1, fileCount do
 		local fileName = files[i]
 		local file = LoadResourceFile('ox_doorlock', ('convert/%s.lua'):format(fileName))
@@ -31,8 +34,6 @@ MySQL.ready(function()
 
 			if next(Config.DoorList) then
 				local size = 0
-				local query = 'INSERT INTO ox_doorlock (name, data) VALUES (?, ?)'
-				local queries = {}
 
 				for k, door in pairs(Config.DoorList) do
 					size += 1
@@ -106,17 +107,21 @@ MySQL.ready(function()
 						data.coords = double[1].coords - ((double[1].coords - double[2].coords) / 2)
 					end
 
+					local name = ('%s %s'):format(fileName, k)
+
 					queries[size] = {
-						query = query, values = { ('%s %s'):format(fileName, k), json.encode(data) }
+						query = query, values = { name, json.encode(data), name }
 					}
 				end
 
-				table.wipe(Config.DoorList)
+				print(('^3Loaded %d doors from convert/%s.lua.^0'):format(size, fileName))
 
 				if MySQL.transaction.await(queries) then
-					print(('Converted %s doors from %s.lua'):format(size, fileName))
-					SaveResourceFile('ox_doorlock', ('convert/%s.lua'):format(fileName), '', -1)
+					SaveResourceFile('ox_doorlock', ('convert/%s.lua'):format(fileName), '-- This file has already been converted for ox_doorlock and should be removed.\r\ndo return end\r\n\r\n' .. file, -1)
 				end
+
+				table.wipe(Config.DoorList)
+				table.wipe(queries)
 			end
 		end
 	end
