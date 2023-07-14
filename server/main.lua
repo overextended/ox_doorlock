@@ -227,30 +227,21 @@ local function isAuthorised(playerId, door, lockpick)
 	return authorised
 end
 
+MySQL.query([[CREATE TABLE IF NOT EXISTS `ox_doorlock` (
+	`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(50) NOT NULL,
+	`data` LONGTEXT NOT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+)]])
+
 MySQL.ready(function()
 	while Config.DoorList do Wait(100) end
 
-	local success, result = pcall(MySQL.query.await, 'SELECT id, name, data FROM ox_doorlock') --[[@as any]]
+	local response = MySQL.query.await('SELECT `id`, `name`, `data` FROM `ox_doorlock`')
 
-	if not success then
-		-- because some people can't run sql files
-		success, result = pcall(MySQL.query, [[CREATE TABLE `ox_doorlock` (
-			`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-			`name` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-			`data` LONGTEXT NOT NULL COLLATE 'utf8mb4_unicode_ci',
-			PRIMARY KEY (`id`) USING BTREE
-		) COLLATE='utf8mb4_unicode_ci' ENGINE=InnoDB; ]])
-
-		if not success then
-			return error(result)
-		end
-
-		print("Created table 'ox_doorlock' in MySQL database.")
-	elseif result then
-		for i = 1, #result do
-			local door = result[i]
-			createDoor(door.id, json.decode(door.data), door.name)
-		end
+	for i = 1, #response do
+		local door = response[i]
+		createDoor(door.id, json.decode(door.data), door.name)
 	end
 
 	isLoaded = true
