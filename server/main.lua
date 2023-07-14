@@ -100,25 +100,7 @@ exports('editDoor', function(id, data)
 	end
 end)
 
-local sounds do
-	local files = {}
-	local system = os.getenv('OS')
-	local command = system and system:match('Windows') and 'dir "' or 'ls "'
-	local path = GetResourcePath(cache.resource)
-	local types = path:gsub('//', '/') .. '/web/build/sounds'
-	local suffix = command == 'dir "' and '/" /b' or '/"'
-	local dir = io.popen(command .. types .. suffix)
-
-	if dir then
-		for line in dir:lines() do
-			local file = line:gsub('%.ogg', '')
-			files[#files+1] = file
-		end
-		dir:close()
-	end
-
-	sounds = files
-end
+local sounds = require 'server.utils'.getFilesInDirectory('web/build/sounds', '%.ogg')
 
 local function createDoor(id, door, name)
 	local double = door.doors
