@@ -1,0 +1,18 @@
+{
+  "unlocked_door": "Porta destrancada",
+  "locked_door": "Porta trancada",
+  "lock_door": "[E] Trancar porta",
+  "unlock_door": "[E] Destrancar porta",
+  "door_lock": "Tranca da Porta",
+  "passcode": "Senha",
+  "lockpick_broke": "Sua lockpick quebrou",
+  "pick_lock": "Arrombar tranca",
+  "add_lock": "Adicionar tranca",
+  "edit_lock": "Editar tranca",
+  "remove_lock": "Remover tranca",
+  "cannot_unlock": "Não foi possível destrancar a porta",
+  "cannot_lock": "Não foi possível trancar a porta",
+  "create_modify_lock": "Crie uma tranca ou modifique uma já existente",
+  "add_door_textui": "**Nova porta**  \nInteraja com [Mouse Esq.]  \nCancele com [Moise Dir.]",
+  "command_closest": "Abrir interface da porta mais próxima"
+}
