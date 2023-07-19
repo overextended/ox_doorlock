@@ -1,9 +1,7 @@
-CREATE TABLE IF NOT EXISTS `ox_doorlock` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `data` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+/*
+	Run this file after ox_doorlock.sql
+	Works with the standard Mission Row PD interior
+*/
 
 INSERT INTO `ox_doorlock` (`id`, `name`, `data`) VALUES
 	(1, 'mrpd locker rooms', '{"maxDistance":2,"heading":90,"coords":{"x":450.1041259765625,"y":-985.7384033203125,"z":30.83930206298828},"groups":{"police":0},"state":1,"model":1557126584,"hideUi":false}'),

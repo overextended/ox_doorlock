@@ -1,9 +1,7 @@
-CREATE TABLE IF NOT EXISTS `ox_doorlock` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `data` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+/*
+	Run this file after ox_doorlock.sql
+	Works with https://www.gta5-mods.com/maps/community-mission-row-pd
+*/
 
 INSERT INTO `ox_doorlock` (`id`, `name`, `data`) VALUES
 	(1, 'community_mrpd 1', '{"coords":{"x":434.7478942871094,"y":-981.916748046875,"z":30.83926963806152},"groups":{"police":0,"offpolice":0},"maxDistance":2.5,"state":0,"doors":[{"coords":{"x":434.7478942871094,"y":-980.618408203125,"z":30.83926963806152},"model":-1215222675,"heading":270},{"coords":{"x":434.7478942871094,"y":-983.215087890625,"z":30.83926963806152},"model":320433149,"heading":270}],"hideUi":false}'),
