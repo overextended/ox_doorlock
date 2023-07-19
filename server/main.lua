@@ -227,12 +227,7 @@ local function isAuthorised(playerId, door, lockpick)
 	return authorised
 end
 
-MySQL.query([[CREATE TABLE IF NOT EXISTS `ox_doorlock` (
-	`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(50) NOT NULL,
-	`data` LONGTEXT NOT NULL,
-	PRIMARY KEY (`id`) USING BTREE
-)]])
+MySQL.query(LoadResourceFile(cache.resource, 'sql/ox_doorlock.sql'))
 
 MySQL.ready(function()
 	while Config.DoorList do Wait(100) end
