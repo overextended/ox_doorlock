@@ -14,4 +14,5 @@
   "cannot_lock": "Nem tudtad bezárni az ajtót",
   "create_modify_lock": "Készíts vagy szerkessz egy ajtózárat.",
   "add_door_textui": "**Ajtó létrehozása**  \nKiválaszt [LMB]  \nMégse [RMB]"
+  "command_closest": "UI megnyitása közvetlenül a legközelebbi ajtózárhoz"
 }
