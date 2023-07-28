@@ -242,7 +242,11 @@ MySQL.ready(function()
 	isLoaded = true
 end)
 
-RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick)
+---@param id number
+---@param state 0 | 1 | boolean
+---@param lockpick? boolean
+---@return boolean
+local function setDoorState(id, state, lockpick)
 	local door = doors[id]
 
 	state = (state == 1 or state == 0) and state or (state and 1 or 0)
@@ -265,14 +269,21 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, lockpick)
 				end)
 			end
 
-			return TriggerEvent('ox_doorlock:stateChanged', source, door.id, state == 1, type(authorised) == 'string' and authorised)
+			TriggerEvent('ox_doorlock:stateChanged', source, door.id, state == 1, type(authorised) == 'string' and authorised)
+
+			return true
 		end
 
 		if source then
 			lib.notify(source, { type = 'error', icon = 'lock', description = state == 0 and 'cannot_unlock' or 'cannot_lock' })
 		end
 	end
-end)
+
+	return false
+end
+
+RegisterNetEvent('ox_doorlock:setState', setDoorState)
+exports('setDoorState', setDoorState)
 
 RegisterNetEvent('ox_doorlock:getDoors', function()
 	local source = source
