@@ -285,10 +285,10 @@ end
 RegisterNetEvent('ox_doorlock:setState', setDoorState)
 exports('setDoorState', setDoorState)
 
-RegisterNetEvent('ox_doorlock:getDoors', function()
-	local source = source
+lib.callback.register('ox_doorlock:getDoors', function()
 	while not isLoaded do Wait(100) end
-	TriggerClientEvent('ox_doorlock:setDoors', source, doors, sounds)
+
+	return doors, sounds
 end)
 
 RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)

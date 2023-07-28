@@ -8,7 +8,6 @@ do
 end
 
 lib.locale()
-TriggerServerEvent('ox_doorlock:getDoors')
 
 local function createDoor(door)
 	local double = door.doors
@@ -38,7 +37,7 @@ end
 local nearbyDoors = {}
 local Entity = Entity
 
-RegisterNetEvent('ox_doorlock:setDoors', function(data, sounds)
+lib.callback('ox_doorlock:getDoors', false, function(data, sounds)
 	doors = data
 
 	SendNUIMessage({
