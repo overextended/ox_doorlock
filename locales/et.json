@@ -13,5 +13,6 @@
   "cannot_unlock": "Sa ei saa seda avada..",
   "cannot_lock": "Sa ei saa seda lukustada..",
   "create_modify_lock": "Lisa uus ukselukk või muuda eelmiseid",
-  "add_door_textui": "**Lisa uus ukselukk**  \nKasuta [LMB]  \nKatkesta [RMB]"
+  "add_door_textui": "**Lisa uus ukselukk**  \nKasuta [LMB]  \nKatkesta [RMB]",
+  "command_closest": "Ava lähima ukse UI"
 }
