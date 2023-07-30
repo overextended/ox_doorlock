@@ -208,7 +208,7 @@ local function isAuthorised(playerId, door, lockpick)
 			authorised = DoesPlayerHaveItem(player, door.items) or nil
 		end
 
-		if authorised ~= nil and door.passcode then
+		if not authorised and door.passcode then
 			authorised = door.passcode == lib.callback.await('ox_doorlock:inputPassCode', playerId)
 		end
 	end
