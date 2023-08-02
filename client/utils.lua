@@ -293,6 +293,8 @@ CreateThread(function()
 			}
 		}
 
+		---@cast target table
+
 		if target.qt then
 			target.exp:Object({ options = options })
 		elseif target.qb then
