@@ -188,6 +188,17 @@ function DoesPlayerHaveItem(player, items, alwaysRemove)
 end
 
 local function isAuthorised(playerId, door, lockpick)
+	if Config.PlayerAceAuthorised then
+		return IsPlayerAceAllowed(playerId, 'command.doorlock')
+	end
+
+	-- e.g. add_ace group.police "doorlock.mrpd locker rooms" allow
+	-- add_principal fivem:123456 group.police
+	-- or add_ace identifier.fivem:123456 "doorlock.mrpd locker rooms" allow
+	if IsPlayerAceAllowed(playerId, ('doorlock.%s'):format(door.name)) then
+		return true
+	end
+
 	local player = GetPlayer(playerId)
 	local authorised = door.passcode or false --[[@as boolean | string | nil]]
 
@@ -211,17 +222,6 @@ local function isAuthorised(playerId, door, lockpick)
 		if authorised ~= nil and door.passcode then
 			authorised = door.passcode == lib.callback.await('ox_doorlock:inputPassCode', playerId)
 		end
-	end
-
-	if not authorised and Config.PlayerAceAuthorised then
-		authorised = IsPlayerAceAllowed(playerId, 'command.doorlock')
-	end
-
-	-- e.g. add_ace group.police "doorlock.mrpd locker rooms" allow
-	-- add_principal fivem:123456 group.police
-	-- or add_ace identifier.fivem:123456 "doorlock.mrpd locker rooms" allow
-	if not authorised and IsPlayerAceAllowed(playerId, ('doorlock.%s'):format(door.name)) then
-		authorised = true
 	end
 
 	return authorised
