@@ -64,12 +64,20 @@
    </Header>
    <SoundSets>
     <Item>
-     <ScriptName>lock</ScriptName>
-     <ChildSound>lock_directional</ChildSound>
+     <ScriptName>button_remote</ScriptName>
+     <ChildSound>button_remote_directional</ChildSound>
     </Item>
     <Item>
-     <ScriptName>unlock</ScriptName>
-     <ChildSound>unlock_directional</ChildSound>
+     <ScriptName>door_bolt</ScriptName>
+     <ChildSound>door_bolt_directional</ChildSound>
+    </Item>
+     <Item>
+     <ScriptName>metal_locker</ScriptName>
+     <ChildSound>metal_locker_directional</ChildSound>
+    </Item>
+    <Item>
+     <ScriptName>metallic_creak</ScriptName>
+     <ChildSound>metallic_creak_directional</ChildSound>
     </Item>
    </SoundSets>
   </Item>
