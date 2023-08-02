@@ -100,7 +100,7 @@ exports('editDoor', function(id, data)
 	end
 end)
 
-local sounds = require 'server.utils'.getFilesInDirectory('web/build/sounds', '%.ogg')
+local sounds = require 'server.utils'.getFilesInDirectory('audio/dlc_oxdoorlock/oxdoorlock', '%.wav')
 
 local function createDoor(id, door, name)
 	local double = door.doors
