@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dat54>
+ <Version value="7314721" />
+ <ContainerPaths>
+  <Item>dlc_oxdoorlock\oxdoorlock</Item>
+ </ContainerPaths>
+ <Items>
+  <!-- SimpleSounds -->
+  <Item type="SimpleSound">
+   <Name>button_remote_simple</Name>
+   <Header>
+    <Flags value="0x00008004" />
+    <Volume value="200" />
+    <Category>hud</Category>
+   </Header>
+   <ContainerName>dlc_oxdoorlock/oxdoorlock</ContainerName>
+   <FileName>button-remote</FileName>
+   <WaveSlotNum value="0" />
+  </Item>
+
+  <Item type="SimpleSound">
+   <Name>door_bolt_simple</Name>
+   <Header>
+    <Flags value="0x00008004" />
+    <Volume value="200" />
+    <Category>hud</Category>
+   </Header>
+   <ContainerName>dlc_oxdoorlock/oxdoorlock</ContainerName>
+   <FileName>door-bolt-4</FileName>
+   <WaveSlotNum value="0" />
+  </Item>
+
+  <Item type="SimpleSound">
+   <Name>metal_locker_simple</Name>
+   <Header>
+    <Flags value="0x00008004" />
+    <Volume value="200" />
+    <Category>hud</Category>
+   </Header>
+   <ContainerName>dlc_oxdoorlock/oxdoorlock</ContainerName>
+   <FileName>metal-locker</FileName>
+   <WaveSlotNum value="0" />
+  </Item>
+
+  <Item type="SimpleSound">
+   <Name>metallic_creak_simple</Name>
+   <Header>
+    <Flags value="0x00008004" />
+    <Volume value="200" />
+    <Category>hud</Category>
+   </Header>
+   <ContainerName>dlc_oxdoorlock/oxdoorlock</ContainerName>
+   <FileName>metallic-creak</FileName>
+   <WaveSlotNum value="0" />
+  </Item>
+
+
+
+  <!-- SoundSets !-->
+  <Item type="SoundSet">
+   <Name>dlc_oxdoorlock_set</Name>
+   <Header>
+    <Flags value="0xAAAAAAAA" />
+   </Header>
+   <SoundSets>
+    <Item>
+     <ScriptName>lock</ScriptName>
+     <ChildSound>lock_directional</ChildSound>
+    </Item>
+    <Item>
+     <ScriptName>unlock</ScriptName>
+     <ChildSound>unlock_directional</ChildSound>
+    </Item>
+   </SoundSets>
+  </Item>
+
+  <Item type="DirectionalSound">
+    <Name>button_remote_directional</Name>
+    <Header>
+        <Flags value="0x00008004" />
+        <Volume value="200" />
+        <Category>hud</Category>
+    </Header>
+    <ChildSound>button_remote_simple</ChildSound>
+    <InnerAngle value="20" />
+    <OuterAngle value="65" />
+    <RearAttenuation value="-3" />
+    <YawAngle value="90" />
+    <PitchAngle value="0" />
+  </Item>
+
+  <Item type="DirectionalSound">
+    <Name>door_bolt_directional</Name>
+    <Header>
+        <Flags value="0x00008004" />
+        <Volume value="200" />
+        <Category>hud</Category>
+    </Header>
+    <ChildSound>door_bolt_simple</ChildSound>
+    <InnerAngle value="20" />
+    <OuterAngle value="65" />
+    <RearAttenuation value="-3" />
+    <YawAngle value="90" />
+    <PitchAngle value="0" />
+  </Item>
+
+  <Item type="DirectionalSound">
+    <Name>metal_locker_directional</Name>
+    <Header>
+        <Flags value="0x00008004" />
+        <Volume value="200" />
+        <Category>hud</Category>
+    </Header>
+    <ChildSound>metal_locker_simple</ChildSound>
+    <InnerAngle value="20" />
+    <OuterAngle value="65" />
+    <RearAttenuation value="-3" />
+    <YawAngle value="90" />
+    <PitchAngle value="0" />
+  </Item>
+
+  <Item type="DirectionalSound">
+    <Name>metallic_creak_directional</Name>
+    <Header>
+        <Flags value="0x00008004" />
+        <Volume value="200" />
+        <Category>hud</Category>
+    </Header>
+    <ChildSound>metallic_creak_simple</ChildSound>
+    <InnerAngle value="20" />
+    <OuterAngle value="65" />
+    <RearAttenuation value="-3" />
+    <YawAngle value="90" />
+    <PitchAngle value="0" />
+  </Item>
+ </Items>
+</Dat54>
