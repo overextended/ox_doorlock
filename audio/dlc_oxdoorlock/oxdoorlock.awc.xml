@@ -4,8 +4,8 @@
  <ChunkIndices value="True" />
  <Streams>
   <Item>
-   <Name>button-remote</Name>
-   <FileName>button-remote.wav</FileName>
+   <Name>button_remote</Name>
+   <FileName>button_remote.wav</FileName>
    <Chunks>
     <Item>
      <Type>peak</Type>
@@ -29,8 +29,8 @@
     </Chunks>
   </Item>
   <Item>
-   <Name>door-bolt-4</Name>
-   <FileName>door-bolt-4.wav</FileName>
+   <Name>door_bolt</Name>
+   <FileName>door_bolt.wav</FileName>
    <Chunks>
     <Item>
      <Type>peak</Type>
@@ -54,8 +54,8 @@
     </Chunks>
   </Item>
   <Item>
-   <Name>metal-locker</Name>
-   <FileName>metal-locker.wav</FileName>
+   <Name>metal_locker</Name>
+   <FileName>metal_locker.wav</FileName>
    <Chunks>
     <Item>
      <Type>peak</Type>
@@ -79,8 +79,8 @@
     </Chunks>
   </Item>
   <Item>
-   <Name>metallic-creak</Name>
-   <FileName>metallic-creak.wav</FileName>
+   <Name>metallic_creak</Name>
+   <FileName>metallic_creak.wav</FileName>
    <Chunks>
     <Item>
      <Type>peak</Type>

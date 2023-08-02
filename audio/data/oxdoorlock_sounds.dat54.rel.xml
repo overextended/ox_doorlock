@@ -11,10 +11,10 @@
    <Header>
     <Flags value="0x00008004" />
     <Volume value="200" />
-    <Category>hud</Category>
+    <Category>scripted</Category>
    </Header>
    <ContainerName>dlc_oxdoorlock/oxdoorlock</ContainerName>
-   <FileName>button-remote</FileName>
+   <FileName>button_remote</FileName>
    <WaveSlotNum value="0" />
   </Item>
 
@@ -23,10 +23,10 @@
    <Header>
     <Flags value="0x00008004" />
     <Volume value="200" />
-    <Category>hud</Category>
+    <Category>scripted</Category>
    </Header>
    <ContainerName>dlc_oxdoorlock/oxdoorlock</ContainerName>
-   <FileName>door-bolt-4</FileName>
+   <FileName>door_bolt</FileName>
    <WaveSlotNum value="0" />
   </Item>
 
@@ -35,10 +35,10 @@
    <Header>
     <Flags value="0x00008004" />
     <Volume value="200" />
-    <Category>hud</Category>
+    <Category>scripted</Category>
    </Header>
    <ContainerName>dlc_oxdoorlock/oxdoorlock</ContainerName>
-   <FileName>metal-locker</FileName>
+   <FileName>metal_locker</FileName>
    <WaveSlotNum value="0" />
   </Item>
 
@@ -47,10 +47,10 @@
    <Header>
     <Flags value="0x00008004" />
     <Volume value="200" />
-    <Category>hud</Category>
+    <Category>scripted</Category>
    </Header>
    <ContainerName>dlc_oxdoorlock/oxdoorlock</ContainerName>
-   <FileName>metallic-creak</FileName>
+   <FileName>metallic_creak</FileName>
    <WaveSlotNum value="0" />
   </Item>
 
@@ -87,7 +87,7 @@
     <Header>
         <Flags value="0x00008004" />
         <Volume value="200" />
-        <Category>hud</Category>
+        <Category>scripted</Category>
     </Header>
     <ChildSound>button_remote_simple</ChildSound>
     <InnerAngle value="20" />
@@ -102,7 +102,7 @@
     <Header>
         <Flags value="0x00008004" />
         <Volume value="200" />
-        <Category>hud</Category>
+        <Category>scripted</Category>
     </Header>
     <ChildSound>door_bolt_simple</ChildSound>
     <InnerAngle value="20" />
@@ -117,7 +117,7 @@
     <Header>
         <Flags value="0x00008004" />
         <Volume value="200" />
-        <Category>hud</Category>
+        <Category>scripted</Category>
     </Header>
     <ChildSound>metal_locker_simple</ChildSound>
     <InnerAngle value="20" />
@@ -132,7 +132,7 @@
     <Header>
         <Flags value="0x00008004" />
         <Volume value="200" />
-        <Category>hud</Category>
+        <Category>scripted</Category>
     </Header>
     <ChildSound>metallic_creak_simple</ChildSound>
     <InnerAngle value="20" />
