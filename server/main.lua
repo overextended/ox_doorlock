@@ -188,8 +188,8 @@ function DoesPlayerHaveItem(player, items, alwaysRemove)
 end
 
 local function isAuthorised(playerId, door, lockpick)
-	if Config.PlayerAceAuthorised then
-		return IsPlayerAceAllowed(playerId, 'command.doorlock')
+	if Config.PlayerAceAuthorised and IsPlayerAceAllowed(playerId, 'command.doorlock') then
+		return true
 	end
 
 	-- e.g. add_ace group.police "doorlock.mrpd locker rooms" allow
