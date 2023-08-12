@@ -252,7 +252,7 @@ local function setDoorState(id, state, lockpick)
 	state = (state == 1 or state == 0) and state or (state and 1 or 0)
 
 	if door then
-		local authorised = source == '' or isAuthorised(source, door, lockpick)
+		local authorised = not source or source == '' or isAuthorised(source, door, lockpick)
 
 		if authorised then
 			door.state = state
