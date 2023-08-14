@@ -100,7 +100,12 @@ exports('editDoor', function(id, data)
 	end
 end)
 
-local sounds = require 'server.utils'.getFilesInDirectory('web/build/sounds', '%.ogg')
+local useNativeAudio = GetConvarInt('doorlock:nativeaudio', 1) == 1
+
+local soundDirectory = useNativeAudio and 'audio/dlc_oxdoorlock/oxdoorlock' or 'web/build/sounds'
+local fileFormat = useNativeAudio and '%.wav' or '%.ogg'
+
+local sounds = require 'server.utils'.getFilesInDirectory(soundDirectory, fileFormat)
 
 local function createDoor(id, door, name)
 	local double = door.doors

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AudioWaveContainer>
+ <Version value="1" />
+ <ChunkIndices value="True" />
+ <Streams>
+  <Item>
+   <Name>button_remote</Name>
+   <FileName>button_remote.wav</FileName>
+   <Chunks>
+    <Item>
+     <Type>peak</Type>
+    </Item>
+    <Item>
+     <Type>data</Type>
+    </Item>
+    <Item>
+     <Type>format</Type>
+     <Codec>ADPCM</Codec>
+     <Samples value="25600" />
+     <SampleRate value="44100" />
+     <Headroom value="-161" />
+     <PlayBegin value="0" />
+     <PlayEnd value="0" />
+     <LoopBegin value="0" />
+     <LoopEnd value="0" />
+     <LoopPoint value="-1" />
+     <Peak unk="0" />
+    </Item>
+    </Chunks>
+  </Item>
+  <Item>
+   <Name>door_bolt</Name>
+   <FileName>door_bolt.wav</FileName>
+   <Chunks>
+    <Item>
+     <Type>peak</Type>
+    </Item>
+    <Item>
+     <Type>data</Type>
+    </Item>
+    <Item>
+     <Type>format</Type>
+     <Codec>ADPCM</Codec>
+     <Samples value="26069" />
+     <SampleRate value="44100" />
+     <Headroom value="-161" />
+     <PlayBegin value="0" />
+     <PlayEnd value="0" />
+     <LoopBegin value="0" />
+     <LoopEnd value="0" />
+     <LoopPoint value="-1" />
+     <Peak unk="0" />
+    </Item>
+    </Chunks>
+  </Item>
+  <Item>
+   <Name>metal_locker</Name>
+   <FileName>metal_locker.wav</FileName>
+   <Chunks>
+    <Item>
+     <Type>peak</Type>
+    </Item>
+    <Item>
+     <Type>data</Type>
+    </Item>
+    <Item>
+     <Type>format</Type>
+     <Codec>ADPCM</Codec>
+     <Samples value="36864" />
+     <SampleRate value="44100" />
+     <Headroom value="-161" />
+     <PlayBegin value="0" />
+     <PlayEnd value="0" />
+     <LoopBegin value="0" />
+     <LoopEnd value="0" />
+     <LoopPoint value="-1" />
+     <Peak unk="0" />
+    </Item>
+    </Chunks>
+  </Item>
+  <Item>
+   <Name>metallic_creak</Name>
+   <FileName>metallic_creak.wav</FileName>
+   <Chunks>
+    <Item>
+     <Type>peak</Type>
+    </Item>
+    <Item>
+     <Type>data</Type>
+    </Item>
+    <Item>
+     <Type>format</Type>
+     <Codec>ADPCM</Codec>
+     <Samples value="17489" />
+     <SampleRate value="44100" />
+     <Headroom value="-161" />
+     <PlayBegin value="0" />
+     <PlayEnd value="0" />
+     <LoopBegin value="0" />
+     <LoopEnd value="0" />
+     <LoopPoint value="-1" />
+     <Peak unk="0" />
+    </Item>
+    </Chunks>
+  </Item>
+ </Streams>
+</AudioWaveContainer>
