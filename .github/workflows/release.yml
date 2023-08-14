@@ -71,6 +71,7 @@ jobs:
         run: |
           mkdir -p ./temp/ox_doorlock
           mkdir -p ./temp/ox_doorlock/web/
+          mkdir -p ./temp/ox_doorlock/convert/
           cp ./{LICENSE,README.md,fxmanifest.lua,config.lua} ./temp/ox_doorlock
           cp -r ./{client,server,sql,locales} ./temp/ox_doorlock
           cp -r ./web/build ./temp/ox_doorlock/web/
