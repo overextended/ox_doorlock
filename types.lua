@@ -1,0 +1,23 @@
+---@class DrawSpriteProps
+---@field [1] string textureDict
+---@field [2] string textureName
+---@field [3] number screenX
+---@field [4] number screenY
+---@field [5] number width
+---@field [6] number height
+---@field [7] number heading
+---@field [8] integer red
+---@field [9] integer green
+---@field [10] integer blue
+---@field [11] integer alpha
+
+---@class DoorlockConfig
+---@field Notify boolean
+---@field DrawTextUI boolean
+---@field CommandPrincipal string
+---@field PlayerAceAuthorised boolean
+---@field LockDifficulty SkillCheckDifficulity | SkillCheckDifficulity[]
+---@field CanPickUnlockedDoors boolean
+---@field LockpickItems string[]
+---@field NativeAudio boolean
+---@field DrawSprite { [0]: DrawSpriteProps, [1]: DrawSpriteProps }

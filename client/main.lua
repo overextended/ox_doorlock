@@ -175,9 +175,7 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 	end
 
 	if door.state == state and door.distance and door.distance < 20 then
-		local useNativeAudio = GetConvarInt('doorlock:nativeaudio', 1) == 1
-
-		if useNativeAudio then
+		if Config.NativeAudio then
 			RequestScriptAudioBank('dlc_oxdoorlock/oxdoorlock', false)
 			local sound = state == 0 and door.unlockSound or door.lockSound or 'door_bolt'
 			local soundId = GetSoundId()

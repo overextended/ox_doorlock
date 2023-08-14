@@ -100,11 +100,8 @@ exports('editDoor', function(id, data)
 	end
 end)
 
-local useNativeAudio = GetConvarInt('doorlock:nativeaudio', 1) == 1
-
-local soundDirectory = useNativeAudio and 'audio/dlc_oxdoorlock/oxdoorlock' or 'web/build/sounds'
-local fileFormat = useNativeAudio and '%.wav' or '%.ogg'
-
+local soundDirectory = Config.NativeAudio and 'audio/dlc_oxdoorlock/oxdoorlock' or 'web/build/sounds'
+local fileFormat = Config.NativeAudio and '%.wav' or '%.ogg'
 local sounds = require 'server.utils'.getFilesInDirectory(soundDirectory, fileFormat)
 
 local function createDoor(id, door, name)
