@@ -40,14 +40,16 @@ local Entity = Entity
 lib.callback('ox_doorlock:getDoors', false, function(data, sounds)
 	doors = data
 
+	for _, door in pairs(data) do
+		createDoor(door)
+	end
+
+	while not NuiHasLoaded do Wait(0) end
+
 	SendNUIMessage({
 		action = 'setSoundFiles',
 		data = sounds
 	})
-
-	for _, door in pairs(data) do
-		createDoor(door)
-	end
 
 	while true do
 		table.wipe(nearbyDoors)
