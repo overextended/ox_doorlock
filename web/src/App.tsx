@@ -43,6 +43,12 @@ const App: React.FC = () => {
   const setDoors = useDoors((state) => state.setDoors);
   const navigate = useNavigate();
 
+  useNuiEvent('playSound', async (data: { sound: string; volume: number }) => {
+    const sound = new Audio(`./sounds/${data.sound}.ogg`);
+    sound.volume = data.volume;
+    await sound.play();
+  });
+
   useNuiEvent('setSoundFiles', (data: string[]) => setSounds(data));
 
   useNuiEvent('setVisible', (data: number) => {
