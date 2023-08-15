@@ -73,7 +73,7 @@ jobs:
           mkdir -p ./temp/ox_doorlock/web/
           mkdir -p ./temp/ox_doorlock/convert/
           cp ./{LICENSE,README.md,fxmanifest.lua,config.lua,types.lua} ./temp/ox_doorlock
-          cp -r ./{client,server,sql,locales} ./temp/ox_doorlock
+          cp -r ./{client,server,sql,locales,audio} ./temp/ox_doorlock
           cp -r ./web/build ./temp/ox_doorlock/web/
           cd ./temp && zip -r ../ox_doorlock.zip ./ox_doorlock
 
