@@ -104,6 +104,10 @@ local soundDirectory = Config.NativeAudio and 'audio/dlc_oxdoorlock/oxdoorlock' 
 local fileFormat = Config.NativeAudio and '%.wav' or '%.ogg'
 local sounds = require 'server.utils'.getFilesInDirectory(soundDirectory, fileFormat)
 
+lib.callback.register('ox_doorlock:getSounds', function()
+	return sounds
+end)
+
 local function createDoor(id, door, name)
 	local double = door.doors
 	door.id = id

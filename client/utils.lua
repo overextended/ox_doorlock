@@ -228,11 +228,17 @@ local function openUi(id)
 
 	if not NuiHasLoaded then
 		NuiHasLoaded = true
+
 		SendNuiMessage(json.encode({
 			action = 'updateDoorData',
 			data = doors
 		}, { with_hole = false }))
 		Wait(100)
+
+		SendNUIMessage({
+			action = 'setSoundFiles',
+			data = lib.callback.await('ox_doorlock:getSounds', false)
+		})
 	end
 
 	SetNuiFocus(true, true)
