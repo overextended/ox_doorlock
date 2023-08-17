@@ -173,7 +173,7 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 			local sound = state == 0 and door.unlockSound or door.lockSound or 'door_bolt'
 			local soundId = GetSoundId()
 
-			PlaySoundFromCoord(soundId, sound, door.coords.x, door.coords.y, door.coords.z, 'DLC_OXDOORLOCK_SET', true, 0, false)
+			PlaySoundFromCoord(soundId, sound, door.coords.x, door.coords.y, door.coords.z, 'DLC_OXDOORLOCK_SET', false, 0, false)
 			ReleaseSoundId(soundId)
 			ReleaseNamedScriptAudioBank('dlc_oxdoorlock/oxdoorlock')
 		else
