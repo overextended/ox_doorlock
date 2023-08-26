@@ -20,7 +20,7 @@ end
 GetPlayer = Ox.GetPlayer
 
 function GetCharacterId(player)
-	return player.charid
+	return player.charId
 end
 
 function IsPlayerInGroup(player, groups)
