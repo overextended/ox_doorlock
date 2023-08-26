@@ -181,7 +181,7 @@ function DoesPlayerHaveItem(player, items, alwaysRemove)
 	for i = 1, #items do
 		local item = items[i]
 		local itemName = item.name or item
-		local data = ox_inventory:Search(playerId, 1, itemName, item.metadata)[1]
+		local data = ox_inventory:Search(playerId, 'slots', itemName, item.metadata)[1]
 
 		if data and data.count > 0 then
 			if alwaysRemove or item.remove then
