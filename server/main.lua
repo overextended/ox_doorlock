@@ -233,7 +233,9 @@ local function isAuthorised(playerId, door, lockpick)
 	return authorised
 end
 
-MySQL.query(LoadResourceFile(cache.resource, 'sql/ox_doorlock.sql'))
+local sql = LoadResourceFile(cache.resource, 'sql/ox_doorlock.sql')
+
+if sql then MySQL.query(sql) end
 
 MySQL.ready(function()
 	while Config.DoorList do Wait(100) end
