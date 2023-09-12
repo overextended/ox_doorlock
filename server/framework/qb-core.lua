@@ -14,33 +14,38 @@ SetTimeout(0, function()
             if player then player.Functions.RemoveItem(item, 1, slot) end
 		end
 
-		function DoesPlayerHaveItem(player, items)
+		---@param player table
+		---@param items string[] | { name: string, remove?: boolean, metadata?: string }[]
+		---@param removeItem? boolean
+		---@return string?
+		function DoesPlayerHaveItem(player, items, removeItem)
 			for i = 1, #items do
 				local item = items[i]
+                local itemName = item.name or item
 
 				if item.metadata then
-					local playerItems = player.Functions.GetItemsByName(item.name)
+					local playerItems = player.Functions.GetItemsByName(itemName)
 
 					for j = 1, #playerItems do
 						local data = playerItems[j]
 
 						if data.info.type == item.metadata then
-							if item.remove then
-								player.Functions.RemoveItem(item.name, 1, data.slot)
+							if removeItem or item.remove then
+								player.Functions.RemoveItem(itemName, 1, data.slot)
 							end
 
-							return item.name
+							return itemName
 						end
 					end
 				else
-					local data = player.Functions.GetItemByName(item.name)
+					local data = player.Functions.GetItemByName(itemName)
 
 					if data then
 						if item.remove then
-							player.Functions.RemoveItem(item.name, 1, data.slot)
+							player.Functions.RemoveItem(itemName, 1, data.slot)
 						end
 
-						return item.name
+						return itemName
 					end
 				end
 			end

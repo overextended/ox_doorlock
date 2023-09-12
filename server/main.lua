@@ -173,9 +173,9 @@ end
 
 ---@param player table
 ---@param items string[] | { name: string, remove?: boolean, metadata?: string }[]
----@param alwaysRemove? boolean
+---@param removeItem? boolean
 ---@return string?
-function DoesPlayerHaveItem(player, items, alwaysRemove)
+function DoesPlayerHaveItem(player, items, removeItem)
 	local playerId = player.source or player.PlayerData.source
 
 	for i = 1, #items do
@@ -184,7 +184,7 @@ function DoesPlayerHaveItem(player, items, alwaysRemove)
 		local data = ox_inventory:Search(playerId, 'slots', itemName, item.metadata)[1]
 
 		if data and data.count > 0 then
-			if alwaysRemove or item.remove then
+			if removeItem or item.remove then
 				ox_inventory:RemoveItem(playerId, itemName, 1, nil, data.slot)
 			end
 
