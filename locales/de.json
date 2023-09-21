@@ -12,7 +12,7 @@
   "remove_lock": "Türschloss entfernen",
   "cannot_unlock": "Es ist nicht möglich die Tür aufzuschließen",
   "cannot_lock": "Es ist nicht möglich die Tür zu verschließen",
-  "create_modify_lock": "Erstelle ein Türschloss oder bearbeite ein vorhandenes"
-  "add_door_textui": "Neue Tür erstellen \nMit [LMB] interagieren \nMit [RMB] abbrechen"
+  "create_modify_lock": "Erstelle ein Türschloss oder bearbeite ein vorhandenes",
+  "add_door_textui": "Neue Tür erstellen \nMit [LMB] interagieren \nMit [RMB] abbrechen",
   "command_closest": "Öffne die UI direkt zur nächstgelegenen Tür"
 }
