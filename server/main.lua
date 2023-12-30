@@ -2,16 +2,10 @@ if not LoadResourceFile(lib.name, 'web/build/index.html') then
 	error('Unable to load UI. Build ox_doorlock or download the latest release.\n	^3https://github.com/overextended/ox_doorlock/releases/latest/download/ox_doorlock.zip^0')
 end
 
-do
-	local success, msg = lib.checkDependency('oxmysql', '2.4.0')
-	if not success then error(msg) end
-
-	success, msg = lib.checkDependency('ox_lib', '3.0.0')
-	if not success then error(msg) end
-end
+if not lib.checkDependency('oxmysql', '2.4.0') then return end
+if not lib.checkDependency('ox_lib', '3.14.0') then return end
 
 lib.versionCheck('overextended/ox_doorlock')
-lib.locale()
 
 local doors = {}
 
@@ -153,7 +147,6 @@ local function createDoor(id, door, name)
 end
 
 local isLoaded = false
-local table = lib.table
 local ox_inventory = exports.ox_inventory
 
 SetTimeout(1000, function()
