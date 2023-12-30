@@ -1,3 +1,4 @@
+---@diagnostic disable: inject-field
 ---@type table?
 Config.DoorList = {}
 
