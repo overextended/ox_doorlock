@@ -2,9 +2,9 @@ local resourceName = 'ND_Core'
 
 if not GetResourceState(resourceName):find('start') then return end
 
-local ND = exports[resourceName]:GetCoreObject()
+lib.load('@ND_Core.init')
 
-GetPlayer = ND.Functions.GetPlayer
+GetPlayer = NDCore.getPlayer
 
 function GetCharacterId(player)
     return player.id
@@ -15,7 +15,7 @@ function IsPlayerInGroup(player, filter)
 
     if type == 'string' then
         if player.job == filter then
-            return player.job, player.data.groups[player.job].rank
+            return player.job, player.groups[player.job].rank
         end
     else
         local tabletype = table.type(filter)
@@ -23,13 +23,13 @@ function IsPlayerInGroup(player, filter)
         if tabletype == 'hash' then
             local grade = filter[player.job]
 
-            if grade and grade <= player.data.groups[player.job].rank then
-                return player.job, player.data.groups[player.job].rank
+            if grade and grade <= player.groups[player.job].rank then
+                return player.job, player.groups[player.job].rank
             end
         elseif tabletype == 'array' then
             for i = 1, #filter do
                 if player.job == filter[i] then
-                    return player.job, player.data.groups[player.job].rank
+                    return player.job, player.groups[player.job].rank
                 end
             end
         end
