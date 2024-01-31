@@ -70,6 +70,12 @@ exports('pickClosestDoor', function()
 	pickLock(ClosestDoor.entity)
 end)
 
+exports('getdooridfromentity', function(entity)
+	if not ClosestDoor then return end
+	local door = getDoorFromEntity(entity)
+	return door
+end)
+
 local tempData = {}
 
 local function addDoorlock(data)
