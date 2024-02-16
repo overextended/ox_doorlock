@@ -281,6 +281,25 @@ end
 
 exports('useClosestDoor', useClosestDoor)
 
+local function getClosestDoor()
+	local num, closestDoor = #nearbyDoors, ClosestDoor
+
+	if num > 0 then
+		for i = 1, num do
+			local door = nearbyDoors[i]
+
+			if door.distance < door.maxDistance then
+				if door.distance < (closestDoor?.distance or 10) then
+					closestDoor = door
+				end
+			end
+		end
+	else closestDoor = nil end
+	return closestDoor, num
+end
+
+exports('getClosestDoor', getClosestDoor)
+
 CreateThread(function()
 	local lockDoor = locale('lock_door')
 	local unlockDoor = locale('unlock_door')
@@ -300,37 +319,21 @@ CreateThread(function()
 		end
 	end
 
-	local SetDrawOrigin = SetDrawOrigin
-	local ClearDrawOrigin = ClearDrawOrigin
-	local DrawSprite = drawSprite and DrawSprite
-
 	while true do
-		local num = #nearbyDoors
-
-		if num > 0 then
-			local ratio = drawSprite and GetAspectRatio(true)
-			for i = 1, num do
-				local door = nearbyDoors[i]
-
-				if door.distance < door.maxDistance then
-					if door.distance < (ClosestDoor?.distance or 10) then
-						ClosestDoor = door
-					end
-
-					if drawSprite and not door.hideUi then
-						local sprite = drawSprite[door.state]
-
-						if sprite then
-							SetDrawOrigin(door.coords.x, door.coords.y, door.coords.z)
-							DrawSprite(sprite[1], sprite[2], sprite[3], sprite[4], sprite[5], sprite[6] * ratio, sprite[7], sprite[8], sprite[9], sprite[10], sprite[11])
-							ClearDrawOrigin()
-						end
-					end
-				end
-			end
-		else ClosestDoor = nil end
+		local num
+		ClosestDoor, num = getClosestDoor()
 
 		if ClosestDoor and ClosestDoor.distance < ClosestDoor.maxDistance then
+			if drawSprite and not ClosestDoor.hideUi then
+				local sprite = drawSprite[ClosestDoor.state]
+
+				if sprite then
+					local ratio = drawSprite and GetAspectRatio(true) or 1.0
+					SetDrawOrigin(ClosestDoor.coords.x, ClosestDoor.coords.y, ClosestDoor.coords.z)
+					DrawSprite(sprite[1], sprite[2], sprite[3], sprite[4], sprite[5], sprite[6] * ratio, sprite[7], sprite[8], sprite[9], sprite[10], sprite[11])
+					ClearDrawOrigin()
+				end
+			end
 			if Config.DrawTextUI and not ClosestDoor.hideUi and ClosestDoor.state ~= showUI then
 				lib.showTextUI(ClosestDoor.state == 0 and lockDoor or unlockDoor)
 				showUI = ClosestDoor.state
