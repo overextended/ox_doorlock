@@ -20,7 +20,10 @@ local function getDoorFromEntity(data)
 end
 
 exports('getClosestDoorId', function() return ClosestDoor?.id end)
-exports('getDoorIdFromEntity', function(entityId) return getDoorFromEntity(entityId)?.doorId end) -- same as Entity(entityId).state.doorId
+exports('getDoorIdFromEntity', function(entityId)
+	local doorid = getDoorFromEntity(entityId)?.id
+	return doorid
+end)
 
 local function entityIsNotDoor(data)
 	local entity = type(data) == 'number' and data or data.entity
