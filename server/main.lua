@@ -241,6 +241,8 @@ MySQL.ready(function()
 	end
 
 	isLoaded = true
+
+	TriggerEvent('ox_doorlock:loaded')
 end)
 
 ---@param id number
