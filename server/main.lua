@@ -63,6 +63,16 @@ end
 
 exports('getDoor', getDoor)
 
+exports('getAllDoors', function()
+	local allDoors = {}
+
+	for _, door in pairs(doors) do
+		allDoors[#allDoors+1] = getDoor(door)
+	end
+
+	return allDoors
+end)
+
 exports('getDoorFromName', function(name)
 	for _, door in pairs(doors) do
 		if door.name == name then
