@@ -1,28 +1,16 @@
-local resourceName = 'ox_core'
+if not lib.checkDependency('ox_core', '0.21.3', true) then return end
 
-if not GetResourceState(resourceName):find('start') then return end
-
-do
-	local file = ('imports/%s.lua'):format(lib.context)
-	local import = LoadResourceFile(resourceName, file)
-
-	if not import then return end
-
-	local func, err = load(import, ('@@%s/%s'):format(resourceName, file))
-
-	if not func or err then
-		return error(err or ('unable to load %s'):format(resourceName))
-	end
-
-	func()
-end
+local Ox = require '@ox_core.lib.init' --[[@as OxServer]]
 
 GetPlayer = Ox.GetPlayer
 
+---@param player OxPlayerServer
 function GetCharacterId(player)
 	return player.charId
 end
 
+---@param player OxPlayerServer
+---@param groups string | string[] | table<string, number>
 function IsPlayerInGroup(player, groups)
-	return player.hasGroup(groups)
+	return player.getGroup(groups)
 end
