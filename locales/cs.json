@@ -13,5 +13,6 @@
   "cannot_unlock": "Nelze odemknout dveře",
   "cannot_lock": "Nelze zamknout dveře",
   "create_modify_lock": "Vytvořit dveře, nebo upravit existující",
-  "add_door_textui": "**Vytvořit nové zámky**  \nPokračovat s [LMB]  \nZrušit s [RMB]"
+  "add_door_textui": "**Vytvořit nové zámky**  \nPokračovat s [LMB]  \nZrušit s [RMB]",
+  "command_closest": "Otevřít UI s nejbližšími dveřmi"
 }
