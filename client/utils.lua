@@ -47,8 +47,10 @@ local function pickLock(entity)
 
 	TaskTurnPedToFaceCoord(cache.ped, door.coords.x, door.coords.y, door.coords.z, 4000)
 	Wait(500)
-	lib.requestAnimDict('mp_common_heist')
-	TaskPlayAnim(cache.ped, 'mp_common_heist', 'pick_door', 3.0, 1.0, -1, 49, 0, true, true, true)
+
+	local animDict = lib.requestAnimDict('mp_common_heist')
+
+	TaskPlayAnim(cache.ped, animDict, 'pick_door', 3.0, 1.0, -1, 49, 0, true, true, true)
 
 	local success = lib.skillCheck(door.lockpickDifficulty or Config.LockDifficulty)
 	local rand = math.random(1, success and 100 or 5)
@@ -62,7 +64,8 @@ local function pickLock(entity)
 		lib.notify({ type = 'error', description = locale('lockpick_broke') })
 	end
 
-	StopEntityAnim(cache.ped, 'pick_door', 'mp_common_heist', 0)
+	StopEntityAnim(cache.ped, 'pick_door', animDict, 0)
+	RemoveAnimDict(animDict)
 
 	PickingLock = false
 end
