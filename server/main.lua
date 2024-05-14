@@ -48,7 +48,7 @@ end
 
 local function getDoor(door)
 	door = type(door) == 'table' and door or doors[door]
-
+	if not door then return false end
 	return {
 		id = door.id,
 		name = door.name,
