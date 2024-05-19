@@ -1,13 +1,17 @@
 if not LoadResourceFile(cache.resource, 'web/build/index.html') then
-	error('Unable to load UI. Build ox_doorlock or download the latest release.\n	^3https://github.com/overextended/ox_doorlock/releases/latest/download/ox_doorlock.zip^0')
+	error(
+		'Unable to load UI. Build ox_doorlock or download the latest release.\n	^3https://github.com/overextended/ox_doorlock/releases/latest/download/ox_doorlock.zip^0')
 end
 
 if not lib.checkDependency('oxmysql', '2.4.0') then return end
 if not lib.checkDependency('ox_lib', '3.14.0') then return end
 
 lib.versionCheck('overextended/ox_doorlock')
+require 'server.convert'
 
+local utils = require 'server.utils'
 local doors = {}
+
 
 local function encodeData(door)
 	local double = door.doors
@@ -96,7 +100,7 @@ end)
 
 local soundDirectory = Config.NativeAudio and 'audio/dlc_oxdoorlock/oxdoorlock' or 'web/build/sounds'
 local fileFormat = Config.NativeAudio and '%.wav' or '%.ogg'
-local sounds = require 'server.utils'.getFilesInDirectory(soundDirectory, fileFormat)
+local sounds = utils.getFilesInDirectory(soundDirectory, fileFormat)
 
 lib.callback.register('ox_doorlock:getSounds', function()
 	return sounds
@@ -149,13 +153,10 @@ end
 local isLoaded = false
 local ox_inventory = exports.ox_inventory
 
-SetTimeout(1000, function()
-	if not GetPlayer then
-		-- because some people want to use this on their vmenu servers or some shit lmao
-		-- only supports passcodes
-		warn('no compatible framework was loaded, most features will not work')
-		function GetPlayer(_) end
-	end
+SetTimeout(0, function()
+	if GetPlayer then return end
+
+	function GetPlayer(_) end
 end)
 
 function RemoveItem(playerId, item, slot)
@@ -211,7 +212,7 @@ local function isAuthorised(playerId, door, lockpick)
 		end
 
 		if door.groups then
-			authorised = IsPlayerInGroup(player, door.groups) or nil
+			authorised = IsPlayerInGroup(player, door.groups) and true or nil
 		end
 
 		if not authorised and door.items then
@@ -270,13 +271,15 @@ local function setDoorState(id, state, lockpick)
 				end)
 			end
 
-			TriggerEvent('ox_doorlock:stateChanged', source, door.id, state == 1, type(authorised) == 'string' and authorised)
+			TriggerEvent('ox_doorlock:stateChanged', source, door.id, state == 1,
+				type(authorised) == 'string' and authorised)
 
 			return true
 		end
 
 		if source then
-			lib.notify(source, { type = 'error', icon = 'lock', description = state == 0 and 'cannot_unlock' or 'cannot_lock' })
+			lib.notify(source,
+				{ type = 'error', icon = 'lock', description = state == 0 and 'cannot_unlock' or 'cannot_lock' })
 		end
 	end
 
@@ -307,7 +310,8 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 
 		if id then
 			if data then
-				MySQL.update('UPDATE ox_doorlock SET name = ?, data = ? WHERE id = ?', { data.name, encodeData(data), id })
+				MySQL.update('UPDATE ox_doorlock SET name = ?, data = ? WHERE id = ?',
+					{ data.name, encodeData(data), id })
 			else
 				MySQL.update('DELETE FROM ox_doorlock WHERE id = ?', { id })
 			end
@@ -315,7 +319,8 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 			doors[id] = data
 			TriggerClientEvent('ox_doorlock:editDoorlock', -1, id, data)
 		else
-			local insertId = MySQL.insert.await('INSERT INTO ox_doorlock (name, data) VALUES (?, ?)', { data.name, encodeData(data) })
+			local insertId = MySQL.insert.await('INSERT INTO ox_doorlock (name, data) VALUES (?, ?)',
+				{ data.name, encodeData(data) })
 			local door = createDoor(insertId, data, data.name)
 
 			TriggerClientEvent('ox_doorlock:setState', -1, door.id, door.state, false, door)
@@ -329,15 +334,15 @@ RegisterNetEvent('ox_doorlock:breakLockpick', function()
 end)
 
 lib.addCommand('doorlock', {
-    help = locale('create_modify_lock'),
-    params = {
-        {
-            name = 'closest',
-            help = locale('command_closest'),
+	help = locale('create_modify_lock'),
+	params = {
+		{
+			name = 'closest',
+			help = locale('command_closest'),
 			optional = true,
-        },
-    },
-    restricted = Config.CommandPrincipal
+		},
+	},
+	restricted = Config.CommandPrincipal
 }, function(source, args)
 	TriggerClientEvent('ox_doorlock:triggeredCommand', source, args.closest)
 end)

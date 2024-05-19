@@ -1,7 +1,4 @@
 local resourceName = 'ND_Core'
-
-if not GetResourceState(resourceName):find('start') then return end
-
 local NDCore = exports[resourceName]
 
 function GetPlayer(src)
@@ -20,7 +17,7 @@ function IsPlayerInGroup(player, groups)
     end
 
     if table.type(groups) == "array" then
-        for i=1, #groups do
+        for i = 1, #groups do
             local groupName = groups[i]
             local groupInfo = player.getGroup(groupName)
             if groupInfo then

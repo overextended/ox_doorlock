@@ -1,17 +1,15 @@
 local resourceName = 'qb-core'
 
-if not GetResourceState(resourceName):find('start') then return end
-
 SetTimeout(0, function()
-    local QB = exports[resourceName]:GetCoreObject()
+	local QB = exports[resourceName]:GetCoreObject()
 
-    GetPlayer = QB.Functions.GetPlayer
+	GetPlayer = QB.Functions.GetPlayer
 
 	if GetResourceState('ox_inventory') == 'missing' then
 		function RemoveItem(playerId, item, slot)
-            local player = GetPlayer(playerId)
+			local player = GetPlayer(playerId)
 
-            if player then player.Functions.RemoveItem(item, 1, slot) end
+			if player then player.Functions.RemoveItem(item, 1, slot) end
 		end
 
 		---@param player table
@@ -21,7 +19,7 @@ SetTimeout(0, function()
 		function DoesPlayerHaveItem(player, items, removeItem)
 			for i = 1, #items do
 				local item = items[i]
-                local itemName = item.name or item
+				local itemName = item.name or item
 
 				if item.metadata then
 					local playerItems = player.Functions.GetItemsByName(itemName)
@@ -50,7 +48,7 @@ SetTimeout(0, function()
 				end
 			end
 		end
-    end
+	end
 end)
 
 function GetCharacterId(player)

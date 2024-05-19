@@ -2,6 +2,8 @@
 ---@type table?
 Config.DoorList = {}
 
+local utils = require 'server.utils'
+
 local function flattenTableToArray(tbl)
 	if type(tbl) == 'table' then
 		if table.type(tbl) == 'array' then return tbl end
@@ -17,13 +19,14 @@ local function flattenTableToArray(tbl)
 end
 
 MySQL.ready(function()
-	local files, fileCount = require 'server.utils'.getFilesInDirectory('convert', '%.lua')
+	local files, fileCount = utils.getFilesInDirectory('convert', '%.lua')
 
 	if fileCount > 0 then
 		print(('^3Found %d nui_doorlock config files.^0'):format(fileCount))
 	end
 
-	local query = 'INSERT INTO `ox_doorlock` (`name`, `data`) SELECT ?, ? WHERE NOT EXISTS (SELECT 1 FROM `ox_doorlock` WHERE `name` = ?)'
+	local query =
+	'INSERT INTO `ox_doorlock` (`name`, `data`) SELECT ?, ? WHERE NOT EXISTS (SELECT 1 FROM `ox_doorlock` WHERE `name` = ?)'
 	local queries = {}
 
 	for i = 1, fileCount do
@@ -118,7 +121,9 @@ MySQL.ready(function()
 				print(('^3Loaded %d doors from convert/%s.lua.^0'):format(size, fileName))
 
 				if MySQL.transaction.await(queries) then
-					SaveResourceFile('ox_doorlock', ('convert/%s.lua'):format(fileName), '-- This file has already been converted for ox_doorlock and should be removed.\r\ndo return end\r\n\r\n' .. file, -1)
+					SaveResourceFile('ox_doorlock', ('convert/%s.lua'):format(fileName),
+						'-- This file has already been converted for ox_doorlock and should be removed.\r\ndo return end\r\n\r\n' ..
+						file, -1)
 				end
 
 				table.wipe(Config.DoorList)
