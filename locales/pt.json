@@ -1,0 +1,18 @@
+{
+  "unlocked_door": "Porta Destrancada",
+  "locked_door": "Porta Trancada",
+  "lock_door": "[E] Trancar Porta",
+  "unlock_door": "[E] Destrancar Porta",
+  "door_lock": "Fechadura",
+  "passcode": "Código de Acesso",
+  "lockpick_broke": "A tua gazua partiu-se",
+  "pick_lock": "Usar Gazua",
+  "add_lock": "Adicionar Fechadura",
+  "edit_lock": "Editar Fechadura",
+  "remove_lock": "Remover Fechadura",
+  "cannot_unlock": "Não foi possível destrancar a porta",
+  "cannot_lock": "Não foi possível trancar a porta",
+  "create_modify_lock": "Criar uma fechadura ou modificar uma existente",
+  "add_door_textui": "**Criar nova fechadura**  \nInteragir com [LMB]  \nCancelar com [RMB]",
+  "command_closest": "Abra a interface da fechadura mais próxima"
+}
