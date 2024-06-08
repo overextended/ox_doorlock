@@ -4,14 +4,15 @@
   "lock_door": "[E] Zamknout dveře",
   "unlock_door": "[E] Odemknout dveře",
   "door_lock": "Zámek dveří",
-  "passcode": "Heslo",
+  "passcode": "Přístupový kód",
   "lockpick_broke": "Šperhák se zlomil",
   "pick_lock": "Vypáčit zámek",
-  "add_lock": "Přidat dveře",
-  "edit_lock": "Upravit dveře",
-  "remove_lock": "Odebrat dveře",
+  "add_lock": "Přidat zámek",
+  "edit_lock": "Upravit zámek",
+  "remove_lock": "Odebrat zámek",
   "cannot_unlock": "Nelze odemknout dveře",
   "cannot_lock": "Nelze zamknout dveře",
-  "create_modify_lock": "Vytvořit dveře, nebo upravit existující",
-  "add_door_textui": "**Vytvořit nové zámky**  \nPokračovat s [LMB]  \nZrušit s [RMB]"
+  "create_modify_lock": "Vytvořit zámek, nebo upravit existující",
+  "add_door_textui": "**Vytvořit nový zámek**  \nPokračovat pomocí [LMB]  \nZrušit pomocí [RMB]",
+  "command_closest": "Otevřít UI pro nejbližší zámek"
 }
