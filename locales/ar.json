@@ -1,0 +1,19 @@
+{
+    "unlocked_door": "الباب مفتوح",
+    "locked_door": "الباب مغلق",
+    "lock_door": "[E] غلق",
+    "unlock_door": "[E] فتح",
+    "door_lock": "قفل الباب",
+    "passcode": "الكود",
+    "lockpick_broke": "المفك مكسور",
+    "pick_lock": "حصل مفتاح",
+    "add_lock": "إضافة باب",
+    "edit_lock": "تعديل باب",
+    "remove_lock": "حدف باب",
+    "cannot_unlock": "غير ممكن",
+    "cannot_lock": "غير ممكن",
+    "create_modify_lock": "إنشاء أو تعديل قفل باب",
+    "add_door_textui": "**إنشاء باب جديد**  \n[LMB] للتأكيد إضغط \n[RMB] للإلغاء إضغط",
+    "command_closest": "إنشاء قفل أو التفعل مع أقرب باب"
+  }
+  
