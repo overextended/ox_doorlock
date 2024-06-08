@@ -66,6 +66,8 @@ function IsPlayerInGroup(player, filter)
 
 			if data.name == filter then
 				return data.name, data.grade.level
+			elseif data.type == filter then
+				return data.type, data.grade.level
 			end
 		end
 	else
@@ -75,9 +77,12 @@ function IsPlayerInGroup(player, filter)
 			for i = 1, #groups do
 				local data = player.PlayerData[groups[i]]
 				local grade = filter[data.name]
+				local grade2 = filter[data.type]
 
 				if grade and grade <= data.grade.level then
 					return data.name, data.grade.level
+				elseif grade2 and grade2 <= data.grade.level then
+					return data.type, data.grade.level
 				end
 			end
 		elseif tabletype == 'array' then
@@ -89,6 +94,8 @@ function IsPlayerInGroup(player, filter)
 
 					if data.name == group then
 						return data.name, data.grade.level
+					elseif data.type == group then
+						return data.type, data.grade.level
 					end
 				end
 			end
