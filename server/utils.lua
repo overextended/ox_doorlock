@@ -25,15 +25,19 @@ function utils.getFilesInDirectory(path, pattern)
 end
 
 local frameworks = { 'es_extended', 'ND_Core', 'ox_core', 'qb-core' }
+local sucess = false
 
 for i = 1, #frameworks do
 	local framework = frameworks[i]
-
+	
 	if GetResourceState(framework):find('start') then
 		require(('server.framework.%s'):format(framework:lower()))
+		sucess = true
 		break
 	end
+end
 
+if not sucess then
 	warn('no compatible framework was loaded, most features will not work')
 end
 
