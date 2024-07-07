@@ -17,13 +17,14 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 25,
   },
 
   main: {
     width: 700,
     height: 500,
     backgroundColor: theme.colors.dark[8],
-    borderRadius: theme.radius.sm,
+    borderRadius: 25,  // Rounded corners with 25px radius
   },
 
   search: {
