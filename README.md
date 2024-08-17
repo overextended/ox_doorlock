@@ -20,7 +20,7 @@ mysql-async is no longer supported.
 
 Used for some UI elements (i.e. notifications, progress circle, input), and cache.
 
-### [ox_target](https://github.com/overextended/ox_target) (preferred) or [qtarget](https://github.com/overextended/qtarget) (deprecated) or [qb-target](https://github.com/qbcore-framework/qb-target)
+### [ox_target](https://github.com/overextended/ox_target) (preferred) or [qtarget](https://github.com/overextended/qtarget) (deprecated)
 
 (Optional) Used for lockpicking.
 
