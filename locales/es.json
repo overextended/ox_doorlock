@@ -12,5 +12,7 @@
   "remove_lock": "Borrar cerradura",
   "cannot_unlock": "No se puede abrir la cerradura",
   "cannot_lock": "No se puede cerrar la cerradura",
-  "create_modify_lock": "Crear una cerradura o modificar una existente"
+  "create_modify_lock": "Crear una cerradura o modificar una existente",
+  "add_door_textui": "**Crear una cerradura**  \nInteractuar con [LMB]  \nCancelar con [RMB]",
+  "command_closest": "Abrir interfaz directamente de la cerradura más cercana"
 }
