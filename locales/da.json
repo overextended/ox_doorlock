@@ -1,0 +1,18 @@
+{
+  "unlocked_door": "Dør låst op",
+  "locked_door": "Dør låst",
+  "lock_door": "[E] Lås dør",
+  "unlock_door": "[E] Lås dør op",
+  "door_lock": "Dørlås",
+  "passcode": "Kode",
+  "lockpick_broke": "Din dirk gik i stykker",
+  "pick_lock": "Dirk lås",
+  "add_lock": "Tilføj dørlås",
+  "edit_lock": "Rediger dørlås",
+  "remove_lock": "Fjern dørlås",
+  "cannot_unlock": "Kan ikke låse dør op",
+  "cannot_lock": "Kan ikke låse dør",
+  "create_modify_lock": "Opret en dørlås, eller rediger en eksisterende",
+  "add_door_textui": "**Opret ny dør**  \nInterager med [LMB]  \nAnnuller med [RMB]",
+  "command_closest": "Åbn UI direkte til nærmeste dørlås"
+}
