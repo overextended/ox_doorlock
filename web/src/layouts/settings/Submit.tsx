@@ -101,6 +101,7 @@ const Submit: React.FC = () => {
             useStore.setState(
               {
                 name: '',
+                iplName: clipboard.iplName,
                 passcode: clipboard.passcode,
                 autolock: clipboard.autolock,
                 items: clipboard.items,
