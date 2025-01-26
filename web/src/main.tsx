@@ -17,6 +17,7 @@ debugData<DoorColumn[]>([
     data: [
       {
         name: 'Door name',
+        iplName: '',
         passcode: 'Supersecret123',
         autolock: 300,
         id: 0,

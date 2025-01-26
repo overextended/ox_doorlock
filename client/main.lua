@@ -46,63 +46,124 @@ lib.callback('ox_doorlock:getDoors', false, function(data)
 		for _, door in pairs(doors) do
 			local double = door.doors
 			door.distance = #(coords - door.coords)
-
-			if double then
-				if door.distance < 80 then
-					for i = 1, 2 do
-						if not double[i].entity and IsModelValid(double[i].model) then
-							local entity = GetClosestObjectOfType(double[i].coords.x, double[i].coords.y, double[i].coords.z, 1.0, double[i].model, false, false, false)
-
+			if door.iplName and door.iplName ~= "" then
+				if IsIplActive(door.iplName) then
+					if double then
+						if door.distance < 80 then
+							for i = 1, 2 do
+								if not double[i].entity and IsModelValid(double[i].model) then
+									local entity = GetClosestObjectOfType(double[i].coords.x, double[i].coords.y, double[i].coords.z, 1.0, double[i].model, false, false, false)
+	
+									if entity ~= 0 then
+										double[i].entity = entity
+										Entity(entity).state.doorId = door.id
+									end
+								end
+							end
+	
+							if door.distance < 20 then
+								nearbyDoors[#nearbyDoors + 1] = door
+							end
+						else
+							for i = 1, 2 do
+								double[i].entity = nil
+							end
+						end
+					elseif door.distance < 80 then
+						if not door.entity and IsModelValid(door.model) then
+							local entity = GetClosestObjectOfType(door.coords.x, door.coords.y, door.coords.z, 1.0, door.model, false, false, false)
+	
 							if entity ~= 0 then
-								double[i].entity = entity
+								local min, max = GetModelDimensions(door.model)
+								local points = {
+									GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, min.z).xy,
+									GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, max.z).xy,
+									GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, max.z).xy,
+									GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, min.z).xy,
+									GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, min.z).xy,
+									GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, max.z).xy,
+									GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, max.z).xy,
+									GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, min.z).xy
+								}
+	
+								local centroid = vec2(0, 0)
+	
+								for i = 1, 8 do
+									centroid += points[i]
+								end
+	
+								centroid = centroid / 8
+								door.coords = vec3(centroid.x, centroid.y, door.coords.z)
+								door.entity = entity
 								Entity(entity).state.doorId = door.id
 							end
+						end
+	
+						if door.distance < 20 then
+							nearbyDoors[#nearbyDoors + 1] = door
+						end
+					elseif door.entity then
+						door.entity = nil
+					end
+				end
+			else
+				if double then
+					if door.distance < 80 then
+						for i = 1, 2 do
+							if not double[i].entity and IsModelValid(double[i].model) then
+								local entity = GetClosestObjectOfType(double[i].coords.x, double[i].coords.y, double[i].coords.z, 1.0, double[i].model, false, false, false)
+
+								if entity ~= 0 then
+									double[i].entity = entity
+									Entity(entity).state.doorId = door.id
+								end
+							end
+						end
+
+						if door.distance < 20 then
+							nearbyDoors[#nearbyDoors + 1] = door
+						end
+					else
+						for i = 1, 2 do
+							double[i].entity = nil
+						end
+					end
+				elseif door.distance < 80 then
+					if not door.entity and IsModelValid(door.model) then
+						local entity = GetClosestObjectOfType(door.coords.x, door.coords.y, door.coords.z, 1.0, door.model, false, false, false)
+
+						if entity ~= 0 then
+							local min, max = GetModelDimensions(door.model)
+							local points = {
+								GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, min.z).xy,
+								GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, max.z).xy,
+								GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, max.z).xy,
+								GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, min.z).xy,
+								GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, min.z).xy,
+								GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, max.z).xy,
+								GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, max.z).xy,
+								GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, min.z).xy
+							}
+
+							local centroid = vec2(0, 0)
+
+							for i = 1, 8 do
+								centroid += points[i]
+							end
+
+							centroid = centroid / 8
+							door.coords = vec3(centroid.x, centroid.y, door.coords.z)
+							door.entity = entity
+							Entity(entity).state.doorId = door.id
 						end
 					end
 
 					if door.distance < 20 then
 						nearbyDoors[#nearbyDoors + 1] = door
 					end
-				else
-					for i = 1, 2 do
-						double[i].entity = nil
-					end
+				elseif door.entity then
+					door.entity = nil
 				end
-			elseif door.distance < 80 then
-				if not door.entity and IsModelValid(door.model) then
-					local entity = GetClosestObjectOfType(door.coords.x, door.coords.y, door.coords.z, 1.0, door.model, false, false, false)
-
-					if entity ~= 0 then
-						local min, max = GetModelDimensions(door.model)
-						local points = {
-							GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, min.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, max.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, max.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, min.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, min.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, max.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, max.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, min.z).xy
-						}
-
-						local centroid = vec2(0, 0)
-
-						for i = 1, 8 do
-							centroid += points[i]
-						end
-
-						centroid = centroid / 8
-						door.coords = vec3(centroid.x, centroid.y, door.coords.z)
-						door.entity = entity
-						Entity(entity).state.doorId = door.id
-					end
-				end
-
-				if door.distance < 20 then
-					nearbyDoors[#nearbyDoors + 1] = door
-				end
-			elseif door.entity then
-				door.entity = nil
 			end
 		end
 
