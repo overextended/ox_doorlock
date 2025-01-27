@@ -179,20 +179,22 @@ end
 ---@param items string[] | { name: string, remove?: boolean, metadata?: string }[]
 ---@param removeItem? boolean
 ---@return string?
-function DoesPlayerHaveItem(player, items, removeItem)
-	local playerId = player.source or player.PlayerData.source
+if not Config.MythicInventory then
+	function DoesPlayerHaveItem(player, items, removeItem)
+		local playerId = player.source or player.PlayerData.source
 
-	for i = 1, #items do
-		local item = items[i]
-		local itemName = item.name or item
-		local data = ox_inventory:Search(playerId, 'slots', itemName, item.metadata)[1]
+		for i = 1, #items do
+			local item = items[i]
+			local itemName = item.name or item
+			local data = ox_inventory:Search(playerId, 'slots', itemName, item.metadata)[1]
 
-		if data and data.count > 0 then
-			if removeItem or item.remove then
-				ox_inventory:RemoveItem(playerId, itemName, 1, nil, data.slot)
+			if data and data.count > 0 then
+				if removeItem or item.remove then
+					ox_inventory:RemoveItem(playerId, itemName, 1, nil, data.slot)
+				end
+
+				return itemName
 			end
-
-			return itemName
 		end
 	end
 end
