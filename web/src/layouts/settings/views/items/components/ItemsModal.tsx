@@ -37,8 +37,8 @@ const ItemsModal: React.FC<Props> = ({ modal, setModal }) => {
   return (
     <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
       <Stack>
-        <TextInput label="Metadata type" defaultValue={itemData.metadata} {...form.getInputProps('metadata')} />
-        <Switch label="Remove on use" defaultChecked={itemData.remove} {...form.getInputProps('remove')} />
+        <TextInput label="Metadata type" defaultValue={itemData.metadata ?? ''} {...form.getInputProps('metadata')} />
+        <Switch label="Remove on use" defaultChecked={itemData.remove ?? false} {...form.getInputProps('remove')} />
         <Button uppercase variant="light" type="submit">
           Confirm
         </Button>

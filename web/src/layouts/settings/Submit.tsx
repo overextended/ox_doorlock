@@ -1,7 +1,7 @@
 import { ActionIcon, Button, Center, Text, Tooltip } from '@mantine/core';
 import { useStore } from '../../store';
 import { fetchNui } from '../../utils/fetchNui';
-import { HiOutlineClipboardCheck, HiOutlineTrash } from 'react-icons/all';
+import { HiOutlineClipboardCheck, HiOutlineTrash } from 'react-icons/hi';
 import { useClipboard } from '../../store/clipboard';
 import { useVisibility } from '../../store/visibility';
 import { openConfirmModal } from '@mantine/modals';

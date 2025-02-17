@@ -73,7 +73,7 @@ const DifficultyModal: React.FC<Props> = ({ selectData, setModal, modal }) => {
         />
         <NumberInput
           label="Area size"
-          defaultValue={typeof lockpickData === 'object' ? lockpickData.areaSize : null}
+          defaultValue={typeof lockpickData === 'object' ? lockpickData.areaSize : undefined}
           description="Skill check area size in degrees"
           disabled={select !== 'custom'}
           max={360}
@@ -85,7 +85,7 @@ const DifficultyModal: React.FC<Props> = ({ selectData, setModal, modal }) => {
           label="Speed multiplier"
           description="Number the indicator speed will be multiplied by"
           disabled={select !== 'custom'}
-          defaultValue={typeof lockpickData === 'object' ? lockpickData.speedMultiplier : null}
+          defaultValue={typeof lockpickData === 'object' ? lockpickData.speedMultiplier : undefined}
           hideControls
           precision={2}
           required={select === 'custom'}
