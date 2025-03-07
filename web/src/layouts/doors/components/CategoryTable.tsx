@@ -1,4 +1,4 @@
-import { Center, Group, Pagination, Stack, Table, Text, UnstyledButton } from '@mantine/core';
+import { ActionIcon, Center, Group, Pagination, Stack, Table, Text, UnstyledButton } from '@mantine/core';
 import {
   ColumnDef,
   flexRender,
@@ -10,37 +10,48 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
+import { HiEye } from 'react-icons/hi';
 import { TbChevronDown, TbChevronUp, TbSearch, TbSelector } from 'react-icons/tb';
-import { useParams } from 'react-router-dom';
-import { useDoors, type DoorColumn } from '../../../store/doors';
+import { Link } from 'react-router-dom';
+import { useDoors } from '../../../store/doors';
 import { useSearch } from '../../../store/search';
-import ActionsMenu from './ActionsMenu';
 
-const DoorTable: React.FC = () => {
-  const { category } = useParams();
-
+const CategoryTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const globalFilter = useSearch((state) => state.debouncedValue);
   const data = useDoors((state) => state.doors);
-  const filteredData = useMemo(() => data.filter((door) => door.category === category), [data, category]);
 
-  const columns = useMemo<ColumnDef<DoorColumn>[]>(
+  const categories = useMemo(() => {
+    const categories: {
+      category: string;
+      zone: string
+    }[] = [];
+
+    data.forEach((door) => {
+      if (categories.some((category) => category.category === door.category)) return;
+
+      categories.push({
+        category: door.category,
+        zone: door.zone
+      });
+    });
+
+    return categories;
+  }, [data]);
+
+  const columns = useMemo<ColumnDef<{
+    category: string;
+    zone: string;
+  }>[]>(
     () => [
       {
-        id: 'id',
-        header: 'ID',
-        accessorKey: 'id',
+        id: 'category',
+        header: 'Category',
+        accessorKey: 'category',
         cell: (info) => info.getValue(),
         enableHiding: false,
         enableGlobalFilter: false, // id is of type number so it breaks filter function
-      },
-      {
-        id: 'name',
-        header: 'Name',
-        accessorKey: 'name',
-        cell: (info) => info.getValue(),
-        enableHiding: false,
       },
       {
         id: 'zone',
@@ -50,15 +61,21 @@ const DoorTable: React.FC = () => {
         enableHiding: false,
       },
       {
-        id: 'options-menu',
-        cell: (data) => <ActionsMenu data={data} />,
+        id: 'view',
+        cell: (data) => (
+          <Link to={`/doors/${data.row.original.category}`}>
+            <ActionIcon color="blue.4" variant="transparent">
+              <HiEye color='blue.4' size={16} />
+            </ActionIcon>
+          </Link>
+        ),
       },
     ],
     []
   );
 
   const table = useReactTable({
-    data: filteredData,
+    data: categories,
     columns,
     initialState: {
       pagination: {
@@ -83,7 +100,7 @@ const DoorTable: React.FC = () => {
   }, [currentPage, data]);
 
   return (
-    <Stack justify="space-between" align="center" sx={{ height: '100%', paddingBottom: 16, paddingRight: 16, paddingLeft: 16  }} spacing={0}>
+    <Stack justify="space-between" align="center" sx={{ height: '100%', paddingBottom: 16, paddingRight: 16, paddingLeft: 16 }} spacing={0}>
       {table.getFilteredRowModel().rows.length > 0 ? (
         <Table>
           <thead>
@@ -135,4 +152,4 @@ const DoorTable: React.FC = () => {
   );
 };
 
-export default DoorTable;
+export default CategoryTable;

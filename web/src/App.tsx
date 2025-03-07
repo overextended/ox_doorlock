@@ -1,13 +1,13 @@
 import { Box, createStyles, Transition } from '@mantine/core';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import { useNuiEvent } from './hooks/useNuiEvent';
-import { defaultState, StoreState, useSetters, useStore } from './store';
-import Doors from './layouts/doors';
-import Settings from './layouts/settings';
-import { useVisibility } from './store/visibility';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useExitListener } from './hooks/useExitListener';
-import { useDoors } from './store/doors';
-import { DoorColumn } from './store/doors';
+import { useNuiEvent } from './hooks/useNuiEvent';
+import Doors from './layouts/doors';
+import Categories from './layouts/doors/categories';
+import Settings from './layouts/settings';
+import { useSetters, useStore } from './store';
+import { DoorColumn, useDoors } from './store/doors';
+import { useVisibility } from './store/visibility';
 import { convertData } from './utils/convertData';
 
 const useStyles = createStyles((theme) => ({
@@ -94,7 +94,8 @@ const App: React.FC = () => {
         {(style) => (
           <Box className={classes.main} style={style}>
             <Routes>
-              <Route path="/" element={<Doors />} />
+              <Route path="/" element={<Categories />} />
+              <Route path="/doors/:category" element={<Doors />} />
               <Route path="/settings/*" element={<Settings />} />
             </Routes>
           </Box>

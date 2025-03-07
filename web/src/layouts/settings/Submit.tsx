@@ -1,11 +1,11 @@
 import { ActionIcon, Button, Center, Text, Tooltip } from '@mantine/core';
+import { openConfirmModal } from '@mantine/modals';
+import { HiOutlineClipboardCheck, HiOutlineTrash } from 'react-icons/hi';
+import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
-import { fetchNui } from '../../utils/fetchNui';
-import { HiOutlineClipboardCheck, HiOutlineTrash } from 'react-icons/all';
 import { useClipboard } from '../../store/clipboard';
 import { useVisibility } from '../../store/visibility';
-import { openConfirmModal } from '@mantine/modals';
-import { useNavigate } from 'react-router-dom';
+import { fetchNui } from '../../utils/fetchNui';
 
 const Submit: React.FC = () => {
   const navigate = useNavigate();
@@ -100,7 +100,7 @@ const Submit: React.FC = () => {
           onClick={() => {
             useStore.setState(
               {
-                name: '',
+                category: clipboard.category,
                 passcode: clipboard.passcode,
                 autolock: clipboard.autolock,
                 items: clipboard.items,

@@ -56,6 +56,7 @@ local function getDoor(door)
 	return {
 		id = door.id,
 		name = door.name,
+    category = door.category,
 		state = door.state,
 		coords = door.coords,
 		characters = door.characters,
@@ -103,7 +104,7 @@ exports('editDoor', function(id, data)
 			end
 		end
 
-		MySQL.update('UPDATE ox_doorlock SET name = ?, data = ? WHERE id = ?', { door.name, encodeData(door), id })
+		MySQL.update('UPDATE ox_doorlock SET name = ?, category = ?, data = ? WHERE id = ?', { door.name, door.category, encodeData(door), id })
 		TriggerClientEvent('ox_doorlock:editDoorlock', -1, id, door)
 	end
 end)
@@ -116,10 +117,11 @@ lib.callback.register('ox_doorlock:getSounds', function()
 	return sounds
 end)
 
-local function createDoor(id, door, name)
+local function createDoor(id, door, name, category)
 	local double = door.doors
 	door.id = id
 	door.name = name
+  door.category = category
 
 	if double then
 		for i = 1, 2 do
@@ -244,11 +246,11 @@ if sql then MySQL.query(sql) end
 MySQL.ready(function()
 	while Config.DoorList do Wait(100) end
 
-	local response = MySQL.query.await('SELECT `id`, `name`, `data` FROM `ox_doorlock`')
+	local response = MySQL.query.await('SELECT `id`, `name`, `category`, `data` FROM `ox_doorlock`')
 
 	for i = 1, #response do
 		local door = response[i]
-		createDoor(door.id, json.decode(door.data), door.name)
+		createDoor(door.id, json.decode(door.data), door.name, door.category)
 	end
 
 	isLoaded = true
@@ -322,8 +324,8 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 
 		if id then
 			if data then
-				MySQL.update('UPDATE ox_doorlock SET name = ?, data = ? WHERE id = ?',
-					{ data.name, encodeData(data), id })
+				MySQL.update('UPDATE ox_doorlock SET name = ?, category = ?, data = ? WHERE id = ?',
+					{ data.name, data.category, encodeData(data), id })
 			else
 				MySQL.update('DELETE FROM ox_doorlock WHERE id = ?', { id })
 			end
@@ -331,9 +333,9 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 			doors[id] = data
 			TriggerClientEvent('ox_doorlock:editDoorlock', -1, id, data)
 		else
-			local insertId = MySQL.insert.await('INSERT INTO ox_doorlock (name, data) VALUES (?, ?)',
-				{ data.name, encodeData(data) })
-			local door = createDoor(insertId, data, data.name)
+			local insertId = MySQL.insert.await('INSERT INTO ox_doorlock (name, category, data) VALUES (?, ?, ?)',
+				{ data.name, data.category, encodeData(data) })
+			local door = createDoor(insertId, data, data.name, data.category)
 
 			TriggerClientEvent('ox_doorlock:setState', -1, door.id, door.state, false, door)
 		end
