@@ -1,16 +1,16 @@
 import { ActionIcon, Menu, Text, Tooltip } from '@mantine/core';
-import { TbDots, TbSettings, TbTrash } from 'react-icons/tb';
-import { HiOutlineClipboardCopy } from 'react-icons/all';
-import { GiTeleport } from 'react-icons/gi';
-import { DoorColumn } from '../../../store/doors';
-import { useNavigate } from 'react-router-dom';
-import { useStore } from '../../../store';
-import { convertData } from '../../../utils/convertData';
-import { useClipboard } from '../../../store/clipboard';
-import { fetchNui } from '../../../utils/fetchNui';
 import { openConfirmModal } from '@mantine/modals';
 import { CellContext } from '@tanstack/react-table';
+import { GiTeleport } from 'react-icons/gi';
+import { HiOutlineClipboardCopy } from 'react-icons/hi';
+import { TbDots, TbSettings, TbTrash } from 'react-icons/tb';
+import { useNavigate } from 'react-router-dom';
+import { useStore } from '../../../store';
+import { useClipboard } from '../../../store/clipboard';
+import { DoorColumn } from '../../../store/doors';
 import { useVisibility } from '../../../store/visibility';
+import { convertData } from '../../../utils/convertData';
+import { fetchNui } from '../../../utils/fetchNui';
 
 const ActionsMenu: React.FC<{ data: CellContext<DoorColumn, unknown> }> = ({ data }) => {
   const navigate = useNavigate();

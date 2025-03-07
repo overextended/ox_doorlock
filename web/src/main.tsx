@@ -1,15 +1,14 @@
+import { MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { debugData } from './utils/debugData';
-import { MantineProvider } from '@mantine/core';
-import { customTheme } from './theme';
-import { isEnvBrowser } from './utils/misc';
-import { StoreState } from './store';
 import { HashRouter } from 'react-router-dom';
-import { ModalsProvider } from '@mantine/modals';
+import App from './App';
+import './index.css';
 import { DoorColumn } from './store/doors';
+import { customTheme } from './theme';
+import { debugData } from './utils/debugData';
+import { isEnvBrowser } from './utils/misc';
 
 debugData<DoorColumn[]>([
   {
@@ -21,6 +20,7 @@ debugData<DoorColumn[]>([
         autolock: 300,
         id: 0,
         zone: 'Mission Row',
+        category: 'Police Dept',
         characters: ['charid1', 'charid2'],
         groups: {
           ['police']: 0,
@@ -50,6 +50,7 @@ debugData(
       data: {
         [0]: {
           name: 'New door',
+          category: 'Police Dept',
           passcode: 'Supersecret123',
           autolock: 300,
           id: 2,

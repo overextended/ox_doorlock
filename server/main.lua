@@ -103,7 +103,7 @@ exports('editDoor', function(id, data)
 			end
 		end
 
-		MySQL.update('UPDATE ox_doorlock SET name = ?, data = ? WHERE id = ?', { door.name, encodeData(door), id })
+		MySQL.update('UPDATE ox_doorlock SET name = ?, category = ?, data = ? WHERE id = ?', { door.name, door.category, encodeData(door), id })
 		TriggerClientEvent('ox_doorlock:editDoorlock', -1, id, door)
 	end
 end)
@@ -322,8 +322,8 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 
 		if id then
 			if data then
-				MySQL.update('UPDATE ox_doorlock SET name = ?, data = ? WHERE id = ?',
-					{ data.name, encodeData(data), id })
+				MySQL.update('UPDATE ox_doorlock SET name = ?, category = ?, data = ? WHERE id = ?',
+					{ data.name, data.category, encodeData(data), id })
 			else
 				MySQL.update('DELETE FROM ox_doorlock WHERE id = ?', { id })
 			end
@@ -331,8 +331,8 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 			doors[id] = data
 			TriggerClientEvent('ox_doorlock:editDoorlock', -1, id, data)
 		else
-			local insertId = MySQL.insert.await('INSERT INTO ox_doorlock (name, data) VALUES (?, ?)',
-				{ data.name, encodeData(data) })
+			local insertId = MySQL.insert.await('INSERT INTO ox_doorlock (name, category, data) VALUES (?, ?, ?)',
+				{ data.name, data.category, encodeData(data) })
 			local door = createDoor(insertId, data, data.name)
 
 			TriggerClientEvent('ox_doorlock:setState', -1, door.id, door.state, false, door)

@@ -4,6 +4,7 @@ import type { StoreState } from './';
 export interface DoorColumn extends Omit<StoreState, 'groups'> {
   id: number;
   name: string;
+  category: string;
   zone: string;
   groups: { [k: string]: number };
 }
