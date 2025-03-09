@@ -1,0 +1,18 @@
+{
+  "unlocked_door": "Kapı açıldı",
+  "locked_door": "Kapı kilitlendi",
+  "lock_door": "[E] Kapıyı Kilitle",
+  "unlock_door": "[E] Kapıyı Aç",
+  "door_lock": "Kapı kilitli",
+  "passcode": "Şifre",
+  "lockpick_broke": "Kilit açma aletin kırıldı",
+  "pick_lock": "Kilidi aç",
+  "add_lock": "Kapı kilidi ekle",
+  "edit_lock": "Kapı kilidini düzenle",
+  "remove_lock": "Kapı kilidini kaldır",
+  "cannot_unlock": "Kapı kilidini açmak için yetkiniz yok",
+  "cannot_lock": "Kapıyı kilitlemek için yetkiniz yok",
+  "create_modify_lock": "Yeni bir kapı kilidi oluştur veya mevcut olanı düzenle",
+  "add_door_textui": "**Yeni kapı oluştur**  \n[Sol Tık] ile etkileşim kur \n[Sağ Tık] ile iptal et",
+  "command_closest": "En yakın kapı kilidine doğrudan kapı kilit menüsü aç"
+}
