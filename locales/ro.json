@@ -1,0 +1,18 @@
+{
+    "unlocked_door": "Ușa descuiătă",
+    "locked_door": "Ușa încuiătă",
+    "lock_door": "[E] încuie ușa",
+    "unlock_door": "[E] Descuie ușa",
+    "door_lock": "încuiere ușă",
+    "passcode": "Cod de acces",
+    "lockpick_broke": "Lockpick-ul s-a rupt",
+    "pick_lock": "Forțează yala",
+    "add_lock": "Adaugă încuietoare ușă",
+    "edit_lock": "Editează încuietoarea ușii",
+    "remove_lock": "Șterge încuietoarea ușii",
+    "cannot_unlock": "Nu se poate descuia ușa",
+    "cannot_lock": "Nu se poate încuia ușa",
+    "create_modify_lock": "Creează o încuietoare de ușă sau modifică una existentă",
+    "add_door_textui": "**Creează ușă nouă**  \nInteracționează cu [LMB]  \nAnulează cu [RMB]",
+    "command_closest": "Deschide interfața direct, la cea mai apropiată încuietoare"
+}
