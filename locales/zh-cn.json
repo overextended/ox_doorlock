@@ -1,8 +1,8 @@
 {
-  "unlocked_door": "已将门解锁",
-  "locked_door": "已将门锁上",
-  "lock_door": "[E] 锁门",
-  "unlock_door": "[E] 解锁门",
+  "unlocked_door": "门已解锁",
+  "locked_door": "门已上锁",
+  "lock_door": "[E] 上锁",
+  "unlock_door": "[E] 解锁",
   "door_lock": "门锁",
   "passcode": "密码",
   "lockpick_broke": "你的开锁工具坏了",
@@ -12,6 +12,7 @@
   "remove_lock": "删除门锁",
   "cannot_unlock": "无法解锁门",
   "cannot_lock": "无法锁门",
+  "create_modify_lock": "创建新门锁或修改已有门锁",
   "add_door_textui": "**创建门锁**  \n互动 [LMB]  \n取消 [RMB]",
-  "create_modify_lock": "建立或修改已存在的门锁"
+  "command_closest": "显示最近门锁设置界面"
 }
