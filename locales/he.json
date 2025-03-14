@@ -1,0 +1,18 @@
+{
+  "unlocked_door": "דלת לא נעולה",
+  "locked_door": "דלת נועלה",
+  "lock_door": "[E] נעל דלת",
+  "unlock_door": "[E] פתח דלת",
+  "door_lock": "מנעול דלת",
+  "passcode": "קוד",
+  "lockpick_broke": "הכלי פריצת מנעולים שלך נשבר",
+  "pick_lock": "פרוץ מנעול",
+  "add_lock": "הוסף נעילה",
+  "edit_lock": "ערוך נעילה",
+  "remove_lock": "מחק נעילה",
+  "cannot_unlock": "לא ניתן לפתוח דלת זאת",
+  "cannot_lock": "לא ניתן לנעול דלת זאת",
+  "create_modify_lock": "צור נעילה לדלת, או ערוך נעילה קיימת",
+  "add_door_textui": "**צור דלת חדשה**  \nלבחירה לחץ [LMB]  \nבטל עם [RMB]",
+  "command_closest": "פתח ממשק ישירות לנעילה הקרובה אליך"
+}
