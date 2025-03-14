@@ -21,3 +21,4 @@
 ---@field LockpickItems string[]
 ---@field NativeAudio boolean
 ---@field DrawSprite { [0]: DrawSpriteProps, [1]: DrawSpriteProps }
+---@field MythicInventory boolean
