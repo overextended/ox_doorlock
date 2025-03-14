@@ -46,7 +46,8 @@ local function encodeData(door)
 		state = door.state,
 		unlockSound = door.unlockSound,
 		passcode = door.passcode,
-		lockpickDifficulty = door.lockpickDifficulty
+		lockpickDifficulty = door.lockpickDifficulty,
+		iplName = door.iplName
 	})
 end
 
@@ -120,6 +121,7 @@ local function createDoor(id, door, name)
 	local double = door.doors
 	door.id = id
 	door.name = name
+	door.iplName = door.iplName or ""
 
 	if double then
 		for i = 1, 2 do

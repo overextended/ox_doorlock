@@ -85,6 +85,7 @@ MySQL.ready(function()
 						maxDistance = door.maxDistance or door.distance,
 						doorRate = door.doorRate and door.doorRate + 0.0 or nil,
 						state = door.locked and 1 or 0,
+						iplName = door.iplName or nil,
 						passcode = door.passcode,
 						doors = double and {
 							{
