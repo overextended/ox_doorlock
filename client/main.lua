@@ -2,11 +2,24 @@ if not LoadResourceFile(cache.resource, 'web/build/index.html') then
 	error('Unable to load UI. Build ox_doorlock or download the latest release.\n	^3https://github.com/overextended/ox_doorlock/releases/latest/download/ox_doorlock.zip^0')
 end
 
-if not lib.checkDependency('ox_lib', '3.14.0', true) then return end
+if not lib.checkDependency('ox_lib', '3.30.4', true) then return end
+
+local math = require 'glm'
+local doors = {}
+_ENV.doors = doors
+
 
 local function createDoor(door)
+	local oldDoor = doors[door.id]
+
+	if oldDoor then
+		lib.grid.removeEntry(oldDoor)
+	end
+
+	doors[door.id] = door
 	local double = door.doors
 	door.zone = GetLabelText(GetNameOfZone(door.coords.x, door.coords.y, door.coords.z))
+	door.radius = door.maxDistance
 
 	if double then
 		for i = 1, 2 do
@@ -27,82 +40,55 @@ local function createDoor(door)
 			DoorSystemSetAutomaticRate(door.hash, door.doorRate or 10.0, false, false)
 		end
 	end
+
+	lib.grid.addEntry(door)
 end
 
-local nearbyDoors = {}
+local nearbyDoors = lib.array:new()
+local nearbyDoorsCount = 0
 local Entity = Entity
+local ratio = GetAspectRatio(true)
 
 lib.callback('ox_doorlock:getDoors', false, function(data)
-	doors = data
-
-	for _, door in pairs(data) do
-		createDoor(door)
-	end
+	for _, door in pairs(data) do createDoor(door) end
 
 	while true do
-		table.wipe(nearbyDoors)
 		local coords = GetEntityCoords(cache.ped)
+		nearbyDoors = lib.grid.getNearbyEntries(coords)
+		nearbyDoorsCount = #nearbyDoors
+		ratio = GetAspectRatio(true)
 
-		for _, door in pairs(doors) do
+		for index = 1, nearbyDoorsCount do
+			local door = nearbyDoors[index]
 			local double = door.doors
 			door.distance = #(coords - door.coords)
 
 			if double then
-				if door.distance < 80 then
-					for i = 1, 2 do
-						if not double[i].entity and IsModelValid(double[i].model) then
-							local entity = GetClosestObjectOfType(double[i].coords.x, double[i].coords.y, double[i].coords.z, 1.0, double[i].model, false, false, false)
+				for i = 1, 2 do
+					if IsModelValid(double[i].model) then
+						local entity = GetClosestObjectOfType(double[i].coords.x, double[i].coords.y, double[i].coords.z, 1.0, double[i].model, false, false, false)
 
-							if entity ~= 0 then
-								double[i].entity = entity
-								Entity(entity).state.doorId = door.id
-							end
+						if entity ~= 0 then
+							double[i].entity = entity
+							Entity(entity).state.doorId = door.id
 						end
-					end
-
-					if door.distance < 20 then
-						nearbyDoors[#nearbyDoors + 1] = door
-					end
-				else
-					for i = 1, 2 do
-						double[i].entity = nil
-					end
+					else double[i].entity = nil end
 				end
-			elseif door.distance < 80 then
-				if not door.entity and IsModelValid(door.model) then
-					local entity = GetClosestObjectOfType(door.coords.x, door.coords.y, door.coords.z, 1.0, door.model, false, false, false)
+			elseif IsModelValid(door.model) then
+				local entity = GetClosestObjectOfType(door.coords.x, door.coords.y, door.coords.z, 1.0, door.model, false, false, false)
 
-					if entity ~= 0 then
-						local min, max = GetModelDimensions(door.model)
-						local points = {
-							GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, min.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, max.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, max.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, min.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, min.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, max.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, max.z).xy,
-							GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, min.z).xy
-						}
+				if entity ~= 0 then
+					local min, max = GetModelDimensions(door.model)
+					local center = vec3((min.x + max.x) / 2, (min.y + max.y) / 2, (min.z + max.z) / 2)
+					local heading = GetEntityHeading(entity) * (math.pi / 180)
+					local sin, cos = math.sincos(heading)
+					local rotatedX = cos * center.x - sin * center.y
+					local rotatedY = sin * center.x + cos * center.y
+					door.coords = vec3(door.coords.x + rotatedX, door.coords.y + rotatedY, door.coords.z + center.z)
+					door.entity = entity
 
-						local centroid = vec2(0, 0)
-
-						for i = 1, 8 do
-							centroid += points[i]
-						end
-
-						centroid = centroid / 8
-						door.coords = vec3(centroid.x, centroid.y, door.coords.z)
-						door.entity = entity
-						Entity(entity).state.doorId = door.id
-					end
-				end
-
-				if door.distance < 20 then
-					nearbyDoors[#nearbyDoors + 1] = door
-				end
-			elseif door.entity then
-				door.entity = nil
+					Entity(entity).state.doorId = door.id
+				else door.entity = nil end
 			end
 		end
 
@@ -114,7 +100,6 @@ RegisterNetEvent('ox_doorlock:setState', function(id, state, source, data)
 	if not doors then return end
 
 	if data then
-		doors[id] = data
 		createDoor(data)
 
 		if NuiHasLoaded then
@@ -243,6 +228,9 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 		end
 	end
 
+	lib.grid.removeEntry(doors[id])
+	lib.grid.addEntry(data)
+
 	doors[id] = data
 
 	if NuiHasLoaded then
@@ -303,15 +291,14 @@ CreateThread(function()
 	local DrawSprite = drawSprite and DrawSprite
 
 	while true do
-		local num = #nearbyDoors
+		ClosestDoor = nearbyDoors[1]
 
-		if num > 0 then
-			local ratio = drawSprite and GetAspectRatio(true)
-			for i = 1, num do
+		if nearbyDoorsCount > 0 then
+			for i = 1, nearbyDoorsCount do
 				local door = nearbyDoors[i]
 
 				if door.distance < door.maxDistance then
-					if door.distance < (ClosestDoor?.distance or 10) then
+					if door.distance < ClosestDoor.distance then
 						ClosestDoor = door
 					end
 
@@ -326,7 +313,7 @@ CreateThread(function()
 					end
 				end
 			end
-		else ClosestDoor = nil end
+		end
 
 		if ClosestDoor and ClosestDoor.distance < ClosestDoor.maxDistance then
 			if Config.DrawTextUI and not ClosestDoor.hideUi and ClosestDoor.state ~= showUI then
@@ -342,7 +329,7 @@ CreateThread(function()
 			showUI = nil
 		end
 
-		Wait(num > 0 and 0 or 500)
+		Wait(nearbyDoorsCount > 0 and 0 or 500)
 	end
 end)
 

@@ -4,7 +4,7 @@ if not LoadResourceFile(cache.resource, 'web/build/index.html') then
 end
 
 if not lib.checkDependency('oxmysql', '2.4.0') then return end
-if not lib.checkDependency('ox_lib', '3.14.0') then return end
+if not lib.checkDependency('ox_lib', '3.30.4') then return end
 
 lib.versionCheck('overextended/ox_doorlock')
 require 'server.convert'
