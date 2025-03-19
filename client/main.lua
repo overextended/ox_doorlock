@@ -65,26 +65,29 @@ lib.callback('ox_doorlock:getDoors', false, function(data)
 
 			if double then
 				for i = 1, 2 do
-					if IsModelValid(double[i].model) then
-						local entity = GetClosestObjectOfType(double[i].coords.x, double[i].coords.y, double[i].coords.z, 1.0, double[i].model, false, false, false)
+					local dDoor = double[i]
 
-						if entity ~= 0 then
-							double[i].entity = entity
+					if IsModelValid(dDoor.model) then
+						local entity = not dDoor.entity and GetClosestObjectOfType(dDoor.coords.x, dDoor.coords.y, dDoor.coords.z, 1.0, dDoor.model, false, false, false)
+
+						if entity and entity ~= 0 then
+							dDoor.entity = entity
 							Entity(entity).state.doorId = door.id
-						end
-					else double[i].entity = nil end
+						else dDoor.entity = nil end
+					end
 				end
 			elseif IsModelValid(door.model) then
-				local entity = GetClosestObjectOfType(door.coords.x, door.coords.y, door.coords.z, 1.0, door.model, false, false, false)
+				local entity = not door.entity and GetClosestObjectOfType(door.coords.x, door.coords.y, door.coords.z, 1.0, door.model, false, false, false)
 
-				if entity ~= 0 then
+				if entity and entity ~= 0 then
+					local dCoords = GetEntityCoords(entity)
 					local min, max = GetModelDimensions(door.model)
 					local center = vec3((min.x + max.x) / 2, (min.y + max.y) / 2, (min.z + max.z) / 2)
 					local heading = GetEntityHeading(entity) * (math.pi / 180)
 					local sin, cos = math.sincos(heading)
 					local rotatedX = cos * center.x - sin * center.y
 					local rotatedY = sin * center.x + cos * center.y
-					door.coords = vec3(door.coords.x + rotatedX, door.coords.y + rotatedY, door.coords.z + center.z)
+					door.coords = vec3(dCoords.x + rotatedX, dCoords.y + rotatedY, dCoords.z + center.z)
 					door.entity = entity
 
 					Entity(entity).state.doorId = door.id
