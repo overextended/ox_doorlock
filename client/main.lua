@@ -182,11 +182,15 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 	local double = door.doors
 	local doorState = data and data.state or 0
 
+	lib.grid.removeEntry(door)
+
 	if data then
 		data.zone = door.zone or GetLabelText(GetNameOfZone(door.coords.x, door.coords.y, door.coords.z))
+		data.radius = data.maxDistance
 
-		-- hacky method to resolve a bug with "closest door" by forcing a distance recalculation
 		if door.distance < 20 then door.distance = 80 end
+
+		lib.grid.addEntry(data)
 	elseif ClosestDoor?.id == id then
 		ClosestDoor = nil
 	end
@@ -230,9 +234,6 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 			end
 		end
 	end
-
-	lib.grid.removeEntry(doors[id])
-	lib.grid.addEntry(data)
 
 	doors[id] = data
 
