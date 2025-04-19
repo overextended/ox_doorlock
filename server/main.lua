@@ -10,8 +10,8 @@ lib.versionCheck('overextended/ox_doorlock')
 require 'server.convert'
 
 local utils = require 'server.utils'
+local TriggerEventHooks = require 'server.hooks'
 local doors = {}
-
 
 local function encodeData(door)
 	local double = door.doors
@@ -218,7 +218,8 @@ local function isAuthorised(playerId, door, lockpick)
 		end
 
 		if door.characters and table.contains(door.characters, GetCharacterId(player)) then
-			return true
+			authorised = true
+			goto continue
 		end
 
 		if door.groups then
@@ -234,7 +235,18 @@ local function isAuthorised(playerId, door, lockpick)
 		end
 	end
 
-	return authorised
+	::continue::
+
+	local hookResult = TriggerEventHooks('doorAuthorization', {
+		source = playerId,
+		door = door,
+		lockpick = lockpick,
+		authorised = authorised,
+	})
+	
+	if hookResult == nil then return authorised end
+
+	return authorised or hookResult == nil or hookResult
 end
 
 local sql = LoadResourceFile(cache.resource, 'sql/ox_doorlock.sql')
