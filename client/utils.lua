@@ -219,9 +219,7 @@ end)
 RegisterNUICallback('teleportToDoor', function(id, cb)
 	cb(1)
 	SetNuiFocus(false, false)
-	local doorCoords = doors[id].coords
-	if not doorCoords then return end
-	SetEntityCoords(cache.ped, doorCoords.x, doorCoords.y, doorCoords.z, false, false, false, false)
+	TriggerServerEvent('ox_doorlock:teleportToDoor', id)
 end)
 
 RegisterNUICallback('exit', function(_, cb)

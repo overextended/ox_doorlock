@@ -1,6 +1,6 @@
 import { ActionIcon, Menu, Text, Tooltip } from '@mantine/core';
 import { TbDots, TbSettings, TbTrash } from 'react-icons/tb';
-import { HiOutlineClipboardCopy } from 'react-icons/all';
+import { HiOutlineClipboardCopy } from 'react-icons/hi';
 import { GiTeleport } from 'react-icons/gi';
 import { DoorColumn } from '../../../store/doors';
 import { useNavigate } from 'react-router-dom';

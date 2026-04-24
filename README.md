@@ -1,13 +1,13 @@
 # Ox Doorlock
 
-Door management resource, with compatibility for [ox_core](https://github.com/overextended/ox_core), [es_extended](https://github.com/esx-framework/esx_core), [nd_core](https://github.com/ND-Framework/ND_Core), and [qbox](https://github.com/Qbox-project/qbx_core).  
+Door management resource, with compatibility for [ox_core](https://github.com/communityox/ox_core), [es_extended](https://github.com/esx-framework/esx_core), [nd_core](https://github.com/ND-Framework/ND_Core), and [qbox](https://github.com/Qbox-project/qbx_core).  
 Successor to nui_doorlock with less scuff and more stuff.
 
-_The UI needs to be built - use the [latest release](https://github.com/overextended/ox_doorlock/releases/latest/download/ox_doorlock.zip) if you want to drag-n-drop._
+_The UI needs to be built - use the [latest release](https://github.com/communityox/ox_doorlock/releases/latest/download/ox_doorlock.zip) if you want to drag-n-drop._
 
 ## Dependencies
 
-### [oxmysql](https://github.com/overextended/oxmysql)
+### [oxmysql](https://github.com/communityox/oxmysql)
 
 Doors are stored in a database for ease-of-use and to allow data to be easily cleared or shared.
 
@@ -16,11 +16,11 @@ mysql-async is no longer supported.
   - people use older versions which do not support parameters as arrays
   - it isn't maintained and has issues that will never be resolved
 
-### [ox_lib](https://github.com/overextended/ox_lib) (v2.3.0 or higher)
+### [ox_lib](https://github.com/communityox/ox_lib) (v2.3.0 or higher)
 
 Used for some UI elements (i.e. notifications, progress circle, input), and cache.
 
-### [ox_target](https://github.com/overextended/ox_target) (preferred) or [qtarget](https://github.com/overextended/qtarget) (deprecated)
+### [ox_target](https://github.com/communityox/ox_target) (preferred) or [qtarget](https://github.com/overextended/qtarget) (deprecated)
 
 (Optional) Used for lockpicking.
 
@@ -123,7 +123,7 @@ end)
 ### Lockpick
 
 - Difficulty
-  - Sets the skillcheck difficulty (see [docs](https://overextended.github.io/docs/ox_lib/Interface/Client/skillcheck)).
+  - Sets the skillcheck difficulty (see [docs](https://coxdocs.dev/ox_lib/Modules/Interface/Client/skillcheck)).
 - Area size
   - Custom difficulty area size.
 - Speed multiplier
