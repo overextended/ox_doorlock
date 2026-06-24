@@ -188,6 +188,20 @@ exports('createDoor', function(data)
     return door.id
 end)
 
+exports('removeDoor', function(id)
+    local door = doors[id]
+
+    if not door then
+        error(('No door found with id %s'):format(id))
+    end
+
+    MySQL.update('DELETE FROM ox_doorlock WHERE id = ?', { id })
+    doors[id] = nil
+    TriggerClientEvent('ox_doorlock:editDoorlock', -1, id, nil)
+
+    return true
+end)
+
 local isLoaded = false
 local ox_inventory = exports.ox_inventory
 
