@@ -160,6 +160,48 @@ local function createDoor(id, door, name)
     return door
 end
 
+exports('createDoor', function(data)
+    if type(data) ~= 'table' then
+        error('Expected table for door data')
+    end
+
+    if not data.coords then
+        local double = data.doors
+
+        if double then
+            data.coords = double[1].coords - ((double[1].coords - double[2].coords) / 2)
+        else
+            error('Door data requires coords or doors')
+        end
+    end
+
+    if not data.name then
+        data.name = tostring(data.coords)
+    end
+
+    local insertId = MySQL.insert.await('INSERT INTO ox_doorlock (name, data) VALUES (?, ?)',
+        { data.name, encodeData(data) })
+    local door = createDoor(insertId, data, data.name)
+
+    TriggerClientEvent('ox_doorlock:setState', -1, door.id, door.state, false, door)
+
+    return door.id
+end)
+
+exports('removeDoor', function(id)
+    local door = doors[id]
+
+    if not door then
+        error(('No door found with id %s'):format(id))
+    end
+
+    MySQL.update('DELETE FROM ox_doorlock WHERE id = ?', { id })
+    doors[id] = nil
+    TriggerClientEvent('ox_doorlock:editDoorlock', -1, id, nil)
+
+    return true
+end)
+
 local isLoaded = false
 local ox_inventory = exports.ox_inventory
 
