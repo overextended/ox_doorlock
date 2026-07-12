@@ -6,6 +6,7 @@ import { useClipboard } from '../../store/clipboard';
 import { useVisibility } from '../../store/visibility';
 import { openConfirmModal } from '@mantine/modals';
 import { useNavigate } from 'react-router-dom';
+import { t } from '../../utils/t';
 
 const Submit: React.FC = () => {
   const navigate = useNavigate();
@@ -87,9 +88,9 @@ const Submit: React.FC = () => {
   return (
     <Center>
       <Button color="blue" uppercase onClick={() => handleSubmit()} fullWidth>
-        Confirm door
+        {t('ui_confirm_door')}
       </Button>
-      <Tooltip label={!clipboard ? 'No door settings copied' : 'Apply copied settings'} withArrow arrowSize={10}>
+      <Tooltip label={!clipboard ? t('ui_no_clipboard') : t('ui_apply_clipboard')} withArrow arrowSize={10}>
         <ActionIcon
           variant="outline"
           disabled={!clipboard}
@@ -120,7 +121,7 @@ const Submit: React.FC = () => {
               },
               true
             );
-            fetchNui('notify', 'Settings applied');
+            fetchNui('notify', t('ui_settings_applied'));
           }}
         >
           <HiOutlineClipboardCheck size={20} />
@@ -135,16 +136,16 @@ const Submit: React.FC = () => {
         disabled={!useStore.getState().id}
         onClick={() =>
           openConfirmModal({
-            title: 'Confirm deletion',
+            title: t('ui_confirm_deletion'),
             centered: true,
             withCloseButton: false,
             children: (
               <Text>
-                Are you sure you want to delete
+                {t('ui_confirm_delete_prompt')}
                 <Text component="span" weight={700}>{` ${useStore.getState().name}`}</Text>?
               </Text>
             ),
-            labels: { confirm: 'Confirm', cancel: 'Cancel' },
+            labels: { confirm: t('ui_confirm'), cancel: t('ui_cancel') },
             confirmProps: { color: 'red' },
             onConfirm: () => {
               fetchNui('deleteDoor', useStore.getState().id);

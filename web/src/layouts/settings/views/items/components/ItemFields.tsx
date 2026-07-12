@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { TbSettings, TbTrash } from 'react-icons/tb';
 import { useSetters, useStore } from '../../../../../store';
 import ItemsModal from './ItemsModal';
+import { t } from '../../../../../utils/t';
 
 const ItemFields: React.FC = () => {
   const itemFields = useStore((state) => state.items);
@@ -39,15 +40,15 @@ const ItemFields: React.FC = () => {
                 sx={{ width: '80%' }}
                 value={(field.name as string) || ''}
                 id="name"
-                placeholder="Item"
+                placeholder={t('ui_item')}
                 onChange={(e) => handleChange(e, index)}
               />
-              <Tooltip label="Item options">
+              <Tooltip label={t('ui_item_options')}>
                 <ActionIcon color="blue.4" variant="transparent" onClick={() => setModal({ opened: true, index })}>
                   <TbSettings size={24} />
                 </ActionIcon>
               </Tooltip>
-              <Tooltip label="Delete row">
+              <Tooltip label={t('ui_delete_row')}>
                 <ActionIcon color="red.4" variant="transparent" onClick={() => handleRowDelete(index)}>
                   <TbTrash size={24} />
                 </ActionIcon>
@@ -60,7 +61,7 @@ const ItemFields: React.FC = () => {
         opened={modal.opened}
         onClose={() => setModal({ ...modal, opened: false })}
         transition="fade"
-        title="Item options"
+        title={t('ui_item_options')}
         centered
         size="xs"
         withCloseButton={false}

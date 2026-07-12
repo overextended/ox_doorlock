@@ -2,6 +2,7 @@ import { Button, NumberInput, Select, Stack } from '@mantine/core';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from '@mantine/form';
 import { useSetters, useStore } from '../../../../../store';
+import { t } from '../../../../../utils/t';
 
 interface Props {
   selectData: { value: string; label: string }[];
@@ -34,10 +35,10 @@ const DifficultyModal: React.FC<Props> = ({ selectData, setModal, modal }) => {
     },
 
     validate: {
-      select: (value) => (value === null ? 'Difficulty is required' : null),
-      areaSize: (value, values) => (value === null && values.select === 'custom' ? 'Area size is required' : null),
+      select: (value) => (value === null ? t('ui_difficulty_required') : null),
+      areaSize: (value, values) => (value === null && values.select === 'custom' ? t('ui_area_size_required') : null),
       speedMultiplier: (value, values) =>
-        value === null && values.select === 'custom' ? 'Speed multiplier is required' : null,
+        value === null && values.select === 'custom' ? t('ui_speed_multiplier_required') : null,
     },
   });
 
@@ -65,16 +66,16 @@ const DifficultyModal: React.FC<Props> = ({ selectData, setModal, modal }) => {
       <Stack>
         <Select
           data={selectData}
-          placeholder="Difficulty"
+          placeholder={t('ui_difficulty')}
           {...form.getInputProps('select')}
           value={select}
           onChange={setSelect}
           required
         />
         <NumberInput
-          label="Area size"
+          label={t('ui_area_size')}
           defaultValue={typeof lockpickData === 'object' ? lockpickData.areaSize : undefined}
-          description="Skill check area size in degrees"
+          description={t('ui_area_size_desc')}
           disabled={select !== 'custom'}
           max={360}
           hideControls
@@ -82,8 +83,8 @@ const DifficultyModal: React.FC<Props> = ({ selectData, setModal, modal }) => {
           {...form.getInputProps('areaSize')}
         />
         <NumberInput
-          label="Speed multiplier"
-          description="Number the indicator speed will be multiplied by"
+          label={t('ui_speed_multiplier')}
+          description={t('ui_speed_multiplier_desc')}
           disabled={select !== 'custom'}
           defaultValue={typeof lockpickData === 'object' ? lockpickData.speedMultiplier : undefined}
           hideControls
@@ -92,7 +93,7 @@ const DifficultyModal: React.FC<Props> = ({ selectData, setModal, modal }) => {
           {...form.getInputProps('speedMultiplier')}
         />
         <Button type="submit" uppercase variant="light">
-          Confirm
+          {t('ui_confirm')}
         </Button>
       </Stack>
     </form>

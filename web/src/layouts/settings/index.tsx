@@ -9,6 +9,7 @@ import Sound from './views/sound';
 import Submit from './Submit';
 import { useStore } from '../../store';
 import Lockpick from './views/lockpick';
+import { t } from '../../utils/t';
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
@@ -27,25 +28,25 @@ const Settings: React.FC = () => {
         >
           <Tabs.List>
             <Tabs.Tab value={'back'} onClick={() => navigate('/')} icon={<TbArrowBackUp size={20} />}>
-              Doors
+              {t('ui_tab_doors')}
             </Tabs.Tab>
             <Tabs.Tab value="general" icon={<TbSettings size={20} />}>
-              General
+              {t('ui_tab_general')}
             </Tabs.Tab>
             <Tabs.Tab value="characters" icon={<TbUser size={20} />}>
-              Characters
+              {t('ui_tab_characters')}
             </Tabs.Tab>
             <Tabs.Tab value="groups" icon={<TbBriefcase size={20} />}>
-              Groups
+              {t('ui_tab_groups')}
             </Tabs.Tab>
             <Tabs.Tab value="items" icon={<TbBottle size={20} />}>
-              Items
+              {t('ui_tab_items')}
             </Tabs.Tab>
             <Tabs.Tab value="lockpick" disabled={!lockpick} icon={<TbLock size={20} />}>
-              Lockpick
+              {t('ui_tab_lockpick')}
             </Tabs.Tab>
             <Tabs.Tab value="sound" icon={<TbBell size={20} />}>
-              Sound
+              {t('ui_tab_sound')}
             </Tabs.Tab>
           </Tabs.List>
         </Tabs>

@@ -3,18 +3,20 @@ import { ActionIcon, Group, Modal, Select, Tooltip } from '@mantine/core';
 import { useState } from 'react';
 import { TbSettings, TbTrash } from 'react-icons/tb';
 import DifficultyModal from '../../characters/components/DifficultyModal';
+import { t } from '../../../../../utils/t';
 
-const selectData: { label: string; value: string }[] = [
-  { label: 'Easy', value: 'easy' },
-  { label: 'Medium', value: 'medium' },
-  { label: 'Hard', value: 'hard' },
-  { label: 'Custom', value: 'custom' },
+const useSelectData = () => [
+  { label: t('ui_easy'), value: 'easy' },
+  { label: t('ui_medium'), value: 'medium' },
+  { label: t('ui_hard'), value: 'hard' },
+  { label: t('ui_custom'), value: 'custom' },
 ];
 
 const LockpickFields: React.FC = () => {
   const lockpickFields = useStore((state) => state.lockpickDifficulty);
   const setLockpickFields = useSetters((setter) => setter.setLockpickDifficulty);
   const [modal, setModal] = useState<{ opened: boolean; index: number }>({ opened: false, index: 0 });
+  const selectData = useSelectData();
 
   const handleRowDelete = (index: number) => {
     setLockpickFields((prevState) => prevState.filter((obj, indx) => indx !== index));
@@ -34,15 +36,15 @@ const LockpickFields: React.FC = () => {
             data={selectData}
             value={typeof field === 'string' ? field : 'custom'}
             readOnly
-            placeholder="Edit row to select value"
+            placeholder={t('ui_edit_row_select')}
             sx={{ width: '80%' }}
           />
-          <Tooltip label="Edit row">
+          <Tooltip label={t('ui_edit_row')}>
             <ActionIcon color="blue.4" variant="transparent" onClick={() => setModal({ opened: true, index })}>
               <TbSettings size={24} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Delete row">
+          <Tooltip label={t('ui_delete_row')}>
             <ActionIcon color="red.4" variant="transparent" onClick={() => handleRowDelete(index)}>
               <TbTrash size={24} />
             </ActionIcon>
@@ -53,7 +55,7 @@ const LockpickFields: React.FC = () => {
         opened={modal.opened}
         onClose={() => setModal({ ...modal, opened: false })}
         transition="fade"
-        title="Lockpick difficulty"
+        title={t('ui_lockpick_difficulty')}
         centered
         size="xs"
         withCloseButton={false}

@@ -9,6 +9,7 @@ import { useExitListener } from './hooks/useExitListener';
 import { useDoors } from './store/doors';
 import { DoorColumn } from './store/doors';
 import { convertData } from './utils/convertData';
+import { useLocale } from './store/locale';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -50,6 +51,8 @@ const App: React.FC = () => {
   });
 
   useNuiEvent('setSoundFiles', (data: string[]) => setSounds(data));
+
+  useNuiEvent('setLocales', (data: Record<string, string>) => useLocale.getState().setLocales(data));
 
   useNuiEvent('setVisible', (data: number) => {
     setVisible(true);
