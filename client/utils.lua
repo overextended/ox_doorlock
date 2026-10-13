@@ -243,6 +243,11 @@ local function openUi(id)
 			action = 'setSoundFiles',
 			data = lib.callback.await('ox_doorlock:getSounds', false)
 		})
+
+		SendNUIMessage({
+			action = 'setLocales',
+			data = lib.getLocales()
+		})
 	end
 
 	SetNuiFocus(true, true)

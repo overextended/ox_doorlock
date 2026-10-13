@@ -1,6 +1,7 @@
 import { Group, TextInput, NumberInput, ActionIcon, Tooltip } from '@mantine/core';
 import { TbTrash } from 'react-icons/tb';
 import { useStore, useSetters } from '../../../../../store';
+import { t } from '../../../../../utils/t';
 
 const GroupFields: React.FC = () => {
   const groups = useStore((state) => state.groups);
@@ -29,17 +30,17 @@ const GroupFields: React.FC = () => {
         >
           <TextInput
             sx={{ width: '100%' }}
-            placeholder="Group"
+            placeholder={t('ui_group')}
             value={field.name as string}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.target.value, index, 'name')}
           />
           <NumberInput
             sx={{ width: '100%' }}
-            placeholder="Grade"
+            placeholder={t('ui_grade')}
             value={field.grade as number}
             onChange={(e) => handleChange(e, index, 'grade')}
           />
-          <Tooltip label="Delete row">
+          <Tooltip label={t('ui_delete_row')}>
             <ActionIcon color="red.4" variant="transparent" onClick={() => handleRowDelete(index)}>
               <TbTrash size={24} />
             </ActionIcon>

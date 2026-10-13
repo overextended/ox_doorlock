@@ -5,6 +5,7 @@ import { useVisibility } from '../../../store/visibility';
 import { fetchNui } from '../../../utils/fetchNui';
 import Searchbar from './Search';
 import { useStore, defaultState } from '../../../store';
+import { t } from '../../../utils/t';
 
 const useStyles = createStyles({
   main: {
@@ -23,7 +24,7 @@ const Header: React.FC = () => {
 
   return (
     <Group className={classes.main}>
-      <Tooltip label="Create a new door" transition="pop">
+      <Tooltip label={t('ui_create_door')} transition="pop">
         <ActionIcon
           variant="light"
           color="blue"

@@ -2,6 +2,7 @@ import { useForm } from '@mantine/form';
 import { Button, Stack, Switch, TextInput } from '@mantine/core';
 import { useMemo } from 'react';
 import { StringField, useSetters, useStore } from '../../../../../store';
+import { t } from '../../../../../utils/t';
 
 interface Props {
   setModal: React.Dispatch<React.SetStateAction<{ opened: boolean; index: number }>>;
@@ -37,10 +38,10 @@ const ItemsModal: React.FC<Props> = ({ modal, setModal }) => {
   return (
     <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
       <Stack>
-        <TextInput label="Metadata type" defaultValue={itemData.metadata ?? undefined} {...form.getInputProps('metadata')} />
-        <Switch label="Remove on use" defaultChecked={itemData.remove ?? undefined} {...form.getInputProps('remove')} />
+        <TextInput label={t('ui_metadata_type')} defaultValue={itemData.metadata ?? undefined} {...form.getInputProps('metadata')} />
+        <Switch label={t('ui_remove_on_use')} defaultChecked={itemData.remove ?? undefined} {...form.getInputProps('remove')} />
         <Button uppercase variant="light" type="submit">
-          Confirm
+          {t('ui_confirm')}
         </Button>
       </Stack>
     </form>
